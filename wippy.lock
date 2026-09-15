@@ -111,23 +111,23 @@ modules:
       version: 0.1.0
       hash: affafc8b84b0439bc1aca3e391bb4be42c0feec321c55df483b7d838ed6c8e31
     - name: windows/antibug
-      version: 0.1.0
-      hash: fee21b211f667497e7aa340ebdfdc495df035f36d700dfdcc7a6f38ad6d55815
+      version: 0.1.1
+      hash: 808db514a7b288823809cccf9329b4a932a3f61a9830c5281973248f45901f28
     - name: windows/appwiz
-      version: 0.1.0
-      hash: 506f8fb9416d229f2add33e98cabd3ffdb3bf26fca058d4a82ee9366da90e5f3
+      version: 0.1.1
+      hash: d64e01fc2107de0bb26aa7a0a76b5e64bea402ab5d3c121bbf83257d17ee8007
     - name: windows/calculator
-      version: 0.1.0
-      hash: 671b810e3c0738dd3d57c433e57dac6b013eb2f1d6e6580438e6370d850919d7
+      version: 0.1.1
+      hash: 9daf0d8e2e53d5b8820aeae40a4510d8fd3d429435bc758942a42705770ed9f9
     - name: windows/minesweeper
       version: 0.1.0
       hash: c05969d28f4beb0200465ba435463e26ba050699c2631b1fd78f3aac35622b6b
     - name: windows/network
-      version: 0.1.0
-      hash: 6e8c0cd6de0a0e3d9f2cb7b966223412dbabdf0f12695aacbe28acd53ce546d7
+      version: 0.1.1
+      hash: 22118c866822b3a950127b9d5a7533b362f1f4c516bf0c322fca812d440102a7
     - name: windows/regedit
-      version: 0.1.0
-      hash: 61601d8e53d6f71bca0991ac9d578164ed5aeaeff621f0c8ad4f76b9d3d70f59
+      version: 0.1.1
+      hash: 9b2f4d9da0e9d8a372b1b34bec9f0e69e4e86aabc83302a4cf50d9fd5f232fc8
     - name: windows/shell
       version: 0.1.3
       hash: 7895b6fb299059bbe2a9c7119304996912e2e11de29bf3cbbf9422e07f0a86c0
