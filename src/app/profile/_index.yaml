@@ -5,7 +5,7 @@ namespace: app.profile
 # sheet over kickside/users: General (identity, groups, session) and Profile
 # (the declared profile fields). It opens from the Start menu's user row with
 # {user_id = <id>}; the shell names this entry through
-# WINDOWS_PROFILE_ENTRY (.wippy.yaml). Not in the menu itself.
+# CHICAGO_PROFILE_ENTRY (.wippy.yaml). Not in the menu itself.
 #
 # The window does what GET/PUT /user/me and GET/PUT /profile do, without HTTP,
 # through the same libraries: user_repo, user_groups_repo, the
@@ -55,7 +55,7 @@ entries:
       height: 26
       window_type: app
       resizable: false
-      pixel_render: windows.shell.sdk:render
+      pixel_render: chicago.shell.sdk:render
       pixel_state: app.profile:window
       comment: An account's properties — name, groups, session and declared profile fields; the signed-in account edits its own name, fields and password, another account is read-only.
     source: file://window.lua
@@ -65,13 +65,13 @@ entries:
       - security
       - time
     imports:
-      app: windows.shell.sdk:app
+      app: chicago.shell.sdk:app
       model: app.profile:model
       sessions: app.users:sessions
       consts: kickside.users:consts
       user_repo: kickside.users.persist:user_repo
       user_groups_repo: kickside.users.persist:user_groups_repo
-      desktop: windows.tui_desktop.desktop:window_api
+      desktop: chicago.tui_desktop.desktop:window_api
     security:
       policies: [app.profile:window_scope]
 

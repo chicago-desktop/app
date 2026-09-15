@@ -66,7 +66,7 @@ entries:
       height: 24
       window_type: app
       resizable: true
-      pixel_render: windows.shell.sdk:render
+      pixel_render: chicago.shell.sdk:render
       pixel_state: app.users:window
       comment: The application's accounts — list, create, rename, change status, reset a password, set groups and delete, through the users module's own libraries and gates; the last administrator and the signed-in account are protected.
     source: file://window.lua
@@ -76,8 +76,8 @@ entries:
       - security
       - time
     imports:
-      app: windows.shell.sdk:app
-      ui: windows.shell.sdk:ui
+      app: chicago.shell.sdk:app
+      ui: chicago.shell.sdk:ui
       model: app.users:model
       sessions: app.users:sessions
       consts: kickside.users:consts

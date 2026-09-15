@@ -1,4 +1,4 @@
--- WindowsWorkshop — an MCP tool: build a window of the Windows 95 shell in the
+-- ChicagoWorkshop — an MCP tool: build a window of the Windows 95 shell in the
 -- running runtime, open it, look at its screen, remove it.
 --
 -- Under MCP the tool runs under the token owner's actor in the
@@ -30,12 +30,12 @@ local desktop = require("desktop")
 -- may have several desktops (terminal.ssh, one per connection) — any one will
 -- do: the registry entry is shared, the others see the window when their menu
 -- opens.
-local SERVICES = {"windows.shell.desktop", "windows.tui_desktop.desktop"}
+local SERVICES = {"chicago.shell.desktop", "chicago.tui_desktop.desktop"}
 local REPLY_TOPIC = "desktop.reply"
 local BUDGET = "3s"
 
 -- Pictures of workshop windows: the `app.workshop:images` pack (an FS entry
--- with meta.type windows.images). The file is `<size>/<name>.png`; in a window
+-- with meta.type chicago.images). The file is `<size>/<name>.png`; in a window
 -- the picture is named `app.workshop:images/<name>`. The shell finds the pack
 -- in the registry and rereads the file on request, so an uploaded picture
 -- appears without a restart, and a replaced one takes the old one's place.
@@ -73,7 +73,7 @@ local function ask(topic: string, body: any): (any, any, boolean)
         if live[1] then pid = live[1].pid; break end
     end
     if not pid then
-        return nil, "the desktop is not running: start the shell (`wippy run --host windows.shell:terminal windows`)", false
+        return nil, "the desktop is not running: start the shell (`wippy run --host chicago.shell:terminal chicago`)", false
     end
     local payload: any = type(body) == "table" and body or {}
     payload.reply_to = process.pid()

@@ -5,7 +5,7 @@ namespace: app.services
 # NT applet over the runtime's supervisor. The table is
 # system.supervisor.states() joined with each service's registry entry (host,
 # lifecycle); the status bar counts system.hosts.list(); the heading names the
-# node through the shell's facts library (windows.shell.config:system).
+# node through the shell's facts library (chicago.shell.config:system).
 #
 # Start, Stop and Restart are disabled and say why: system.supervisor only
 # reads (state, states), and the Go supervisor has no per-service control to
@@ -59,7 +59,7 @@ entries:
       comment: Pure translation between supervisor states, registry entries and the window (table rows, detail line, properties sheet, status line); no IO, so a test runs it on stubs.
     source: file://model.lua
     imports:
-      facts: windows.shell.config:system
+      facts: chicago.shell.config:system
 
   # app.services:window
   - name: window
@@ -75,7 +75,7 @@ entries:
       height: 24
       window_type: app
       resizable: true
-      pixel_render: windows.shell.sdk:render
+      pixel_render: chicago.shell.sdk:render
       pixel_state: app.services:window
       comment: The runtime's supervised services — status, startup, host and the declaration behind each; Start, Stop and Restart are disabled because the runtime has no service control for Lua.
     source: file://window.lua
@@ -85,9 +85,9 @@ entries:
       - system
       - time
     imports:
-      app: windows.shell.sdk:app
+      app: chicago.shell.sdk:app
       model: app.services:model
-      facts: windows.shell.config:system
+      facts: chicago.shell.config:system
     security:
       policies: [app.services:window_scope, app.services:runtime_read]
 

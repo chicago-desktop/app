@@ -1,7 +1,7 @@
 -- The "Memory" widget on the desktop (FR-006 §9): the runtime's heap now — a
 -- gauge against a round ceiling — and its history over two minutes. Every 2 s
 -- one sample by the same path Task Manager uses
--- (`windows.shell.config:system`); a click on the widget opens Task Manager.
+-- (`chicago.shell.config:system`); a click on the widget opens Task Manager.
 local app = require("app")
 local sample = require("sample")
 

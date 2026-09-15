@@ -1,8 +1,8 @@
 # The runtime binary. The shell runs only on a build of the runtime fork
-# (wippy-windows/runtime, branch wippy-projects): `make runtime` downloads
+# (chicago-desktop/runtime, branch wippy-projects): `make runtime` downloads
 # the latest release into bin/, or point WIPPY at a build of your own.
 WIPPY ?= ./bin/wippy
-RUNTIME_REPO ?= wippy-windows/runtime
+RUNTIME_REPO ?= chicago-desktop/runtime
 RUNTIME_TAG ?= latest
 GOOS ?= $(shell uname -s | tr '[:upper:]' '[:lower:]')
 GOARCH ?= $(shell uname -m | sed -e 's/x86_64/amd64/' -e 's/aarch64/arm64/')
@@ -27,7 +27,7 @@ run:
 
 ## the desktop in this terminal (the whole runtime comes up with it)
 windows:
-	$(WIPPY) run --host windows.shell:terminal windows
+	$(WIPPY) run --host chicago.shell:terminal chicago
 
 ## boots the whole application
 test:

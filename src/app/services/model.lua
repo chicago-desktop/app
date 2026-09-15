@@ -6,7 +6,7 @@
 -- the status line. No IO here: the window reads, the model translates, so a
 -- test runs it on stubs.
 --
--- Refusals are worded by the shell's windows.shell.config:system
+-- Refusals are worded by the shell's chicago.shell.config:system
 -- (`facts.reason`): the runtime's system module marks a permission denial
 -- with kind Invalid and the text "permission denied: system.read on …", not
 -- with PermissionDenied, and that library is the one place that knows it.

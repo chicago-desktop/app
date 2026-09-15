@@ -4,7 +4,7 @@
 --
 -- One library for both widgets: memory and goroutines are read by one path and
 -- drawn with one kit, and two parsings of one rule would drift apart on the
--- first field. The runtime is read through `windows.shell.config:system`
+-- first field. The runtime is read through `chicago.shell.config:system`
 -- with a substitute `system` for the tests, so the ring and the trees are
 -- checked without a running application.
 local facts = require("facts")

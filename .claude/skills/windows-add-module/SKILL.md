@@ -1,6 +1,6 @@
 ---
 name: windows-add-module
-description: Add a Hub module to the Wippy Windows application (the ns.dependency entry in src/app/deps/_index.yaml with the parameters that bind the module's requirements, wippy update, restart), update a module to its newest version, or write a NEW module of the Windows 95 shell from the windows/module-template and publish it to the Hub. Use when a program should appear in the Start menu that lives in a module, or when a module's version has to move.
+description: Add a Hub module to the Wippy Windows application (the ns.dependency entry in src/app/deps/_index.yaml with the parameters that bind the module's requirements, wippy update, restart), update a module to its newest version, or write a NEW module of the Windows 95 shell from the chicago/module-template and publish it to the Hub. Use when a program should appear in the Start menu that lives in a module, or when a module's version has to move.
 ---
 
 # Adding a module to the application
@@ -20,11 +20,11 @@ module. Copy the shape of an existing entry:
     name: weather
     kind: ns.dependency
     meta: {}
-    component: windows/weather
+    component: chicago/weather
     parameters:
-      - name: windows.weather:target_db
+      - name: chicago.weather:target_db
         value: app:db
-      - name: windows.weather:process_host
+      - name: chicago.weather:process_host
         value: app:processes
 ```
 
@@ -55,7 +55,7 @@ module. Copy the shape of an existing entry:
 - Keep the file's comments free of an unquoted `: ` — it breaks the parse of
   the whole index.
 - The shell's **Add/Remove Programs** (Start → Settings) edits this same file
-  through `app.desktop:deps_source` (`WINDOWS_DEPS_FS` in `.wippy.yaml`); it
+  through `app.desktop:deps_source` (`CHICAGO_DEPS_FS` in `.wippy.yaml`); it
   installs nothing into the running runtime either — the two steps below
   follow, and the window says so.
 
@@ -80,22 +80,22 @@ wippy update                      # re-resolves src/app/deps against the Hub
 - The module's windows appear in the Start menu under the folder the
   **module** declares (`meta.group`, e.g. `Programs/Weather`); without a
   group a window lands in `Programs`. The application does not keep a
-  catalog of its own; `GET /api/v1/windows/programs` shows what the registry
+  catalog of its own; `GET /api/v1/chicago/programs` shows what the registry
   found.
 - A module's desktop widget or image pack is a registry entry the compositor
   reads at start — a restart, not a live update.
 
 ## 3. Writing a new module: the template
 
-The template is `windows/module-template`
-([wippy-windows/module-template](https://github.com/wippy-windows/module-template)):
+The template is `chicago/module-template`
+([chicago-desktop/module-template](https://github.com/chicago-desktop/module-template)):
 one sample window on the shell's SDK (`src/view.lua` — the window as data, a
 pure library the tests exercise; `src/window.lua` — the process that runs
 it), the module's image pack (`assets/images/{32,16}/hello.png`), the
 harness in `test/`, the checks and the publish targets in the Makefile.
 
 ```bash
-gh repo create <owner>/<name> --template wippy-windows/module-template --clone   # or "Use this template" on GitHub, or clone
+gh repo create <owner>/<name> --template chicago-desktop/module-template --clone   # or "Use this template" on GitHub, or clone
 cd <name>
 make init ORG=windows MODULE_NAME=<name> TITLE="<Title>"      # renames the template's identity; refuses to run twice with another identity
 make setup WIPPY=~/src/runtime/dist/wippy-linux-amd64          # resolves the module's and the harness's locks from the Hub
@@ -109,13 +109,13 @@ make test                                                      # the harness boo
 entry in `src/_index.yaml` (`meta.type: tui_desktop.window`, `title`,
 `group: Programs/<Module>`, `image: <ns>:images/<file>`, `icon` for a
 terminal without graphics, `width`/`height`, `pixel_render:
-windows.shell.sdk:render`, `pixel_state: <ns>:window`, `imports: {app:
-windows.shell.sdk:app}`, `security.policies: [windows.shell.security:view_state]`)
+chicago.shell.sdk:render`, `pixel_state: <ns>:window`, `imports: {app:
+chicago.shell.sdk:app}`, `security.policies: [chicago.shell.security:view_state]`)
 and the code against the SDK — skill `wippy-window-app`, `docs/sdk.md`.
 
 Rules the module has to keep:
 
-- **It depends on `windows/shell` and `windows/tui-desktop`** — two
+- **It depends on `chicago/shell` and `chicago/tui-desktop`** — two
   `ns.dependency` entries in its `src/_index.yaml` with a range (`"*"`),
   never an exact version. The shell lays out and draws the window, the base
   owns its frame and input.
@@ -125,7 +125,7 @@ Rules the module has to keep:
 - **`make test` and `make lint` only with the runtime fork's build** (`WIPPY=`;
   the shell declares `gfx`, the release binary does not load it at all).
 - **Everything outside `src/` that the module declares goes under `embed:` in
-  `wippy.yaml`** — image packs (`fs.directory`, `meta.type: windows.images`),
+  `wippy.yaml`** — image packs (`fs.directory`, `meta.type: chicago.images`),
   assets. `wippy publish` packs the entries of `src/` and embeds only what is
   listed; without the line the published module has no pictures.
   `scripts/check-module.mjs` verifies every pack is there.

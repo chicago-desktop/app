@@ -13,7 +13,7 @@ writes:
 plus the alternate-screen switch and the frame synchronization, which do not
 affect the content.
 
-    python3 tools/tui-probe.py --cols 100 --rows 30 -- wippy run --host windows.shell:terminal windows
+    python3 tools/tui-probe.py --cols 100 --rows 30 -- wippy run --host chicago.shell:terminal chicago
     python3 tools/tui-probe.py --send 'echo probe-ok' --send-key enter -- ssh -tt -p 2222 localhost
 """
 

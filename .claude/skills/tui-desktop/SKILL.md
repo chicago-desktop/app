@@ -1,6 +1,6 @@
 ---
 name: tui-desktop
-description: Drive the windows of a live desktop (windows/tui-desktop, the Windows 95 shell over it) through its command channel — open a window with a program, type into it, read its screen, move or close a window, bring the desktop up. Use when an agent must act on a running desktop without touching the person's keyboard.
+description: Drive the windows of a live desktop (chicago/tui-desktop, the Windows 95 shell over it) through its command channel — open a window with a program, type into it, read its screen, move or close a window, bring the desktop up. Use when an agent must act on a running desktop without touching the person's keyboard.
 ---
 
 # Driving the desktop
@@ -37,10 +37,10 @@ AUTH="Authorization: Bearer $KICKSIDE_API_TOKEN"
 ```
 
 The shell has an API of its own next to the channel, under
-`/api/v1/windows/...`: `GET /api/v1/windows/status` (is the shell alive, its
+`/api/v1/windows/...`: `GET /api/v1/chicago/status` (is the shell alive, its
 windows, the workshop `restore` report, the frame instruments),
-`GET /api/v1/windows/programs` (the Start menu catalog from the registry),
-`GET|POST /api/v1/windows/desktop` and `PATCH|DELETE /api/v1/windows/desktop/{id}`
+`GET /api/v1/chicago/programs` (the Start menu catalog from the registry),
+`GET|POST /api/v1/chicago/desktop` and `PATCH|DELETE /api/v1/chicago/desktop/{id}`
 (the desktop shortcuts).
 
 ## What can be done
@@ -70,13 +70,13 @@ A window with a program is opened by `command`, an application window by
 `entry` (a process entry declared by the application or a module). What is
 declared is visible in the Start menu; the same mark,
 `meta.type: tui_desktop.window`, can be searched in the registry
-(`GET /api/v1/windows/programs` lists it).
+(`GET /api/v1/chicago/programs` lists it).
 
 The other actions of the same shape: `key` (`key`, `ctrl`, `alt`, `shift`),
 `move` (`x`, `y`), `resize` (`w`, `h`), `focus`, `minimize` (`value`), `close`.
 
 With the SSH host there can be several desktops in one runtime, one per
-connection (the name family `windows.shell`, `windows.shell.2`, …). The
+connection (the name family `chicago.shell`, `chicago.shell.2`, …). The
 channel addresses the first one; a command meant for every desktop (a tray
 item, a refresh) is sent by code that iterates the family.
 
@@ -128,8 +128,8 @@ Such a window opens like any other — by the `entry` from the answer.
 
 ```bash
 wippy run                                           # the web platform on :8099 and the SSH desktop on :2222
-wippy run --host windows.shell:terminal windows     # the Windows 95 shell in this terminal
-wippy run --host windows.tui_desktop:terminal desktop   # the bare desktop base, no shell
+wippy run --host chicago.shell:terminal chicago     # the Windows 95 shell in this terminal
+wippy run --host chicago.tui_desktop:terminal desktop   # the bare desktop base, no shell
 ```
 
 `--host` is required: the CLI's terminal-host autodetection counts
@@ -141,6 +141,6 @@ on the server side: `ssh -t -p 2222 localhost` from any client (skill
 `windows-debug`).
 
 Whether a desktop is up is one `GET /windows` on the channel: it answers a
-list, not "not running". `GET /api/v1/windows/status` answers
+list, not "not running". `GET /api/v1/chicago/status` answers
 `running: false` for a shell that is shut down — with code 200, because a
 shut-down shell is not a broken application.

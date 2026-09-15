@@ -6,8 +6,8 @@ namespace: app
 entries:
   # app:system_fonts
   #
-  # Fonts for the pixel shell. The name is not ours to choose: windows/shell
-  # looks for `app:system_fonts` by default (WINDOWS_FONTS overrides it), and
+  # Fonts for the pixel shell. The name is not ours to choose: chicago/shell
+  # looks for `app:system_fonts` by default (CHICAGO_FONTS overrides it), and
   # declaring the filesystem is the application's job, not the module's.
   #
   # The directory is the system's and read only; `auto_init` is off on

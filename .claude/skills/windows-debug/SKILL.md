@@ -25,7 +25,7 @@ set -a; . ./.env.local; set +a          # or export KICKSIDE_API_TOKEN=…
 API=http://127.0.0.1:8099/api/v1; AUTH="Authorization: Bearer $KICKSIDE_API_TOKEN"
 
 curl -s -H "$AUTH" $API/tui-desktop/windows      # the base's dashboard: windows, focus, screen, restore, frame
-curl -s -H "$AUTH" $API/windows/status           # the shell: running, windows, restore, frame instruments
+curl -s -H "$AUTH" $API/chicago/status           # the shell: running, windows, restore, frame instruments
 curl -s -H "$AUTH" -H 'Content-Type: application/json' -X POST -d '{}' \
   $API/tui-desktop/windows/w1/screen             # a window's screen, rows of text
 ```
@@ -39,12 +39,12 @@ curl -s -H "$AUTH" -H 'Content-Type: application/json' -X POST -d '{}' \
   and **`restore`** (`restored`, `failed`, `names`, `error`): what became of
   the workshop windows at start. Silence there would read as "there were no
   windows".
-- `GET /windows/status` answers `running: false` **with 200** for a shell
+- `GET /chicago/status` answers `running: false` **with 200** for a shell
   that is shut down: a shut-down shell is not a broken application. It is
   the only place a person can see the restore report — the terminal host's
   log is muted.
 - With the SSH host there is one desktop per connection (the name family
-  `windows.shell`, `windows.shell.2` … `.16`); the channel and the status
+  `chicago.shell`, `chicago.shell.2` … `.16`); the channel and the status
   endpoint address the first one. `user = {id, name}` in `desktop.list` is
   the only way to tell windows under a person from windows under the
   service actor.
@@ -65,7 +65,7 @@ curl -s -H "$AUTH" -H 'Content-Type: application/json' -X POST -d '{}' \
 ## 2. The SSH desktop
 
 `app.desktop:ssh` (`src/app/desktop/_index.yaml`): `terminal.ssh` on
-`0.0.0.0:2222`, `auth: logon`, `entry: windows.shell:shell` (the entry ID,
+`0.0.0.0:2222`, `auth: logon`, `entry: chicago.shell:shell` (the entry ID,
 not the CLI command name `windows`), `close_grace: 10s`, `max_sessions: 16`,
 host key `.wippy/ssh_host_ed25519_key` (generated once). The kind exists only
 in the runtime fork's build.
@@ -98,7 +98,7 @@ ssh -t -J <machine> -p 2222 localhost     # from outside
 - Bash windows (`window_pty`, `meta.requires: tui_desktop.pty`) are for
   scopes with the action: `app.security:admin` has `*`, an ordinary user is
   refused with the reason on the desktop. Task Manager, AntiBug, Add/Remove
-  Programs, Registry Editor require `windows.admin`.
+  Programs, Registry Editor require `chicago.admin`.
 - Port forwarding and exec are refused; a key with options in
   `authorized_keys` is skipped whole.
 
@@ -137,7 +137,7 @@ python3 tools/tui-probe.py --cols 100 --rows 30 --boot 15 --settle 3 --tail 6 \
 ## 4. The log, the instance, the terminal
 
 - **The log is the stdout of `wippy run`.** The terminal hosts
-  (`windows.shell:terminal`, `windows.tui_desktop:terminal`) hide their own
+  (`chicago.shell:terminal`, `chicago.tui_desktop:terminal`) hide their own
   log — a runtime log line would scramble the frame for good — so **a
   failure told only to the log is told to no one**. Run the platform with
   plain `wippy run` (the SSH desktops come with it) when you need the log,

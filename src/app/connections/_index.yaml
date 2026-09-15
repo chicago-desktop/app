@@ -58,7 +58,7 @@ entries:
       height: 22
       window_type: app
       resizable: true
-      pixel_render: windows.shell.sdk:render
+      pixel_render: chicago.shell.sdk:render
       pixel_state: app.connections:window
       comment: Connections of the platform — list, create from a provider's credential form, rename, test and delete; every refusal is shown in the status bar.
     source: file://window.lua
@@ -69,8 +69,8 @@ entries:
       - security
       - time
     imports:
-      app: windows.shell.sdk:app
-      ui: windows.shell.sdk:ui
+      app: chicago.shell.sdk:app
+      ui: chicago.shell.sdk:ui
       model: app.connections:model
       component: kickside.component:component
       conn_types: kickside.connection:types

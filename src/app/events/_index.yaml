@@ -57,7 +57,7 @@ entries:
       height: 26
       window_type: app
       resizable: true
-      pixel_render: windows.shell.sdk:render
+      pixel_render: chicago.shell.sdk:render
       pixel_state: app.events:window
       comment: The platform's threads as logs and their events newest first, a page at a time — filter by type and text, double-click for the event's properties and payload.
     source: file://window.lua
@@ -65,7 +65,7 @@ entries:
     modules:
       - time
     imports:
-      app: windows.shell.sdk:app
+      app: chicago.shell.sdk:app
       model: app.events:model
       format: app.common:format
       threads: kickside.core.threads:contract

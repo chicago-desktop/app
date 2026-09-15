@@ -5,11 +5,11 @@ namespace: app.desktop
 # that belong in the sources.
 #
 # The workshop — building a window in the running runtime — lives in the
-# windows/tui-desktop module together with its store: the `/tui-desktop/apps`
+# chicago/tui-desktop module together with its store: the `/tui-desktop/apps`
 # endpoints. What stays here are the windows that travel as files and belong
 # in the sources.
 #
-# The desktop (windows/tui-desktop) provides the mechanism — the compositor,
+# The desktop (chicago/tui-desktop) provides the mechanism — the compositor,
 # the viewport, the command channel — and the application brings the windows.
 # An entry marked `meta.type: tui_desktop.window` lands in the compositor's
 # menu (alt+o), and nothing in the module has to be edited for that.
@@ -38,7 +38,7 @@ entries:
   # Windows 95 shell's "Add/Remove Programs". The window edits ONLY
   # `_index.yaml` here: it removes and appends `ns.dependency` entries; that
   # takes effect after `wippy update` and a restart, the same as an edit by
-  # hand. The shell learns this entry's name from WINDOWS_DEPS_FS (an override
+  # hand. The shell learns this entry's name from CHICAGO_DEPS_FS (an override
   # in .wippy.yaml).
   - name: deps_source
     kind: fs.directory
@@ -52,15 +52,15 @@ entries:
   - name: taskbar_clock
     kind: registry.entry
     meta:
-      type: windows.taskbar_clock
+      type: chicago.taskbar_clock
       comment: "Clicking the taskbar clock opens the Windows 95 shell's Date/Time window."
     data:
-      entry: windows.datetime:window
+      entry: chicago.datetime:window
 
   # ─── Logging on to the Windows 95 shell ──────────────────────────────
   #
-  # The shell (windows/shell) shows "Log On to Windows" at start and calls the
-  # function named in WINDOWS_LOGON_FUNC (an override in .wippy.yaml). The
+  # The shell (chicago/shell) shows "Log On to Windows" at start and calls the
+  # function named in CHICAGO_LOGON_FUNC (an override in .wippy.yaml). The
   # function runs under ITS OWN actor with rights to the users database — the
   # same six policies the kickside.users web logon has — and answers with a
   # session token. The shell is given no access to the password table.
@@ -263,7 +263,7 @@ entries:
       height: 20
       window_type: app
       resizable: true
-      pixel_render: windows.shell.sdk:render
+      pixel_render: chicago.shell.sdk:render
       pixel_state: app.desktop:ssh_keys_window
       comment: "The signed-in account's SSH public keys: add one by pasting its .pub line, remove one; a listed key opens the desktop over SSH without a password."
     source: file://ssh_keys_window.lua
@@ -272,7 +272,7 @@ entries:
       - security
       - time
     imports:
-      app: windows.shell.sdk:app
+      app: chicago.shell.sdk:app
       keys: app.desktop:ssh_keys
       user_repo: kickside.users.persist:user_repo
     security:
@@ -349,7 +349,7 @@ entries:
     # desktop without a password; any other client meets the logon.
     key_owner: app.desktop:ssh_key_owner
     # The shell entry's ID, not the CLI command name `windows`.
-    entry: windows.shell:shell
+    entry: chicago.shell:shell
     close_grace: 10s
     max_sessions: 16
     lifecycle:
@@ -371,7 +371,7 @@ entries:
   - name: user_name
     kind: function.lua
     meta:
-      comment: "{user_id} → the display name for the Windows 95 shell's Start menu (the full name, else the e-mail — logon's rule); the shell calls it through funcs on desktop.refresh (WINDOWS_USER_FUNC), under this function's own actor."
+      comment: "{user_id} → the display name for the Windows 95 shell's Start menu (the full name, else the e-mail — logon's rule); the shell calls it through funcs on desktop.refresh (CHICAGO_USER_FUNC), under this function's own actor."
     source: file://user_name.lua
     method: handler
     imports:

@@ -2,6 +2,71 @@ directories:
     modules: .wippy
     src: ./src
 modules:
+    - name: chicago/aicq
+      version: 0.2.0
+      source: github.com/chicago-desktop/aicq
+      commit: 24daf913c658925a3955a3e923c7c7e20bccbdc5
+      local_hash: sha256-tree-v1:bbeb0c97d76a88df6712ccc3d0b41167bee5d63e7b8cf1569717aba7d70305ed
+    - name: chicago/antibug
+      version: 0.2.0
+      source: github.com/chicago-desktop/antibug
+      commit: e836fede6a7f79a8d7b64731a572c334121f1f12
+      local_hash: sha256-tree-v1:a5ebdd16391696bbbbe065b390702c50eb75148ae0f5d78352d91c0c19bfa93f
+    - name: chicago/appwiz
+      version: 0.2.0
+      source: github.com/chicago-desktop/appwiz
+      commit: ce5818ef295dabef4745e947c72f3cf45e448ae5
+      local_hash: sha256-tree-v1:29b4cd195e20e62769ef8d6ec4c3048472fed3eef02526dd291520f51ee952f6
+    - name: chicago/calculator
+      version: 0.2.0
+      source: github.com/chicago-desktop/calculator
+      commit: d937401c81f325c6ee6c457c3b3663530245b3ce
+      local_hash: sha256-tree-v1:fc006d16e946c28dca3db8b4ecf25162a6ab8893c6bcf3349aab8b69469596ac
+    - name: chicago/datetime
+      version: 0.2.0
+      source: github.com/chicago-desktop/datetime
+      commit: fe92a4aba23aca8d71341052754f49663cc22c7f
+      local_hash: sha256-tree-v1:dd33bb503fc4781db92cf2a490f331a769dfb9c3d55a2900c813a25c76f7b772
+    - name: chicago/minesweeper
+      version: 0.2.0
+      source: github.com/chicago-desktop/minesweeper
+      commit: ce049b43719fe5c25ae1b70a2ab43bb40b804a8e
+      local_hash: sha256-tree-v1:090e9d8c6c231a100f584549ab53024f3eac3cd37fb2864acbddca370cc033d3
+    - name: chicago/network
+      version: 0.2.0
+      source: github.com/chicago-desktop/network
+      commit: a8d6d723e2667d6d7daafa86beafcb7025f01967
+      local_hash: sha256-tree-v1:389efef0b8e70ffd567688afc713e9cc142f0966c4a2f1279d4cf4e29fa157be
+    - name: chicago/regedit
+      version: 0.2.0
+      source: github.com/chicago-desktop/regedit
+      commit: 2eb9f67f4aff9528d5049eee8db872a8c23e872d
+      local_hash: sha256-tree-v1:09aa1a89c114113a3f07345009fa426318e63d720242a767c79a61f11fb497e3
+    - name: chicago/run
+      version: 0.2.0
+      source: github.com/chicago-desktop/run
+      commit: 71a1b97e2ae6c0e84f869ec550fe9ce1b9b86d81
+      local_hash: sha256-tree-v1:ec96893c691ecae9b5fb687421b3543a944166819630e8b7a1f87e22676feb3a
+    - name: chicago/shell
+      version: 0.2.0
+      source: github.com/chicago-desktop/shell
+      commit: 3903352d94c43c6b1eb7eb846c5288fe2a18a2c7
+      local_hash: sha256-tree-v1:f6c370a42752d4e2a85d7100d228ba9adb67f7d40da4a39dee55cb791aa3a6c6
+    - name: chicago/taskman
+      version: 0.2.0
+      source: github.com/chicago-desktop/taskman
+      commit: 2bb732b2cc2d33d043fe37598855d6109e26dc72
+      local_hash: sha256-tree-v1:9558144f3668367c5ada5f62c994afedd96611d50665f0297a7576aedb9a2f98
+    - name: chicago/tui-desktop
+      version: 0.2.0
+      source: github.com/chicago-desktop/tui-desktop
+      commit: 4a946604767059b248b3fed724c308a5f09c50fc
+      local_hash: sha256-tree-v1:5d2265ae39d08badb662b04a505c6f35d516d8c2093877b1806dc3a59e7daef4
+    - name: chicago/weather
+      version: 0.2.0
+      source: github.com/chicago-desktop/weather
+      commit: 4fda75926ec141bbfd4a92cc9f96490feee1e969
+      local_hash: sha256-tree-v1:d0aa2be980c7261f2689dc527f75fcebd237bfe0732ffc7f6f39a78d9f41be51
     - name: keeper/keeper
       version: 0.5.83
       hash: fe598669f8b0ef6e99acaf0eba7568492b785f2f32bd6df4683b26d452de0fef
@@ -107,36 +172,6 @@ modules:
     - name: kickside/widgets
       version: 0.1.34
       hash: 8841a783dbfebbb8b4af4ae7f0799b1131b48b8bd5e05047d5a6ccc397a86b00
-    - name: windows/aicq
-      version: 0.1.0
-      hash: affafc8b84b0439bc1aca3e391bb4be42c0feec321c55df483b7d838ed6c8e31
-    - name: windows/antibug
-      version: 0.1.1
-      hash: 808db514a7b288823809cccf9329b4a932a3f61a9830c5281973248f45901f28
-    - name: windows/appwiz
-      version: 0.1.1
-      hash: d64e01fc2107de0bb26aa7a0a76b5e64bea402ab5d3c121bbf83257d17ee8007
-    - name: windows/calculator
-      version: 0.1.1
-      hash: 9daf0d8e2e53d5b8820aeae40a4510d8fd3d429435bc758942a42705770ed9f9
-    - name: windows/minesweeper
-      version: 0.1.0
-      hash: c05969d28f4beb0200465ba435463e26ba050699c2631b1fd78f3aac35622b6b
-    - name: windows/network
-      version: 0.1.1
-      hash: 22118c866822b3a950127b9d5a7533b362f1f4c516bf0c322fca812d440102a7
-    - name: windows/regedit
-      version: 0.1.1
-      hash: 9b2f4d9da0e9d8a372b1b34bec9f0e69e4e86aabc83302a4cf50d9fd5f232fc8
-    - name: windows/shell
-      version: 0.1.3
-      hash: 7895b6fb299059bbe2a9c7119304996912e2e11de29bf3cbbf9422e07f0a86c0
-    - name: windows/tui-desktop
-      version: 0.1.0
-      hash: 450fce14e8dc510b6754d11022f8da9909cda41b174e3f21e3348e4d4c47ee47
-    - name: windows/weather
-      version: 0.1.0
-      hash: 990ed52a0a5d927a35e65774408c4f4219d2e7a1012d418d13889ecfc647983e
     - name: wippy/agent
       version: 0.4.17
       hash: f8b8ed9f8098e254f7b431ca9f5378672bb5deae33122b777d1714092bcca91a

@@ -1,6 +1,6 @@
 ---
 name: wippy-window-workshop
-description: Build a window for the Chicago shell in the running runtime through the WindowsWorkshop MCP tool (or the HTTP workshop) — no files, no restart. Use when an agent connected over MCP must add, iterate, inspect or remove a shell window live. For windows that belong in module sources use wippy-window-app instead.
+description: Build a window for the Chicago shell in the running runtime through the ChicagoWorkshop MCP tool (or the HTTP workshop) — no files, no restart. Use when an agent connected over MCP must add, iterate, inspect or remove a shell window live. For windows that belong in module sources use wippy-window-app instead.
 ---
 
 # Building shell windows through MCP
@@ -12,20 +12,20 @@ by building again under the same name.
 
 Canonical contracts: the [window SDK](../../../docs/sdk.md) (the application's
 copy of the shell's guide) for the component tree, and the README of the
-desktop base `windows/tui-desktop`
-([wippy-windows/tui-desktop](https://github.com/wippy-windows/tui-desktop),
+desktop base `chicago/tui-desktop`
+([chicago-desktop/tui-desktop](https://github.com/chicago-desktop/tui-desktop),
 the section on building a window in the running runtime — the workshop
 endpoint `POST /api/v1/tui-desktop/apps`) for the storage and registry
 mechanics.
 
-In this application the tool is the entry `app.workshop:windows_workshop`
+In this application the tool is the entry `app.workshop:chicago_workshop`
 (`src/app/workshop/`), its trait `app.workshop:trait`, its image pack
 `app.workshop:images` (`src/app/workshop/images/{32,16}/`). The HTTP router
 is `app:api`, so every path below is under `/api/v1` on `127.0.0.1:8099`.
 
 ## Tool
 
-`WindowsWorkshop` (kickside MCP, trait `app.workshop:trait`). One tool, `action`
+`ChicagoWorkshop` (kickside MCP, trait `app.workshop:trait`). One tool, `action`
 selects what happens. Every answer is `{success, ...}`; a failure names the field
 or the reason in `error`.
 
@@ -59,8 +59,8 @@ Open and inspect through the desktop command channel — skill `tui-desktop`.
 2. Write `source` as an SDK application (template below). `init`, `view`,
    `update`, optional `interval` and `dispose`. Keep `view` pure: no I/O, no
    callbacks in the tree.
-3. `build` with `imports = {app = "windows.shell.sdk:app"}`,
-   `pixel_render = "windows.shell.sdk:render"`, a `group` folder
+3. `build` with `imports = {app = "chicago.shell.sdk:app"}`,
+   `pixel_render = "chicago.shell.sdk:render"`, a `group` folder
    (`Programs/<module>` style), an `image` (icon catalog or image pack, see
    "Pictures"), and `open = true`.
 4. Read the answer: `live` must be true; `error` names the field that failed.
@@ -117,8 +117,8 @@ return {main = main, definition = definition}
 ```json
 {"action": "build", "name": "probe_list", "title": "Probe", "width": 60, "height": 20,
  "group": "Programs/Workshop", "image": "program",
- "imports": {"app": "windows.shell.sdk:app"},
- "pixel_render": "windows.shell.sdk:render", "open": true}
+ "imports": {"app": "chicago.shell.sdk:app"},
+ "pixel_render": "chicago.shell.sdk:render", "open": true}
 ```
 
 ## Rules the workshop enforces
@@ -134,7 +134,7 @@ return {main = main, definition = definition}
 - `imports` may name any `library.lua` of the registry; a dead id or a
   non-library is refused by field name. Alias `desktop` is reserved for the
   desktop library (`desktop.open`, `desktop.close`, `desktop.list`).
-- `pixel_render` must be a library the theme registers (`windows.shell.sdk:render`
+- `pixel_render` must be a library the theme registers (`chicago.shell.sdk:render`
   for SDK windows). Without it the window is cell-only.
 - Rights: the window runs under the actor of the logged-on user (Windows logon)
   plus `app_window_scope` (process context, `db.get`, send to the compositor).
@@ -149,11 +149,11 @@ return {main = main, definition = definition}
 
 The workshop carries source, not files. A window's pictures live in an image
 pack — an `fs.*` entry of a module or the application with
-`meta.type: windows.images`, pictures as `<size>/<file>.png` — and are named
+`meta.type: chicago.images`, pictures as `<size>/<file>.png` — and are named
 `<pack entry>/<file>` wherever a name is taken: the `build` `image`, an SDK
 `image`, `button.image` (a picture instead of the caption) and `ui.message`'s
 `image`. The contract is the shell's `docs/icons.md`, "Image packs of other
-modules" ([wippy-windows/windows](https://github.com/wippy-windows/windows/blob/main/docs/icons.md)).
+modules" ([chicago-desktop/shell](https://github.com/chicago-desktop/shell/blob/main/docs/icons.md)).
 
 In this application the pack for workshop windows is `app.workshop:images`; upload a
 picture into it with `image` and name what it answers. The shell looks at a
@@ -187,9 +187,9 @@ duplicated `id`, a runtime call outside the whitelist, Lua's late `local`
 - **Cells:** read `screen` and look for the labels and controls you expect.
 - **Pixels:** `screen` is empty; the evidence is a PNG rendered by the same
   code the compositor runs. Copy the shell module's `test/` app (in the
-  `windows/shell` repository) into a scratch folder (absolute replacements, the shared `test/` stays untouched), register
+  `chicago/shell` repository) into a scratch folder (absolute replacements, the shared `test/` stays untouched), register
   the window source as a `library.lua` with the build's imports plus
-  `desktop: windows.tui_desktop.desktop:window_api`, and write a command
+  `desktop: chicago.tui_desktop.desktop:window_api`, and write a command
   that builds `app.context({width, height, native = true})`, drives
   `definition.init/update` through `app.dispatch` with the actions the SDK
   would send, and paints each state with `chrome_pixels.paint` exactly as

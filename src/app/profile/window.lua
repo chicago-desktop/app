@@ -1,7 +1,7 @@
 -- User Profile — an account's properties in the Windows 95 shell.
 --
 -- Opened from the Start menu's user row with {user_id = <id>} (the shell
--- names this entry through WINDOWS_PROFILE_ENTRY); without a
+-- names this entry through CHICAGO_PROFILE_ENTRY); without a
 -- target it is the signed-in account's. A window on the shell SDK doing what
 -- GET/PUT /user/me and GET/PUT /profile do, without HTTP: user_repo for the
 -- account, user_groups_repo for its groups, the kickside.users.profile:profile

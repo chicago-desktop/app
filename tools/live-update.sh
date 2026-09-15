@@ -20,7 +20,7 @@
 # pack) still wants a restart.
 #
 # Environment:
-#   WINDOWS_APP_API    API base, default http://127.0.0.1:8099/api/v1
+#   CHICAGO_APP_API    API base, default http://127.0.0.1:8099/api/v1
 #   KICKSIDE_API_TOKEN operator token (24 h); read from .env.local if unset —
 #                      see .env.example for how to mint one
 set -euo pipefail
@@ -33,7 +33,7 @@ if [ -z "${KICKSIDE_API_TOKEN:-}" ] && [ -f .env.local ]; then
 fi
 : "${KICKSIDE_API_TOKEN:?KICKSIDE_API_TOKEN is not set (export it or put it in .env.local; see .env.example)}"
 
-API="${WINDOWS_APP_API:-http://127.0.0.1:8099/api/v1}"
+API="${CHICAGO_APP_API:-http://127.0.0.1:8099/api/v1}"
 AUTH="Authorization: Bearer $KICKSIDE_API_TOKEN"
 NS="${1:?namespace, e.g. app.desktop}"; shift || true
 

@@ -24,7 +24,7 @@ entries:
 
   # app.deps:mcp
   #
-  # The platform's MCP server: the WindowsWorkshop tool (app.workshop) is
+  # The platform's MCP server: the ChicagoWorkshop tool (app.workshop) is
   # reached over it.
   - version: '>=v0.0.0'
     name: mcp
@@ -49,129 +49,156 @@ entries:
   # needs hide_logs — and from then on the CLI's terminal host autodetection
   # refuses to choose: it counts terminal.host entries, and there are two now.
   # So every command needs an explicit --host, including other modules':
-  #   wippy run --host windows.tui_desktop:terminal desktop
+  #   wippy run --host chicago.tui_desktop:terminal desktop
   #   wippy test --host wippy.terminal:host
-  - version: '>=v0.0.0'
+  - version: '>=0.2.0'
     name: tui-desktop
     kind: ns.dependency
     meta: {}
-    component: windows/tui-desktop
+    component: github.com/chicago-desktop/tui-desktop
     parameters:
-      - name: windows.tui_desktop:api_router
+      - name: chicago.tui_desktop:api_router
         value: app:api
-      - name: windows.tui_desktop.security:user_security_scope
+      - name: chicago.tui_desktop.security:user_security_scope
         value: app.security:user
 
   # app.deps:windows
   #
   # The second shell of the same desktop — the Windows 95 look. It carries no
   # window mechanics of its own: it calls the compositor library from
-  # windows/tui-desktop with its own theme. It brings a THIRD terminal.host, so
+  # chicago/tui-desktop with its own theme. It brings a THIRD terminal.host, so
   # --host is required here too:
-  #   wippy run --host windows.shell:terminal windows
+  #   wippy run --host chicago.shell:terminal chicago
   # The SSH host (app.desktop:ssh) opens this module's `shell` entry.
-  - version: '>=v0.0.0'
+  - version: '>=0.2.0'
     name: windows
     kind: ns.dependency
     meta: {}
-    component: windows/shell
+    component: github.com/chicago-desktop/shell
     parameters:
-      - name: windows.shell:api_router
+      - name: chicago.shell:api_router
         value: app:api
-      - name: windows.shell:target_db
+      - name: chicago.shell:target_db
         value: app:db
-      - name: windows.shell.security:user_security_scope
+      - name: chicago.shell.security:user_security_scope
         value: app.security:user
 
   # app.deps:minesweeper
   #
   # Minesweeper for the shell: the rules as a pure library, the window a
   # declarative SDK application. No requirements to bind.
-  - version: '>=v0.0.0'
+  - version: '>=0.2.0'
     name: minesweeper
     kind: ns.dependency
     meta: {}
-    component: windows/minesweeper
+    component: github.com/chicago-desktop/minesweeper
 
   # app.deps:weather
   #
   # Weather for the shell: the window, the temperature in the tray and the
   # desktop widget. The forecaster service keeps the chosen city in the
   # application's database and runs on its process host.
-  - version: '>=v0.0.0'
+  - version: '>=0.2.0'
     name: weather
     kind: ns.dependency
     meta: {}
-    component: windows/weather
+    component: github.com/chicago-desktop/weather
     parameters:
-      - name: windows.weather:target_db
+      - name: chicago.weather:target_db
         value: app:db
-      - name: windows.weather:process_host
+      - name: chicago.weather:process_host
         value: app:processes
   # app.deps:aicq
   #
   # aICQ — people and agents in one ICQ-style contact list. The parameters
   # follow the module's requirements: the database for contacts and messages,
   # the process host for the presence and messenger services.
-  - version: '>=v0.0.0'
+  - version: '>=0.2.0'
     name: aicq
     kind: ns.dependency
     meta: {}
-    component: windows/aicq
+    component: github.com/chicago-desktop/aicq
     parameters:
-      - name: windows.aicq:target_db
+      - name: chicago.aicq:target_db
         value: app:db
-      - name: windows.aicq:process_host
+      - name: chicago.aicq:process_host
         value: app:processes
 
   # app.deps:calculator
   #
   # The Windows 95 Calculator, a module of its own since shell 0.1.1.
-  - version: '>=v0.0.0'
+  - version: '>=0.2.0'
     name: calculator
     kind: ns.dependency
     meta: {}
-    component: windows/calculator
+    component: github.com/chicago-desktop/calculator
 
   # app.deps:network
   #
   # Network Neighborhood: the runtime's cluster as computers on a network; it
   # stands on the desktop. A module of its own since shell 0.1.1.
-  - version: '>=v0.0.0'
+  - version: '>=0.2.0'
     name: network
     kind: ns.dependency
     meta: {}
-    component: windows/network
+    component: github.com/chicago-desktop/network
 
   # app.deps:antibug
   #
   # AntiBug, the test scanner (administrators only). This application declares
   # no scan targets of its own: "This computer" runs the application's tests.
-  - version: '>=v0.0.0'
+  - version: '>=0.2.0'
     name: antibug
     kind: ns.dependency
     meta: {}
-    component: windows/antibug
+    component: github.com/chicago-desktop/antibug
     parameters:
-      - name: windows.antibug:process_host
+      - name: chicago.antibug:process_host
         value: app:processes
 
   # app.deps:appwiz
   #
   # Add/Remove Programs (administrators only): edits this file through the
-  # folder WINDOWS_DEPS_FS names (app.desktop:deps_source, .wippy.yaml).
-  - version: '>=v0.0.0'
+  # folder CHICAGO_DEPS_FS names (app.desktop:deps_source, .wippy.yaml).
+  - version: '>=0.2.0'
     name: appwiz
     kind: ns.dependency
     meta: {}
-    component: windows/appwiz
+    component: github.com/chicago-desktop/appwiz
 
   # app.deps:regedit
   #
   # The Registry Editor (administrators only, read-only), a module of its own
   # since shell 0.1.2.
-  - version: '>=v0.0.0'
+  - version: '>=0.2.0'
     name: regedit
     kind: ns.dependency
     meta: {}
-    component: windows/regedit
+    component: github.com/chicago-desktop/regedit
+
+  # app.deps:datetime
+  #
+  # Date/Time, opened by the taskbar clock (app.desktop:taskbar_clock names it).
+  - version: '>=0.2.0'
+    name: datetime
+    kind: ns.dependency
+    meta: {}
+    component: github.com/chicago-desktop/datetime
+
+  # app.deps:taskman
+  #
+  # Task Manager (administrators only); the monitor widgets open it.
+  - version: '>=0.2.0'
+    name: taskman
+    kind: ns.dependency
+    meta: {}
+    component: github.com/chicago-desktop/taskman
+
+  # app.deps:run
+  #
+  # Run…, at the root of the Start menu.
+  - version: '>=0.2.0'
+    name: run
+    kind: ns.dependency
+    meta: {}
+    component: github.com/chicago-desktop/run

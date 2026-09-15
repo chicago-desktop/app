@@ -2,7 +2,7 @@
 -- an application session.
 --
 -- Called by the shell through `funcs` (it reads the function's name from
--- WINDOWS_LOGON_FUNC), and runs under its OWN actor with
+-- CHICAGO_LOGON_FUNC), and runs under its OWN actor with
 -- permissions on the users database: the shell is not given them, and the
 -- code of workshop windows arrives over HTTP and must not reach the password
 -- table.

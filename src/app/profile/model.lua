@@ -291,7 +291,7 @@ end
 -- after_rename(changes, err) -> the compositor requests after the name write
 --
 -- The full name is also the user row at the top of Start, and the shell reads
--- it again on `desktop.refresh` (through WINDOWS_USER_FUNC). So a
+-- it again on `desktop.refresh` (through CHICAGO_USER_FUNC). So a
 -- name that WAS written asks for exactly one refresh — the request Display
 -- Properties sends after a colour; a refused write, or a save that did not
 -- touch the name, asks for none.

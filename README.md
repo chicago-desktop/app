@@ -20,24 +20,24 @@ Connections, User Profile).
 | Module | Repository | What it is |
 |---|---|---|
 | `kickside/kickside`, `kickside/mcp` | Hub | the platform: users, agents, models, sessions, MCP |
-| `windows/tui-desktop` | [wippy-windows/tui-desktop](https://github.com/wippy-windows/tui-desktop) | the terminal window manager: compositor, PTY windows, the command channel |
-| `windows/shell` | [wippy-windows/windows](https://github.com/wippy-windows/windows) | the Chicago shell: theme, Start menu, the SDK windows are written against |
-| `windows/minesweeper` | [wippy-windows/minesweeper](https://github.com/wippy-windows/minesweeper) | Minesweeper |
-| `windows/weather` | [wippy-windows/weather](https://github.com/wippy-windows/weather) | Weather: window, tray, desktop widget |
-| `windows/aicq` | [wippy-windows/aicq](https://github.com/wippy-windows/aicq) | aICQ: people and agents in one contact list |
-| the runtime | [wippy-windows/runtime](https://github.com/wippy-windows/runtime) | the fork of wippyai/runtime the shell needs (see below) |
+| `chicago/tui-desktop` | [chicago-desktop/tui-desktop](https://github.com/chicago-desktop/tui-desktop) | the terminal window manager: compositor, PTY windows, the command channel |
+| `chicago/shell` | [chicago-desktop/shell](https://github.com/chicago-desktop/shell) | the Chicago shell: theme, Start menu, the SDK windows are written against |
+| `chicago/minesweeper` | [chicago-desktop/minesweeper](https://github.com/chicago-desktop/minesweeper) | Minesweeper |
+| `chicago/weather` | [chicago-desktop/weather](https://github.com/chicago-desktop/weather) | Weather: window, tray, desktop widget |
+| `chicago/aicq` | [chicago-desktop/aicq](https://github.com/chicago-desktop/aicq) | aICQ: people and agents in one contact list |
+| the runtime | [chicago-desktop/runtime](https://github.com/chicago-desktop/runtime) | the fork of wippyai/runtime the shell needs (see below) |
 
 The declarations live in `src/app/deps/_index.yaml`; the shell's
 "Add/Remove Programs" edits that file.
 
 ## Requirements
 
-- **The runtime fork** — [wippy-windows/runtime](https://github.com/wippy-windows/runtime),
+- **The runtime fork** — [chicago-desktop/runtime](https://github.com/chicago-desktop/runtime),
   branch `wippy-projects`. The shell needs its `gfx` module (pixels in the
   terminal) and its `terminal.ssh` host; a release `wippy` does not have
   either, and an entry that declares a module the runtime does not know fails
   the whole boot, not just that entry. `make runtime` downloads the fork's
-  latest [release](https://github.com/wippy-windows/runtime/releases) binary
+  latest [release](https://github.com/chicago-desktop/runtime/releases) binary
   for this machine into `bin/wippy` (Linux and macOS, amd64 and arm64;
   `RUNTIME_TAG=v0.3.40a-windows.1` pins a version); or build it there with
   `make build-wippy-local` and point `WIPPY` at the binary.
@@ -69,7 +69,7 @@ files, restart once.
 ```bash
 wippy run                                       # the web platform on 127.0.0.1:8099 and the SSH desktop on :2222
 ssh -t -p 2222 <server>                         # from anywhere: "Log On to Windows", then the desktop
-wippy run --host windows.shell:terminal windows # the desktop in this terminal (the whole runtime comes up with it)
+wippy run --host chicago.shell:terminal chicago # the desktop in this terminal (the whole runtime comes up with it)
 ```
 
 The SSH door asks nothing itself (`auth: logon`): "Log On to Windows" checks
@@ -108,10 +108,10 @@ is immutable, so a fix is always a new version.
 Skills in `.claude/skills/` (one `SKILL.md` each):
 
 - `wippy-window-app` — write or repair a window on the shell's SDK (registry entry, component tree, resize, scrolling, input, lifecycle); `docs/sdk.md` is the application's copy of the shell's SDK guide.
-- `wippy-window-workshop` — build a window in the running runtime through the WindowsWorkshop MCP tool (`app.workshop:windows_workshop`) or `POST /api/v1/tui-desktop/apps`, no files, no restart.
+- `wippy-window-workshop` — build a window in the running runtime through the ChicagoWorkshop MCP tool (`app.workshop:chicago_workshop`) or `POST /api/v1/tui-desktop/apps`, no files, no restart.
 - `tui-desktop` — drive a live desktop through its command channel: open a window, type into it, read its screen, move or close it.
 - `windows-debug` — see what the desktop is doing, the SSH desktop, the terminal probe, the log, restarts, live update, tests and lint, and the traps that fail silently.
-- `windows-add-module` — add a Hub module to the application, update one, or write and publish a new one from `windows/module-template`.
+- `windows-add-module` — add a Hub module to the application, update one, or write and publish a new one from `chicago/module-template`.
 
 Tools in `tools/`:
 
@@ -121,7 +121,7 @@ Tools in `tools/`:
 
 ## The icons
 
-The icon set ships with the shell module (`windows/shell`,
+The icon set ships with the shell module (`chicago/shell`,
 `assets/icons`, see its `SOURCE.md`); the application carries none of its
 own. The icon set is an interim one and is being replaced with original pixel art
 ([chicago-desktop/shell#1](https://github.com/chicago-desktop/shell/issues/1));

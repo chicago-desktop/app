@@ -11,17 +11,17 @@ namespace: app.workshop
 # `registry.apply`.
 #
 # How an agent uses it — the `wippy-window-workshop` skill in the
-# windows/shell module (skills/wippy-window-workshop/SKILL.md).
+# chicago/shell module (skills/wippy-window-workshop/SKILL.md).
 
 entries:
-  # app.workshop:windows_workshop
-  - name: windows_workshop
+  # app.workshop:chicago_workshop
+  - name: chicago_workshop
     kind: function.lua
     meta:
       type: tool
       public: true
       title: Windows Workshop
-      llm_alias: WindowsWorkshop
+      llm_alias: ChicagoWorkshop
       llm_description: |
         Build, open, inspect and remove windows of the Chicago shell in the running
         runtime — no files, no restart. `build` stores Lua source plus a description
@@ -65,10 +65,10 @@ entries:
           imports:
             type: object
             additionalProperties: {type: string}
-            description: "Library imports {alias = entry id} (build). SDK windows: {app = \"windows.shell.sdk:app\"}. Alias desktop is reserved."
+            description: "Library imports {alias = entry id} (build). SDK windows: {app = \"chicago.shell.sdk:app\"}. Alias desktop is reserved."
           pixel_render:
             type: string
-            description: "Pixel view renderer for SDK windows (build): windows.shell.sdk:render."
+            description: "Pixel view renderer for SDK windows (build): chicago.shell.sdk:render."
           group:
             type: string
             description: "Start menu folder (build), e.g. Programs/My tools. Empty lets the shell decide."
@@ -132,10 +132,10 @@ entries:
       - base64
       - gfx
     imports:
-      repo: windows.tui_desktop.persist:repo
-      apps: windows.tui_desktop.persist:apps
+      repo: chicago.tui_desktop.persist:repo
+      apps: chicago.tui_desktop.persist:apps
       # The rule of desktop names (name, name.2, …): terminal.ssh runs several.
-      desktop: windows.tui_desktop.desktop:window_api
+      desktop: chicago.tui_desktop.desktop:window_api
 
   # app.workshop:trait
   - name: trait
@@ -144,25 +144,25 @@ entries:
       type: agent.trait
       public: true
       title: Windows Workshop
-      comment: Build and drive windows of the Chicago shell in the running runtime through the WindowsWorkshop tool.
+      comment: Build and drive windows of the Chicago shell in the running runtime through the ChicagoWorkshop tool.
       tags: [windows, workshop, tui]
       prompt: |
-        You can build windows for the Chicago shell with the WindowsWorkshop tool:
+        You can build windows for the Chicago shell with the ChicagoWorkshop tool:
         build stores Lua source and registers the window live, open opens it, screen
         shows its text, remove deletes it, image uploads a PNG picture for windows.
         Follow the wippy-window-workshop skill.
     prompt: |
-      You can build windows for the Chicago shell with the WindowsWorkshop tool:
+      You can build windows for the Chicago shell with the ChicagoWorkshop tool:
       build stores Lua source and registers the window live, open opens it, screen
       shows its text, remove deletes it, image uploads a PNG picture for windows.
       Follow the wippy-window-workshop skill.
     tools:
-      - app.workshop:windows_workshop
+      - app.workshop:chicago_workshop
 
   # app.workshop:images
   #
   # Pictures of workshop windows — a pack of their own, not the shell's: an FS
-  # entry with meta.type windows.images; a picture is named
+  # entry with meta.type chicago.images; a picture is named
   # `app.workshop:images/<file>` and lies as `<size>/<file>.png`. The shell
   # looks the pack up in the registry at the moment of the request, so a file
   # added here appears without editing its code. mine — w98_minesweeper.ico
@@ -171,7 +171,7 @@ entries:
   - name: images
     kind: fs.directory
     meta:
-      type: windows.images
+      type: chicago.images
       comment: "Pictures of workshop windows (Minesweeper) — an image pack for the Chicago shell."
     auto_init: false
     directory: ./src/app/workshop/images

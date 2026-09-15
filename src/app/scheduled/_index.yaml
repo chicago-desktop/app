@@ -60,7 +60,7 @@ entries:
       height: 22
       window_type: app
       resizable: true
-      pixel_render: windows.shell.sdk:render
+      pixel_render: chicago.shell.sdk:render
       pixel_state: app.scheduled:window
       comment: The scheduler's tasks under your account — next and last run, status, Run Now, Pause/Resume, Delete and Properties; every refusal is shown in the status bar.
     source: file://window.lua
@@ -71,8 +71,8 @@ entries:
       - security
       - time
     imports:
-      app: windows.shell.sdk:app
-      ui: windows.shell.sdk:ui
+      app: chicago.shell.sdk:app
+      ui: chicago.shell.sdk:ui
       model: app.scheduled:model
       format: app.common:format
     security:

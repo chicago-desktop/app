@@ -1,7 +1,7 @@
 -- The logged-on user's display name for the Windows 95 shell's Start menu.
 --
 -- The shell calls this through funcs — it reads the name of this function
--- from WINDOWS_USER_FUNC — with {user_id} when the desktop is reread
+-- from CHICAGO_USER_FUNC — with {user_id} when the desktop is reread
 -- (`desktop.refresh`), so a name changed in the User Profile window reaches the
 -- user row at the top of Start. The name is app.common:format's display_name
 -- (the full name, else the e-mail, else the id) — the rule logon.lua uses
