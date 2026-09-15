@@ -1,9 +1,10 @@
 # app — the Chicago desktop application
 
-A wippy *application*, not a module: it composes Hub modules (the kickside
-platform, `chicago/tui-desktop`, `chicago/shell`, the games and apps) and adds
-what only an application declares — the logon, the SSH host, the system
-windows. Its own namespace is `app` / `app.*`; the dependencies are in
+A wippy *application*, not a module: it composes modules — the kickside
+platform from the Hub; `chicago/tui-desktop`, `chicago/shell`, the games and
+apps from their GitHub repositories by tag — and adds what only an
+application declares — the logon, the SSH host, the system windows. Its own
+namespace is `app` / `app.*`; the dependencies are in
 `src/app/deps/_index.yaml`; the overrides in `.wippy.yaml`.
 
 ## Rules
@@ -20,6 +21,15 @@ windows. Its own namespace is `app` / `app.*`; the dependencies are in
 - **`--host` on every command:** `wippy run --host chicago.shell:terminal chicago`
   for the local desktop, `wippy test --host wippy.terminal:host` for the tests
   (which boot the whole application).
+- **The desktop's modules come from GitHub tags through the runtime's git
+  sources** (`component: github.com/chicago-desktop/<name>`, a range over the
+  repository's semver tags, `>=0.2.0`); only the `kickside/*` platform
+  modules come from the Hub. The lock records the commit (`source`,
+  `commit`, `local_hash`) and is committed; `wippy install` on a fresh
+  checkout needs `git` on PATH and the network the first time only (the
+  cache is `~/.wippy/git`, `WIPPY_GIT_CACHE`), later boots work offline. A
+  moved tag is followed only by `wippy update`. Skill `windows-add-module`
+  has the whole procedure, the `url#ref` replacement for a branch included.
 - **`wippy update` rewrites `wippy.lock`.** Back it up first; a dependency
   missing from the lock stops the boot.
 - **Entry ids named by environment variables stay put:** `app.desktop:logon`,

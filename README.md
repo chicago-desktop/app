@@ -17,30 +17,47 @@ Connections, User Profile).
 
 ## What it composes
 
-| Module | Repository | What it is |
+| Module | Source | What it is |
 |---|---|---|
-| `kickside/kickside`, `kickside/mcp` | Hub | the platform: users, agents, models, sessions, MCP |
-| `chicago/tui-desktop` | [chicago-desktop/tui-desktop](https://github.com/chicago-desktop/tui-desktop) | the terminal window manager: compositor, PTY windows, the command channel |
-| `chicago/shell` | [chicago-desktop/shell](https://github.com/chicago-desktop/shell) | the Chicago shell: theme, Start menu, the SDK windows are written against |
-| `chicago/minesweeper` | [chicago-desktop/minesweeper](https://github.com/chicago-desktop/minesweeper) | Minesweeper |
-| `chicago/weather` | [chicago-desktop/weather](https://github.com/chicago-desktop/weather) | Weather: window, tray, desktop widget |
-| `chicago/aicq` | [chicago-desktop/aicq](https://github.com/chicago-desktop/aicq) | aICQ: people and agents in one contact list |
-| the runtime | [chicago-desktop/runtime](https://github.com/chicago-desktop/runtime) | the fork of wippyai/runtime the shell needs (see below) |
+| `kickside/kickside`, `kickside/mcp` | the Hub | the platform: users, agents, models, sessions, MCP |
+| `chicago/tui-desktop` | GitHub by tag: [chicago-desktop/tui-desktop](https://github.com/chicago-desktop/tui-desktop) | the terminal window manager: compositor, PTY windows, the command channel |
+| `chicago/shell` | GitHub by tag: [chicago-desktop/shell](https://github.com/chicago-desktop/shell) | the Chicago shell: theme, Start menu, the SDK windows are written against |
+| `chicago/minesweeper` | GitHub by tag: [chicago-desktop/minesweeper](https://github.com/chicago-desktop/minesweeper) | Minesweeper |
+| `chicago/weather` | GitHub by tag: [chicago-desktop/weather](https://github.com/chicago-desktop/weather) | Weather: window, tray, desktop widget |
+| `chicago/aicq` | GitHub by tag: [chicago-desktop/aicq](https://github.com/chicago-desktop/aicq) | aICQ: people and agents in one contact list |
+| the runtime | release binary: [chicago-desktop/runtime](https://github.com/chicago-desktop/runtime) | the fork of wippyai/runtime the shell needs (see below) |
 
 The declarations live in `src/app/deps/_index.yaml`; the shell's
-"Add/Remove Programs" edits that file.
+"Add/Remove Programs" edits that file. A desktop module's entry names its
+repository (`component: github.com/chicago-desktop/<name>`) and a version
+range over the repository's semver tags (`>=0.2.0`); the runtime's git
+sources resolve the tag to a commit, and `wippy.lock` records the commit
+(`source`, `commit`, `local_hash`). The platform's entries name Hub modules
+(`kickside/kickside`) and the lock records their Hub versions and hashes.
+The other desktop modules in that file (Calculator, Network Neighborhood,
+AntiBug, Add/Remove Programs, Registry Editor, Date/Time, Task Manager,
+Run…) come the same way, each from its own repository in
+[chicago-desktop](https://github.com/chicago-desktop).
 
 ## Requirements
 
 - **The runtime fork** — [chicago-desktop/runtime](https://github.com/chicago-desktop/runtime),
   branch `wippy-projects`. The shell needs its `gfx` module (pixels in the
-  terminal) and its `terminal.ssh` host; a release `wippy` does not have
-  either, and an entry that declares a module the runtime does not know fails
-  the whole boot, not just that entry. `make runtime` downloads the fork's
-  latest [release](https://github.com/chicago-desktop/runtime/releases) binary
-  for this machine into `bin/wippy` (Linux and macOS, amd64 and arm64;
-  `RUNTIME_TAG=v0.3.40a-windows.1` pins a version); or build it there with
-  `make build-wippy-local` and point `WIPPY` at the binary.
+  terminal) and its `terminal.ssh` host, and the application needs its git
+  sources — the desktop's modules are resolved from their GitHub
+  repositories by tag, which a release `wippy` cannot do; nor does it have
+  `gfx` or `terminal.ssh`, and an entry that declares a module the runtime
+  does not know fails the whole boot, not just that entry. `make runtime`
+  downloads the fork's latest
+  [release](https://github.com/chicago-desktop/runtime/releases) binary for
+  this machine into `bin/wippy` (`v0.3.40a-chicago.2` today; Linux and
+  macOS, amd64 and arm64; `RUNTIME_TAG=v0.3.40a-chicago.2` pins a version);
+  or build it there with `make build-wippy-local` and point `WIPPY` at the
+  binary.
+- **git on PATH** — the runtime clones the desktop's modules with the
+  system `git` (into `~/.wippy/git`, `WIPPY_GIT_CACHE` overrides); a missing
+  git is one clear error naming the source. Network is needed once, for
+  `wippy install` on a fresh checkout; later boots work from the cache.
 - **fonts-liberation** (`/usr/share/fonts/truetype/liberation/`) — the pixel
   theme renders text from these files; `app:system_fonts` in
   `src/app/storage/_index.yaml` names the directory.
@@ -96,12 +113,18 @@ files next to the code, each with a `meta.type: test` entry.
 ## Updating
 
 ```bash
-wippy update            # re-resolves src/app/deps against the Hub and rewrites wippy.lock
+wippy update            # re-resolves src/app/deps against the GitHub tags and the Hub, rewrites wippy.lock
 ```
 
-Back up `wippy.lock` before running it against a working system: a
-dependency the resolve drops is a boot that fails. A published module version
-is immutable, so a fix is always a new version.
+For a desktop module `wippy update` lists the repository's tags
+(`git ls-remote --tags`), picks the highest one in the entry's range,
+resolves it to a commit and writes `source`, `commit` and `local_hash` into
+the lock; for the platform modules it asks the Hub as before. `wippy
+install` and the boot take the commit from the lock and never look at the
+tags again — a moved tag is followed only by the next `update`, and a
+module's fix is a new tag. Back up `wippy.lock` before running it against a
+working system: a dependency the resolve drops is a boot that fails. The
+lock is committed; commit it with the change that moved it.
 
 ## For agents
 
@@ -111,7 +134,7 @@ Skills in `.claude/skills/` (one `SKILL.md` each):
 - `wippy-window-workshop` — build a window in the running runtime through the ChicagoWorkshop MCP tool (`app.workshop:chicago_workshop`) or `POST /api/v1/tui-desktop/apps`, no files, no restart.
 - `tui-desktop` — drive a live desktop through its command channel: open a window, type into it, read its screen, move or close it.
 - `windows-debug` — see what the desktop is doing, the SSH desktop, the terminal probe, the log, restarts, live update, tests and lint, and the traps that fail silently.
-- `windows-add-module` — add a Hub module to the application, update one, or write and publish a new one from `chicago/module-template`.
+- `windows-add-module` — add a module from its GitHub repository to the application (by tag, through the runtime's git sources), move one to a newer tag, pin a branch or commit for development, or write a new one from `chicago/module-template` and release it by pushing a tag.
 
 Tools in `tools/`:
 
