@@ -2,6 +2,8 @@
 
 A desktop in the terminal, in the look of the mid-nineties desktops, served from a server over SSH.
 
+![The Chicago desktop: Claude Code, Task Manager, Add/Remove Programs, aICQ, Date/Time and the desktop widgets](docs/screenshot.png)
+
 **Installing on a server:** see [INSTALLATION.md](INSTALLATION.md) — the
 step-by-step guide from an empty account to a desktop over SSH, with a
 systemd unit, the ports, updating, backups and troubleshooting.
