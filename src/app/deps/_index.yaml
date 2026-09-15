@@ -69,8 +69,10 @@ entries:
   # chicago/tui-desktop with its own theme. It brings a THIRD terminal.host, so
   # --host is required here too:
   #   wippy run --host chicago.shell:terminal chicago
-  # The SSH host (app.desktop:ssh) opens this module's `shell` entry.
-  - version: '>=0.2.0'
+  # The SSH host (app.desktop:ssh) opens this module's `shell` entry. The
+  # logon takes the display-name rule from chicago.shell.sdk:format, which
+  # came in 0.2.4.
+  - version: '>=0.2.4'
     name: windows
     kind: ns.dependency
     meta: {}
@@ -187,8 +189,9 @@ entries:
 
   # app.deps:taskman
   #
-  # Task Manager (administrators only); the monitor widgets open it.
-  - version: '>=0.2.0'
+  # Task Manager (administrators only) and the runtime monitor widgets on the
+  # desktop (Memory, Goroutines), which open it; the widgets came in 0.2.1.
+  - version: '>=0.2.1'
     name: taskman
     kind: ns.dependency
     meta: {}
@@ -202,3 +205,49 @@ entries:
     kind: ns.dependency
     meta: {}
     component: github.com/chicago-desktop/run
+
+  # app.deps:users
+  #
+  # Users and User Profile (Start → Settings). CHICAGO_PROFILE_ENTRY in
+  # .wippy.yaml names chicago.users:profile for the user row of the Start menu.
+  - version: '>=0.2.0'
+    name: users
+    kind: ns.dependency
+    meta: {}
+    component: github.com/chicago-desktop/users
+
+  # app.deps:services
+  #
+  # Services (Start → Settings), the runtime's supervised services, read-only.
+  - version: '>=0.2.0'
+    name: services
+    kind: ns.dependency
+    meta: {}
+    component: github.com/chicago-desktop/services
+
+  # app.deps:scheduled
+  #
+  # Scheduled Tasks (Start → Settings), the tasks kickside/cron runs.
+  - version: '>=0.2.0'
+    name: scheduled
+    kind: ns.dependency
+    meta: {}
+    component: github.com/chicago-desktop/scheduled
+
+  # app.deps:events
+  #
+  # Event Viewer (Start → Settings), the platform's component events.
+  - version: '>=0.2.0'
+    name: events
+    kind: ns.dependency
+    meta: {}
+    component: github.com/chicago-desktop/events
+
+  # app.deps:connections
+  #
+  # Connections (Start → Settings), the platform's connections.
+  - version: '>=0.2.0'
+    name: connections
+    kind: ns.dependency
+    meta: {}
+    component: github.com/chicago-desktop/connections

@@ -37,8 +37,8 @@ namespace is `app` / `app.*`; the dependencies are in
 - **`wippy update` rewrites `wippy.lock`.** Back it up first; a dependency
   missing from the lock stops the boot.
 - **Entry ids named by environment variables stay put:** `app.desktop:logon`,
-  `app.desktop:user_name`, `app.desktop:deps_source`, `app.profile:window`
-  (see the `CHICAGO_*` overrides in `.wippy.yaml`).
+  `app.desktop:user_name`, `app.desktop:deps_source`, and the Users module's
+  `chicago.users:profile` (see the `CHICAGO_*` overrides in `.wippy.yaml`).
 - An unquoted `: ` inside a YAML comment or `meta.comment` breaks the whole
   index file; quote `meta.comment` values that contain a colon.
 - `tools/late-locals.py src` finds file-level locals used above their

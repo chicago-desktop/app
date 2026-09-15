@@ -310,7 +310,7 @@ entries:
       user_repo: kickside.users.persist:user_repo
       user_groups_repo: kickside.users.persist:user_groups_repo
       session: kickside.users:session
-      format: app.common:format
+      format: chicago.shell.sdk:format
       limit: app.desktop:logon_limit
       keys: app.desktop:ssh_keys
     security:
@@ -377,7 +377,7 @@ entries:
     imports:
       consts: kickside.users:consts
       user_repo: kickside.users.persist:user_repo
-      format: app.common:format
+      format: chicago.shell.sdk:format
     security:
       actor:
         id: app.desktop:user_name
@@ -394,7 +394,7 @@ entries:
     imports:
       consts: kickside.users:consts
       user_repo: kickside.users.persist:user_repo
-      format: app.common:format
+      format: chicago.shell.sdk:format
 
   # app.desktop:user_name_test
   #

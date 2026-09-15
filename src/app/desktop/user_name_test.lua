@@ -23,7 +23,7 @@ end
 
 local function define_tests()
     test.describe("The Start menu's user name", function()
-        -- The naming rule itself is tested with app.common:format; here only
+        -- The naming rule itself is tested with chicago.shell.sdk:format; here only
         -- that the answer carries it.
         test.it("answers the full name, else the e-mail, as logon does", function()
             local named = user_name.answer({user_id = "u1"}, repo(USERS))

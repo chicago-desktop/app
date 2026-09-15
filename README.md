@@ -17,9 +17,10 @@ platform (users, agents, models, sessions, MCP) on `127.0.0.1:8099`.
 
 This repository is the *application*: it composes modules (the platform's from the Hub, the desktop's resolved from their GitHub repositories by tag — v0.2.0 is the first) and adds what
 only an application can declare — the logon, the SSH host, the users'
-SSH keys, the runtime monitor widgets, the MCP window workshop, and the
-platform's system windows (Users, Services, Scheduled Tasks, Event Viewer,
-Connections, User Profile).
+SSH keys and the MCP window workshop. The platform's system windows (Users
+with User Profile, Services, Scheduled Tasks, Event Viewer, Connections) are
+modules like the rest, and the runtime monitor widgets come with Task
+Manager.
 
 ## What it composes
 
@@ -41,8 +42,10 @@ sources resolve the tag to a commit, and `wippy.lock` records the commit
 (`source`, `commit`, `local_hash`). The platform's entries name Hub modules
 (`kickside/kickside`) and the lock records their Hub versions and hashes.
 The other desktop modules in that file (Calculator, Network Neighborhood,
-AntiBug, Add/Remove Programs, Registry Editor, Date/Time, Task Manager,
-Run…) come the same way, each from its own repository in
+AntiBug, Add/Remove Programs, Registry Editor, Date/Time, Task Manager with
+the monitor widgets, Run…, and the platform's system windows — Users with
+User Profile, Services, Scheduled Tasks, Event Viewer, Connections) come the
+same way, each from its own repository in
 [chicago-desktop](https://github.com/chicago-desktop).
 
 ## Requirements

@@ -20,7 +20,7 @@ mechanics.
 
 In this application the tool is the entry `app.workshop:chicago_workshop`
 (`src/app/workshop/`), its trait `app.workshop:trait`, its image pack
-`app.workshop:images` (`src/app/workshop/images/{32,16}/`). The HTTP router
+`app.workshop:images` (`src/app/workshop/images/<size>/`, empty until a picture is uploaded). The HTTP router
 is `app:api`, so every path below is under `/api/v1` on `127.0.0.1:8099`.
 
 ## Tool
@@ -156,12 +156,12 @@ pack — an `fs.*` entry of a module or the application with
 modules" ([chicago-desktop/shell](https://github.com/chicago-desktop/shell/blob/main/docs/icons.md)).
 
 In this application the pack for workshop windows is `app.workshop:images`; upload a
-picture into it with `image` and name what it answers. The shell looks at a
+picture into it with `image` and name what it answers (`app.workshop:images/<file>`).
+The shell looks at a
 pack picture again every few seconds, so an uploaded picture shows and a
 re-uploaded one replaces the old without a rebuild or a restart. Draw at the
 size it is shown: 16 for a button face or a title, 32 for a menu or dialog
-icon — there is no scaling. Minesweeper takes `app.workshop:images/mine` and
-`…/face_smile`. One pack serves every workshop window; a NEW pack entry is
+icon — there is no scaling. One pack serves every workshop window; a NEW pack entry is
 registry and arrives only with a restart. Keep `text` / `icon` beside every
 picture: cells show them, and pixels show them while the picture is missing.
 

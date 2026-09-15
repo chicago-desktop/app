@@ -165,13 +165,13 @@ entries:
   # entry with meta.type chicago.images; a picture is named
   # `app.workshop:images/<file>` and lies as `<size>/<file>.png`. The shell
   # looks the pack up in the registry at the moment of the request, so a file
-  # added here appears without editing its code. mine — w98_minesweeper.ico
-  # (32) and the game's mine drawn pixel by pixel (16); face_smile /
-  # face_dead / face_cool — the Minesweeper faces 16×16, our own drawing.
+  # added here appears without editing its code. It ships empty (a .gitkeep
+  # keeps the folder); the tool's `image` action writes into it and creates
+  # the size folder it needs.
   - name: images
     kind: fs.directory
     meta:
       type: chicago.images
-      comment: "Pictures of workshop windows (Minesweeper) — an image pack for the Chicago shell."
+      comment: "Pictures of workshop windows, uploaded through the tool's image action — an image pack for the Chicago shell."
     auto_init: false
     directory: ./src/app/workshop/images

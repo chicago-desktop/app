@@ -27,8 +27,8 @@ override:
   # ... and the token store the shell restores the actor from. Remove both lines and the shell comes up without a logon.
   "app.env:defaults:data.values.CHICAGO_TOKEN_STORE": "kickside.users.security:tokens"
 
-  # A click on the logged-on user in the Start menu opens their profile — app.profile:window with args {user_id}.
-  "app.env:defaults:data.values.CHICAGO_PROFILE_ENTRY": "app.profile:window"
+  # A click on the logged-on user in the Start menu opens their profile — the Users module's chicago.users:profile with args {user_id}.
+  "app.env:defaults:data.values.CHICAGO_PROFILE_ENTRY": "chicago.users:profile"
 
   # The Start menu rereads the logged-on user's name on desktop.refresh through this function ({user_id} → {name}).
   "app.env:defaults:data.values.CHICAGO_USER_FUNC": "app.desktop:user_name"

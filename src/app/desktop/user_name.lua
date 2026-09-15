@@ -3,7 +3,7 @@
 -- The shell calls this through funcs — it reads the name of this function
 -- from CHICAGO_USER_FUNC — with {user_id} when the desktop is reread
 -- (`desktop.refresh`), so a name changed in the User Profile window reaches the
--- user row at the top of Start. The name is app.common:format's display_name
+-- user row at the top of Start. The name is chicago.shell.sdk:format's display_name
 -- (the full name, else the e-mail, else the id) — the rule logon.lua uses
 -- too, so the row reads the same after a refresh as after the logon that
 -- first put it there.

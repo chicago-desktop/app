@@ -44,7 +44,7 @@ local function issue(user: any): any
         return {success = false, error = "Session not issued: " .. tostring(mint_err)}
     end
 
-    -- The name is app.common:format's display_name — the same rule
+    -- The name is chicago.shell.sdk:format's display_name — the same rule
     -- app.desktop:user_name answers with when the Start menu is refreshed.
     return {
         success = true,
