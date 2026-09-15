@@ -110,9 +110,15 @@ modules:
     - name: windows/aicq
       version: 0.1.0
       hash: affafc8b84b0439bc1aca3e391bb4be42c0feec321c55df483b7d838ed6c8e31
+    - name: windows/calculator
+      version: 0.1.0
+      hash: 671b810e3c0738dd3d57c433e57dac6b013eb2f1d6e6580438e6370d850919d7
     - name: windows/minesweeper
       version: 0.1.0
       hash: c05969d28f4beb0200465ba435463e26ba050699c2631b1fd78f3aac35622b6b
+    - name: windows/network
+      version: 0.1.0
+      hash: 6e8c0cd6de0a0e3d9f2cb7b966223412dbabdf0f12695aacbe28acd53ce546d7
     - name: windows/shell
       version: 0.1.1
       hash: 2063a73f5a2bfbcda756e3c1c0afeecd593a50edf400dc6c743cfa277ee0d6c5

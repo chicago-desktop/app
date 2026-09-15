@@ -123,3 +123,22 @@ entries:
         value: app:db
       - name: windows.aicq:process_host
         value: app:processes
+
+  # app.deps:calculator
+  #
+  # The Windows 95 Calculator, a module of its own since shell 0.1.1.
+  - version: '>=v0.0.0'
+    name: calculator
+    kind: ns.dependency
+    meta: {}
+    component: windows/calculator
+
+  # app.deps:network
+  #
+  # Network Neighborhood: the runtime's cluster as computers on a network; it
+  # stands on the desktop. A module of its own since shell 0.1.1.
+  - version: '>=v0.0.0'
+    name: network
+    kind: ns.dependency
+    meta: {}
+    component: windows/network
