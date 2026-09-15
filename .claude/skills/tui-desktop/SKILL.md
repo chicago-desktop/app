@@ -76,7 +76,7 @@ The other actions of the same shape: `key` (`key`, `ctrl`, `alt`, `shift`),
 `move` (`x`, `y`), `resize` (`w`, `h`), `focus`, `minimize` (`value`), `close`.
 
 With the SSH host there can be several desktops in one runtime, one per
-connection (the name family `chicago.shell`, `chicago.shell.2`, …). The
+connection (the name family `chicago.shell.desktop`, `chicago.shell.desktop.2`, …). The
 channel addresses the first one; a command meant for every desktop (a tray
 item, a refresh) is sent by code that iterates the family.
 

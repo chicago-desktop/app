@@ -44,7 +44,9 @@ curl -s -H "$AUTH" -H 'Content-Type: application/json' -X POST -d '{}' \
   the only place a person can see the restore report — the terminal host's
   log is muted.
 - With the SSH host there is one desktop per connection (the name family
-  `chicago.shell`, `chicago.shell.2` … `.16`); the channel and the status
+  `chicago.shell.desktop`, `chicago.shell.desktop.2` … `.16` — the shell's
+  `SERVICE_NAME`, and what `chicago.shell.sdk:notify` iterates as
+  `notify.FAMILY`); the channel and the status
   endpoint address the first one. `user = {id, name}` in `desktop.list` is
   the only way to tell windows under a person from windows under the
   service actor.
