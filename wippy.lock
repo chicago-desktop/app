@@ -83,10 +83,10 @@ modules:
       commit: 4a946604767059b248b3fed724c308a5f09c50fc
       local_hash: sha256-tree-v1:5d2265ae39d08badb662b04a505c6f35d516d8c2093877b1806dc3a59e7daef4
     - name: chicago/users
-      version: 0.2.0
+      version: 0.2.1
       source: github.com/chicago-desktop/users
-      commit: 946939b4bf351106df0362fd2eb92ccd1ee9df0b
-      local_hash: sha256-tree-v1:884b2b8dab0eef1a06c939639dac5a5610a93e0156703be215e1bdde89bafc83
+      commit: 11ea3a75488007483b376c4418aa090d0133eb14
+      local_hash: sha256-tree-v1:631d50cf842a842d509bfb5f275aab8a2017c8ffb8b1aa628727800fcddc4988
     - name: chicago/weather
       version: 0.2.0
       source: github.com/chicago-desktop/weather
