@@ -108,3 +108,18 @@ entries:
         value: app:db
       - name: windows.weather:process_host
         value: app:processes
+  # app.deps:aicq
+  #
+  # aICQ — people and agents in one ICQ-style contact list. The parameters
+  # follow the module's requirements: the database for contacts and messages,
+  # the process host for the presence and messenger services.
+  - version: '>=v0.0.0'
+    name: aicq
+    kind: ns.dependency
+    meta: {}
+    component: windows/aicq
+    parameters:
+      - name: windows.aicq:target_db
+        value: app:db
+      - name: windows.aicq:process_host
+        value: app:processes

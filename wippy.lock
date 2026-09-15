@@ -107,6 +107,9 @@ modules:
     - name: kickside/widgets
       version: 0.1.34
       hash: 8841a783dbfebbb8b4af4ae7f0799b1131b48b8bd5e05047d5a6ccc397a86b00
+    - name: windows/aicq
+      version: 0.1.0
+      hash: affafc8b84b0439bc1aca3e391bb4be42c0feec321c55df483b7d838ed6c8e31
     - name: windows/minesweeper
       version: 0.1.0
       hash: c05969d28f4beb0200465ba435463e26ba050699c2631b1fd78f3aac35622b6b
