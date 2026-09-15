@@ -59,8 +59,8 @@ same way, each from its own repository in
   does not know fails the whole boot, not just that entry. `make runtime`
   downloads the fork's latest
   [release](https://github.com/chicago-desktop/runtime/releases) binary for
-  this machine into `bin/wippy` (`v0.3.40a-chicago.2` today; Linux and
-  macOS, amd64 and arm64; `RUNTIME_TAG=v0.3.40a-chicago.2` pins a version);
+  this machine into `bin/wippy` (`v0.3.40a-chicago.4` today; Linux and
+  macOS, amd64 and arm64; `RUNTIME_TAG=v0.3.40a-chicago.4` pins a version);
   or build it there with `make build-wippy-local` and point `WIPPY` at the
   binary.
 - **git on PATH** — the runtime clones the desktop's modules with the
