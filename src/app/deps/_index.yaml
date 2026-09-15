@@ -71,8 +71,9 @@ entries:
   #   wippy run --host chicago.shell:terminal chicago
   # The SSH host (app.desktop:ssh) opens this module's `shell` entry. The
   # logon takes the display-name rule from chicago.shell.sdk:format, which
-  # came in 0.2.4.
-  - version: '>=0.2.4'
+  # came in 0.2.4; the startup windows and the SDK picture the Welcome module
+  # stands on came in 0.2.5.
+  - version: '>=0.2.5'
     name: windows
     kind: ns.dependency
     meta: {}
@@ -251,3 +252,18 @@ entries:
     kind: ns.dependency
     meta: {}
     component: github.com/chicago-desktop/connections
+
+  # app.deps:welcome
+  #
+  # Welcome — the "Did you know..." window after logon (a startup window of
+  # the shell), with tips any module registers as `meta.type: chicago.tip`
+  # (app.desktop:ssh_keys_tip is the application's own). It keeps whether to
+  # show itself and the last tip per person in the application's database.
+  - version: '>=0.2.0'
+    name: welcome
+    kind: ns.dependency
+    meta: {}
+    component: github.com/chicago-desktop/welcome
+    parameters:
+      - name: chicago.welcome:target_db
+        value: app:db

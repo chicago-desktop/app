@@ -278,6 +278,20 @@ entries:
     security:
       policies: [app.desktop:ssh_keys_window_scope]
 
+  # app.desktop:ssh_keys_tip — a "Did you know..." tip of the Welcome window
+  # (chicago/welcome reads every `meta.type: chicago.tip` entry); Show Me
+  # opens SSH Keys. Inert without the Welcome module.
+  - name: ssh_keys_tip
+    kind: registry.entry
+    meta:
+      type: chicago.tip
+      order: 200
+      comment: "Welcome tip — logging on with an SSH key instead of a password."
+    data:
+      text: "You can come in without typing a password. Paste your public SSH key into Start, Settings, SSH Keys, and your next ssh connection opens your desktop right away."
+      image: key
+      open: app.desktop:ssh_keys_window
+
   # app.desktop:ssh_keys_test — also run in a copy of the shell module's
   # harness; the table rules run on a scratch table, never on app_ssh_keys.
   - name: ssh_keys_test
