@@ -28,7 +28,7 @@ entries:
         (imports, pixel view, icon, menu folder) and asks the compositor to register it;
         `open` opens a window by entry id; `windows` lists open windows; `screen` returns
         a window's text screen; `type` sends keystrokes; `close` closes a window;
-        `list` shows stored workshop windows; `remove` deletes one. `image` uploads a
+        `list` shows stored workshop windows; `get` returns the full saved source and build configuration; `remove` deletes one. `image` uploads a
         PNG into the workshop image pack (app.workshop:images/<name>), drawn by the
         shell within seconds, no restart; `images` lists the pack. Read the
         wippy-window-workshop skill before building.
@@ -41,7 +41,7 @@ entries:
         properties:
           action:
             type: string
-            enum: [build, remove, list, windows, open, screen, type, close, image, images]
+            enum: [build, remove, list, get, windows, open, screen, type, close, image, images]
             description: What to do.
           name:
             type: string
@@ -175,3 +175,13 @@ entries:
       comment: "Pictures of workshop windows, uploaded through the tool's image action — an image pack for the Chicago shell."
     auto_init: false
     directory: ./src/app/workshop/images
+
+  - name: catalog
+    kind: function.lua
+    source: file://catalog.lua
+    method: handle
+    modules: [registry, security]
+    imports:
+      repo: chicago.tui_desktop.persist:repo
+      apps: chicago.tui_desktop.persist:apps
+      roster: kickside.agents.traits:roster_list

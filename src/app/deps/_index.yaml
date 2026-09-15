@@ -21,6 +21,10 @@ entries:
     kind: ns.dependency
     meta: {}
     component: kickside/kickside
+    # Bind the control plane explicitly from the host application.
+    parameters:
+      - name: keeper:admin_scope
+        value: app.security:admin
 
   # app.deps:mcp
   #
@@ -267,3 +271,14 @@ entries:
     parameters:
       - name: chicago.welcome:target_db
         value: app:db
+
+  # Local floppy prototype; resolved through workspace.replacements.
+  - name: floppy
+    kind: ns.dependency
+    component: chicago/floppy
+    version: "*"
+
+  - name: workshop
+    kind: ns.dependency
+    component: chicago/workshop
+    version: "*"

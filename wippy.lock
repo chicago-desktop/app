@@ -2,6 +2,8 @@ directories:
     modules: .wippy
     src: ./src
 modules:
+    - name: chicago/workshop
+      version: 0.0.0
     - name: chicago/aicq
       version: 0.2.0
       source: github.com/chicago-desktop/aicq
@@ -37,6 +39,8 @@ modules:
       source: github.com/chicago-desktop/events
       commit: 762bf450ea2af05d71f9b116974ec06a05fd2fe1
       local_hash: sha256-tree-v1:c8eff0994fd38dfd8960108ccc4fc39c9f1de27942011ce4977ae81003393b60
+    - name: chicago/floppy
+      version: 0.0.0
     - name: chicago/minesweeper
       version: 0.2.0
       source: github.com/chicago-desktop/minesweeper

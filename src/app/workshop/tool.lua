@@ -153,6 +153,15 @@ function actions.list(args: any): any
     return {success = true, apps = out}
 end
 
+-- Read the full saved build so agents can preserve its configuration when editing.
+function actions.get(args: any): any
+    local name = type(args.name) == "string" and args.name or ""
+    if name == "" then return {success = false, error = "name is required"} end
+    local window, err = repo.get(name)
+    if not window then return {success = false, error = tostring(err or "No saved tool with that name.")} end
+    return {success = true, app = window, entry = apps.entry_id(name)}
+end
+
 function actions.windows(args: any): any
     local answer, err = ask("desktop.list", {})
     if not answer then return {success = false, error = tostring(err)} end
@@ -273,7 +282,7 @@ local function run(args: any): any
     local action = type(args.action) == "string" and args.action or ""
     local handler = actions[action]
     if not handler then
-        return {success = false, error = "action: build, remove, list, windows, open, screen, type, close, image or images"}
+        return {success = false, error = "action: build, remove, list, get, windows, open, screen, type, close, image or images"}
     end
     return handler(args)
 end
