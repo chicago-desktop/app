@@ -62,9 +62,10 @@ Run…) come the same way, each from its own repository in
   system `git` (into `~/.wippy/git`, `WIPPY_GIT_CACHE` overrides); a missing
   git is one clear error naming the source. Network is needed once, for
   `wippy install` on a fresh checkout; later boots work from the cache.
-- **fonts-liberation** (`/usr/share/fonts/truetype/liberation/`) — the pixel
-  theme renders text from these files; `app:system_fonts` in
-  `src/app/storage/_index.yaml` names the directory.
+- No font package: the shell carries its own fonts (Liberation Sans and
+  Mono, under the SIL Open Font License, in the module's `assets/fonts`) and
+  reads them from `chicago.shell.theme:fonts` unless `CHICAGO_FONTS` names
+  another filesystem.
 - A terminal with kitty or sixel graphics for the pixel theme (kitty,
   WezTerm, foot, the terminals that speak sixel …). Any terminal works in
   cell mode.

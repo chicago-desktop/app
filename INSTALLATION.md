@@ -36,10 +36,10 @@ You need:
 - **`git`, `curl`, `make`** — `git` is what fetches the desktop's modules
   from GitHub, `curl` downloads the runtime, `make` runs the two-line
   targets in the `Makefile`.
-- **`fonts-liberation`** — the pixel theme renders its text from
-  `/usr/share/fonts/truetype/liberation/` (`app:system_fonts` in
-  `src/app/storage/_index.yaml`). Without the package the cell theme still
-  works, the pixel theme has no text.
+- **No font package.** The shell ships the fonts its pixel theme draws
+  with (Liberation Sans and Liberation Mono under the SIL Open Font
+  License, `assets/fonts` of `chicago/shell` with the licence next to
+  them); nothing on the server has to be installed for text in pixels.
 - **A terminal on the client side** with Kitty graphics or Sixel for the
   pixel theme (kitty, WezTerm, foot, and the terminals that speak Sixel).
   Any terminal gets the cell rendering of the same desktop; the runtime
@@ -50,7 +50,7 @@ You need:
   has a root shell on your server.
 
 ```bash
-sudo apt-get install -y git curl make fonts-liberation
+sudo apt-get install -y git curl make
 sudo adduser --disabled-password --gecos "" chicago
 sudo -iu chicago
 ```
