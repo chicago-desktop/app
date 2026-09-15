@@ -100,6 +100,22 @@ Back up `wippy.lock` before running it against a working system: a
 dependency the resolve drops is a boot that fails. A published module version
 is immutable, so a fix is always a new version.
 
+## For agents
+
+Skills in `.claude/skills/` (one `SKILL.md` each):
+
+- `wippy-window-app` — write or repair a window on the shell's SDK (registry entry, component tree, resize, scrolling, input, lifecycle); `docs/sdk.md` is the application's copy of the shell's SDK guide.
+- `wippy-window-workshop` — build a window in the running runtime through the WindowsWorkshop MCP tool (`app.workshop:windows_workshop`) or `POST /api/v1/tui-desktop/apps`, no files, no restart.
+- `tui-desktop` — drive a live desktop through its command channel: open a window, type into it, read its screen, move or close it.
+- `windows-debug` — see what the desktop is doing, the SSH desktop, the terminal probe, the log, restarts, live update, tests and lint, and the traps that fail silently.
+- `windows-add-module` — add a Hub module to the application, update one, or write and publish a new one from `windows/module-template`.
+
+Tools in `tools/`:
+
+- `tui-probe.py` — a PTY probe: runs a command (the shell, or `ssh -tt -p 2222 localhost`), types by a script, prints the screen as text.
+- `live-update.sh <namespace> [migration …]` — pushes `src/` of one `app.*` namespace into the running registry through keeper's sync (upload only) and runs migrations.
+- `late-locals.py` — finds file-level locals read above their declaration.
+
 ## The icons
 
 The icon set — the Windows 95/98 icons from `shell32.dll` as PNG — is

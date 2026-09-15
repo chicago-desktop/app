@@ -29,5 +29,9 @@ windows. Its own namespace is `app` / `app.*`; the dependencies are in
   index file; quote `meta.comment` values that contain a colon.
 - `tools/late-locals.py src` finds file-level locals used above their
   declaration (a nil in Lua, silently); `wippy lint` does not.
+- Skills for the work here are in `.claude/skills/` — `windows-debug` (what
+  the desktop is doing, the probe, live update, the silent traps),
+  `windows-add-module`, `tui-desktop`, `wippy-window-app`,
+  `wippy-window-workshop`; the README's "For agents" lists them.
 - The Windows 95 icons (Microsoft's artwork) ship with the shell module; the
   application carries no icon files of its own.
