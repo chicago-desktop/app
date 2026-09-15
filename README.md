@@ -2,7 +2,11 @@
 
 A desktop in the terminal, in the look of the mid-nineties desktops, served from a server over SSH.
 
-`ssh -t -p 2222 <server>` gets you "Log On to Windows", then a teal desktop
+**Installing on a server:** see [INSTALLATION.md](INSTALLATION.md) — the
+step-by-step guide from an empty account to a desktop over SSH, with a
+systemd unit, the ports, updating, backups and troubleshooting.
+
+`ssh -t -p 2222 <server>` gets you the logon dialog, then a teal desktop
 with a taskbar, a Start menu, overlapping windows, real programs under a PTY
 (a bash, htop, an editor), the games and the apps — and the same platform's
 agents, models and MCP behind them. Every connection is a desktop of its own,
@@ -61,44 +65,45 @@ Run…) come the same way, each from its own repository in
 - **fonts-liberation** (`/usr/share/fonts/truetype/liberation/`) — the pixel
   theme renders text from these files; `app:system_fonts` in
   `src/app/storage/_index.yaml` names the directory.
-- A terminal with kitty or sixel graphics for the pixel theme (Windows
-  Terminal, kitty, WezTerm, foot …). Any terminal works in cell mode.
+- A terminal with kitty or sixel graphics for the pixel theme (kitty,
+  WezTerm, foot, the terminals that speak sixel …). Any terminal works in
+  cell mode.
 
 ## First boot
 
 ```bash
 make runtime                                    # the runtime fork's release binary into bin/wippy
-wippy install                                   # modules from the committed wippy.lock
+./bin/wippy install                             # modules from the committed wippy.lock
 export KICKSIDE_USERS_DEFAULT_ADMIN_EMAIL=admin@example.com
 export KICKSIDE_USERS_DEFAULT_ADMIN_PASSWORD='choose one'
-wippy run
+./bin/wippy run
 ```
 
-The two variables (see `.env.example`) create the first administrator on the
-first start; the encryption key is generated into `.wippy/.env` and the SSH
-host key into `.wippy/ssh_host_ed25519_key` — both are kept, neither is in
-git. On the very first start after an install the modules are still being
-unpacked while the application starts; if the web UI answers 500 on static
-files, restart once.
+The two variables are read from the OS environment of the process and create
+the first administrator on the first start; the encryption key is generated
+into `.wippy/.env` and the SSH host key into `.wippy/ssh_host_ed25519_key`.
+What each step prints, the first-boot quirks and the service unit:
+[INSTALLATION.md](INSTALLATION.md).
 
 ## Running
 
 ```bash
-wippy run                                       # the web platform on 127.0.0.1:8099 and the SSH desktop on :2222
-ssh -t -p 2222 <server>                         # from anywhere: "Log On to Windows", then the desktop
-wippy run --host chicago.shell:terminal chicago # the desktop in this terminal (the whole runtime comes up with it)
+./bin/wippy run                                       # the web platform on 127.0.0.1:8099 and the SSH desktop on :2222
+ssh -t -p 2222 <server>                               # from anywhere: the logon dialog, then the desktop
+./bin/wippy run --host chicago.shell:terminal chicago # the desktop in this terminal (the whole runtime comes up with it)
 ```
 
-The SSH door asks nothing itself (`auth: logon`): "Log On to Windows" checks
-the account's name and password, the same as the web logon. A public key
-pasted in Start → Settings → SSH Keys logs its owner on without the password
-screen. At most 10 failed logons per user name, then 15 minutes of refusal.
+The SSH door asks nothing itself (`auth: logon`): the logon dialog checks the
+account's name and password, the same as the web logon; a public key pasted
+in Start → Settings → SSH Keys logs its owner on without the password screen;
+at most 10 failed logons per user name. Ports, tunnels, stopping, updating
+and backups: [INSTALLATION.md](INSTALLATION.md).
 
-`--host` is required for every command: the desktop modules bring terminal
-hosts of their own, and the CLI refuses to pick one when it sees several.
-
-Only one instance can run: a second one cannot bind :8099 and dies quietly
-while the first keeps serving. Stopping takes about twenty seconds.
+`--host` is required for every command that names one: the desktop modules
+bring terminal hosts of their own, and the CLI refuses to pick one when it
+sees several. Only one instance can run: a second one cannot bind :8099 and
+dies quietly while the first keeps serving. Stopping takes about twenty
+seconds.
 
 ## Tests
 

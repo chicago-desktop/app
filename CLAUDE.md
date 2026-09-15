@@ -15,6 +15,10 @@ namespace is `app` / `app.*`; the dependencies are in
   branch `wippy-projects`. The shell declares the `gfx` module and the
   application declares a `terminal.ssh` host; a release `wippy` has neither,
   and one unknown module fails the whole boot. Set `WIPPY` for `make`.
+- **Installation and operation on a server: `INSTALLATION.md`** — keep it in
+  step with the `Makefile` and `.wippy.yaml` (the runtime target, the
+  addresses, the overrides) and with `src/app/desktop/_index.yaml` (the SSH
+  host).
 - **Ports:** the gateway on `127.0.0.1:8099` (loopback on purpose, set in
   `.wippy.yaml`), the SSH desktop on `0.0.0.0:2222`. One instance at a time —
   a second one dies quietly on the port; stopping takes ~20 s.
