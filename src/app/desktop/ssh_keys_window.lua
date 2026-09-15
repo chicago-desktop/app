@@ -1,5 +1,5 @@
 -- SSH Keys — the public keys that log the signed-in account on to the
--- Windows 95 desktop over SSH without a password (app.desktop:ssh_keys).
+-- Chicago desktop over SSH without a password (app.desktop:ssh_keys).
 --
 -- A window on the shell SDK under the signed-in account's actor. It reads and
 -- writes only that account's keys: the id comes from the actor, never from the

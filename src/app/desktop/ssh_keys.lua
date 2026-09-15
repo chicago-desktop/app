@@ -1,5 +1,5 @@
 -- SSH public keys of the application's accounts: a key registered here logs
--- its owner on to the Windows 95 desktop over SSH without a password.
+-- its owner on to the Chicago desktop over SSH without a password.
 --
 -- Three readers, one rule each, all here:
 --

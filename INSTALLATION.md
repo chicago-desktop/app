@@ -448,7 +448,7 @@ Stop the service before copying `app.db`, or use `sqlite3 .wippy/app.db
   read from the API instead: `GET /api/v1/tui-desktop/windows` and
   `GET /api/v1/chicago/status` with a bearer token (`.env.example` says how
   to mint one; it lives 24 hours, and `{"error":"Authentication required"}`
-  means it expired). The agent skill `.claude/skills/windows-debug/SKILL.md`
+  means it expired). The agent skill `.claude/skills/chicago-debug/SKILL.md`
   has the whole procedure.
 - **`{"error":"Authentication required"}` on every request** — the token
   expired (24 h), not a broken server. Mint a new one with the account's

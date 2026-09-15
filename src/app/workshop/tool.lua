@@ -1,4 +1,4 @@
--- ChicagoWorkshop — an MCP tool: build a window of the Windows 95 shell in the
+-- ChicagoWorkshop — an MCP tool: build a window of the Chicago shell in the
 -- running runtime, open it, look at its screen, remove it.
 --
 -- Under MCP the tool runs under the token owner's actor in the
@@ -25,7 +25,7 @@ local base64 = require("base64")
 local gfx = require("gfx")
 local desktop = require("desktop")
 
--- The Windows 95 shell and the base register under different families of
+-- The Chicago shell and the base register under different families of
 -- names; the tool asks both, and the first running desktop answers. A family
 -- may have several desktops (terminal.ssh, one per connection) — any one will
 -- do: the registry entry is shared, the others see the window when their menu

@@ -1,4 +1,4 @@
--- Services — the runtime's supervised services in the Windows 95 shell.
+-- Services — the runtime's supervised services in the Chicago shell.
 --
 -- A window on the shell SDK. IO lives here: the supervisor's states, each
 -- service's registry entry, the process hosts and the node's name. The model

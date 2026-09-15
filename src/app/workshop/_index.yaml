@@ -20,7 +20,7 @@ entries:
     meta:
       type: tool
       public: true
-      title: Windows Workshop
+      title: Chicago Workshop
       llm_alias: ChicagoWorkshop
       llm_description: |
         Build, open, inspect and remove windows of the Chicago shell in the running
@@ -143,7 +143,7 @@ entries:
     meta:
       type: agent.trait
       public: true
-      title: Windows Workshop
+      title: Chicago Workshop
       comment: Build and drive windows of the Chicago shell in the running runtime through the ChicagoWorkshop tool.
       tags: [windows, workshop, tui]
       prompt: |

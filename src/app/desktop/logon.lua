@@ -1,4 +1,4 @@
--- Logging on to the Windows 95 shell from a terminal: name and password →
+-- Logging on to the Chicago shell from a terminal: name and password →
 -- an application session.
 --
 -- Called by the shell through `funcs` (it reads the function's name from

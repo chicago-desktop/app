@@ -1,7 +1,7 @@
 version: "1.0"
 namespace: app.connections
 
-# Connections settings in the Windows 95 shell: "Start → Settings →
+# Connections settings in the Chicago shell: "Start → Settings →
 # Connections". A connection is a kickside platform concept (a component whose
 # meta.class is "connection", created from a provider's contract.binding with a
 # credential_schema), so the window lives in the stand, like the chat window,

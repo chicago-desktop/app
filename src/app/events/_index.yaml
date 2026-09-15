@@ -1,7 +1,7 @@
 version: "1.0"
 namespace: app.events
 
-# Event Viewer in the Windows 95 shell: "Start → Settings → Event Viewer". The
+# Event Viewer in the Chicago shell: "Start → Settings → Event Viewer". The
 # logs are kickside/core's threads and the entries their events, so the window
 # lives in the stand, like Connections, and not in the shell module.
 #

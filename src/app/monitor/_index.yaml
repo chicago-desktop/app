@@ -1,7 +1,7 @@
 version: "1.0"
 namespace: app.monitor
 
-# The runtime monitor on the Windows 95 shell's desktop: two widgets (FR-006,
+# The runtime monitor on the Chicago shell's desktop: two widgets (FR-006,
 # the shell module's docs/sdk.md, "Desktop widgets") — the heap and the
 # goroutines, a sample every 2 s, two minutes of history. They read the
 # runtime the same way Task Manager does (`chicago.shell.config:system`) and

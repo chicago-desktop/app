@@ -138,8 +138,8 @@ Skills in `.claude/skills/` (one `SKILL.md` each):
 - `wippy-window-app` — write or repair a window on the shell's SDK (registry entry, component tree, resize, scrolling, input, lifecycle); `docs/sdk.md` is the application's copy of the shell's SDK guide.
 - `wippy-window-workshop` — build a window in the running runtime through the ChicagoWorkshop MCP tool (`app.workshop:chicago_workshop`) or `POST /api/v1/tui-desktop/apps`, no files, no restart.
 - `tui-desktop` — drive a live desktop through its command channel: open a window, type into it, read its screen, move or close it.
-- `windows-debug` — see what the desktop is doing, the SSH desktop, the terminal probe, the log, restarts, live update, tests and lint, and the traps that fail silently.
-- `windows-add-module` — add a module from its GitHub repository to the application (by tag, through the runtime's git sources), move one to a newer tag, pin a branch or commit for development, or write a new one from `chicago/module-template` and release it by pushing a tag.
+- `chicago-debug` — see what the desktop is doing, the SSH desktop, the terminal probe, the log, restarts, live update, tests and lint, and the traps that fail silently.
+- `chicago-add-module` — add a module from its GitHub repository to the application (by tag, through the runtime's git sources), move one to a newer tag, pin a branch or commit for development, or write a new one from `chicago/module-template` and release it by pushing a tag.
 
 Tools in `tools/`:
 

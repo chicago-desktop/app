@@ -1,7 +1,7 @@
 version: "1.0"
 namespace: app.profile
 
-# User Profile in the Windows 95 shell — the Windows 95 "User Properties"
+# User Profile in the Chicago shell — the classic "User Properties"
 # sheet over kickside/users: General (identity, groups, session) and Profile
 # (the declared profile fields). It opens from the Start menu's user row with
 # {user_id = <id>}; the shell names this entry through

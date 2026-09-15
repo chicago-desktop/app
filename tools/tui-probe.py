@@ -51,7 +51,7 @@ def mouse(col, row, button=0, press=True):
     """A mouse event in the SGR 1006 format — the one the compositor enables.
 
     Without it the probe knows only the keyboard, and then the shell grows
-    keyboard paths that real Windows does not have: the interface starts
+    keyboard paths that a real desktop does not have: the interface starts
     adapting to the tool's limitation. Coordinates are one-based, as on the
     screen.
     """

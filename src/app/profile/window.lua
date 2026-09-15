@@ -1,4 +1,4 @@
--- User Profile — an account's properties in the Windows 95 shell.
+-- User Profile — an account's properties in the Chicago shell.
 --
 -- Opened from the Start menu's user row with {user_id = <id>} (the shell
 -- names this entry through CHICAGO_PROFILE_ENTRY); without a

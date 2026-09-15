@@ -32,7 +32,7 @@ namespace is `app` / `app.*`; the dependencies are in
   `commit`, `local_hash`) and is committed; `wippy install` on a fresh
   checkout needs `git` on PATH and the network the first time only (the
   cache is `~/.wippy/git`, `WIPPY_GIT_CACHE`), later boots work offline. A
-  moved tag is followed only by `wippy update`. Skill `windows-add-module`
+  moved tag is followed only by `wippy update`. Skill `chicago-add-module`
   has the whole procedure, the `url#ref` replacement for a branch included.
 - **`wippy update` rewrites `wippy.lock`.** Back it up first; a dependency
   missing from the lock stops the boot.
@@ -43,9 +43,9 @@ namespace is `app` / `app.*`; the dependencies are in
   index file; quote `meta.comment` values that contain a colon.
 - `tools/late-locals.py src` finds file-level locals used above their
   declaration (a nil in Lua, silently); `wippy lint` does not.
-- Skills for the work here are in `.claude/skills/` — `windows-debug` (what
+- Skills for the work here are in `.claude/skills/` — `chicago-debug` (what
   the desktop is doing, the probe, live update, the silent traps),
-  `windows-add-module`, `tui-desktop`, `wippy-window-app`,
+  `chicago-add-module`, `tui-desktop`, `wippy-window-app`,
   `wippy-window-workshop`; the README's "For agents" lists them.
 - The icon set (an interim one, being replaced with original pixel art —
   chicago-desktop/shell#1) ships with the shell module; the application

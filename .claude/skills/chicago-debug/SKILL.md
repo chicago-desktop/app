@@ -1,9 +1,9 @@
 ---
-name: windows-debug
-description: Debug the Wippy Windows application — see what a running desktop is doing through the command channel and the shell's status endpoint, drive the SSH desktop with the terminal probe, read the log, restart without ending up with two instances, update app.* code live through keeper, run lint and tests with the right build, and recognize the traps that fail silently (late locals, YAML colons, the test form, env.get permission silence, go-lua). Use when a window does not open, a desktop looks dead, a change "did not land", or a test is green for no reason.
+name: chicago-debug
+description: Debug the Chicago application — see what a running desktop is doing through the command channel and the shell's status endpoint, drive the SSH desktop with the terminal probe, read the log, restart without ending up with two instances, update app.* code live through keeper, run lint and tests with the right build, and recognize the traps that fail silently (late locals, YAML colons, the test form, env.get permission silence, go-lua). Use when a window does not open, a desktop looks dead, a change "did not land", or a test is green for no reason.
 ---
 
-# Debugging the Windows application
+# Debugging the Chicago application
 
 Most of what breaks here breaks silently: a window that dies on its first
 frame just is not there, a permission denial reads as "not set", a test that

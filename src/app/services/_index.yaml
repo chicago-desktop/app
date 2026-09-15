@@ -1,8 +1,8 @@
 version: "1.0"
 namespace: app.services
 
-# Services in the Windows 95 shell: "Start → Settings → Services", the Windows
-# NT applet over the runtime's supervisor. The table is
+# Services in the Chicago shell: "Start → Settings → Services", the classic
+# Services applet over the runtime's supervisor. The table is
 # system.supervisor.states() joined with each service's registry entry (host,
 # lifecycle); the status bar counts system.hosts.list(); the heading names the
 # node through the shell's facts library (chicago.shell.config:system).

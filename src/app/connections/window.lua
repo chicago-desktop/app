@@ -1,4 +1,4 @@
--- Connections — the platform's connections in the Windows 95 shell.
+-- Connections — the platform's connections in the Chicago shell.
 --
 -- A window on the shell SDK. IO lives here and does what the HTTP handlers of
 -- kickside/connection do, without HTTP; the model (app.connections:model)

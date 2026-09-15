@@ -141,7 +141,7 @@ function model.options(declared: any): any
 end
 
 -- The choice list of a select field. A required select starts on its first
--- option, as a Windows drop-down always shows a value; an optional one gets
+-- option, as a classic drop-down always shows a value; an optional one gets
 -- a "(none)" row with an empty value first, so a field nobody touched stays
 -- out of the private_context instead of sending the first option unasked.
 function model.select_options(field: any): any

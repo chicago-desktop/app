@@ -1,7 +1,7 @@
 version: "1.0"
 namespace: app.users
 
-# Users in the Windows 95 shell: "Start → Settings → Users", the Windows NT
+# Users in the Chicago shell: "Start → Settings → Users", the classic
 # User Manager over kickside/users. The window does what the module's HTTP
 # handlers do, without HTTP, through the same libraries: user_repo and
 # user_groups_repo to list, admin_repo to create and update, group_validation

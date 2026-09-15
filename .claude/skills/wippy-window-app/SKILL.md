@@ -1,6 +1,6 @@
 ---
 name: wippy-window-app
-description: Add or repair a window application in the Wippy Windows shell. Use for registry registration, declarative window UI, client resize, scrolling, mouse input, lifecycle, and cell/pixel renderer integration in chicago/shell and chicago/tui-desktop. Keeps agents on the same SDK contract.
+description: Add or repair a window application in the Chicago shell. Use for registry registration, declarative window UI, client resize, scrolling, mouse input, lifecycle, and cell/pixel renderer integration in chicago/shell and chicago/tui-desktop. Keeps agents on the same SDK contract.
 ---
 
 # Wippy window application
@@ -17,7 +17,7 @@ when repairing an older custom window.
 In this application a window of its own lives in `src/app/<name>/` under the
 `app.<name>` namespace (the system windows there are the examples); a window
 that belongs to a module lives in that module's repository and reaches the
-application through `src/app/deps/_index.yaml` (skill `windows-add-module`).
+application through `src/app/deps/_index.yaml` (skill `chicago-add-module`).
 
 ## Work sequence
 
@@ -76,7 +76,7 @@ application through `src/app/deps/_index.yaml` (skill `windows-add-module`).
   button is `context` at the press. Wheel belongs to the
   panel under the cursor. Client motion/release can leave its bounds during capture.
 - Render controls through shared `pixels.button/field/checkbox/edge`: two-pixel
-  Win95 borders, a dotted focus rectangle, a separate default-button outline
+  bevelled borders, a dotted focus rectangle, a separate default-button outline
   and single-pass gray disabled labels (no white text shadow at small sizes).
   Do not substitute a single `bevel`.
 - Handle close and release resources within the compositor's grace period.

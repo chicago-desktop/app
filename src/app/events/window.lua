@@ -1,5 +1,5 @@
--- Event Viewer — the platform's threads and their events in the Windows 95
--- shell, with the look of the Windows NT Event Viewer.
+-- Event Viewer — the platform's threads and their events in the Chicago
+-- shell, with the look of the classic Event Viewer.
 --
 -- A window on the shell SDK. IO lives here and does what the HTTP handlers of
 -- kickside/core do, without HTTP: the log tree is kickside.core.threads:contract

@@ -1,6 +1,6 @@
 ---
 name: tui-desktop
-description: Drive the windows of a live desktop (chicago/tui-desktop, the Windows 95 shell over it) through its command channel — open a window with a program, type into it, read its screen, move or close a window, bring the desktop up. Use when an agent must act on a running desktop without touching the person's keyboard.
+description: Drive the windows of a live desktop (chicago/tui-desktop, the Chicago shell over it) through its command channel — open a window with a program, type into it, read its screen, move or close a window, bring the desktop up. Use when an agent must act on a running desktop without touching the person's keyboard.
 ---
 
 # Driving the desktop
@@ -128,7 +128,7 @@ Such a window opens like any other — by the `entry` from the answer.
 
 ```bash
 wippy run                                           # the web platform on :8099 and the SSH desktop on :2222
-wippy run --host chicago.shell:terminal chicago     # the Windows 95 shell in this terminal
+wippy run --host chicago.shell:terminal chicago     # the Chicago shell in this terminal
 wippy run --host chicago.tui_desktop:terminal desktop   # the bare desktop base, no shell
 ```
 
@@ -138,7 +138,7 @@ local-terminal commands take the terminal whole and bring up the full runtime
 with the gateway, so a person runs them — an agent has no terminal, and
 without one `screen_size()` answers zeros. The SSH desktop needs no terminal
 on the server side: `ssh -t -p 2222 localhost` from any client (skill
-`windows-debug`).
+`chicago-debug`).
 
 Whether a desktop is up is one `GET /windows` on the channel: it answers a
 list, not "not running". `GET /api/v1/chicago/status` answers

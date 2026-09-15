@@ -1,4 +1,4 @@
--- Scheduled Tasks — kickside/cron's schedules in the Windows 95 shell.
+-- Scheduled Tasks — kickside/cron's schedules in the Chicago shell.
 --
 -- A window on the shell SDK. IO lives here and does what the HTTP handlers of
 -- kickside/cron do, without HTTP; the model (app.scheduled:model) translates

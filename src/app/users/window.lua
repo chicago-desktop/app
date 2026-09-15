@@ -1,4 +1,4 @@
--- Users — the application's accounts in the Windows 95 shell.
+-- Users — the application's accounts in the Chicago shell.
 --
 -- A window on the shell SDK doing what kickside/users' HTTP handlers do,
 -- without HTTP: the same gates (security.can("access", <handler endpoint>),

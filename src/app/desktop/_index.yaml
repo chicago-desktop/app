@@ -35,7 +35,7 @@ entries:
   # app.desktop:deps_source
   #
   # The folder of the application's dependency declarations — for the
-  # Windows 95 shell's "Add/Remove Programs". The window edits ONLY
+  # Chicago shell's "Add/Remove Programs". The window edits ONLY
   # `_index.yaml` here: it removes and appends `ns.dependency` entries; that
   # takes effect after `wippy update` and a restart, the same as an edit by
   # hand. The shell learns this entry's name from CHICAGO_DEPS_FS (an override
@@ -47,17 +47,17 @@ entries:
     auto_init: false
     directory: ./src/app/deps
 
-  # The taskbar clock opens the shell's "Date/Time" — the Windows 95
+  # The taskbar clock opens the shell's "Date/Time" — the classic
   # properties dialog with a calendar and an analog clock, read only.
   - name: taskbar_clock
     kind: registry.entry
     meta:
       type: chicago.taskbar_clock
-      comment: "Clicking the taskbar clock opens the Windows 95 shell's Date/Time window."
+      comment: "Clicking the taskbar clock opens the Chicago shell's Date/Time window."
     data:
       entry: chicago.datetime:window
 
-  # ─── Logging on to the Windows 95 shell ──────────────────────────────
+  # ─── Logging on to the Chicago shell ─────────────────────────────────
   #
   # The shell (chicago/shell) shows "Log On to Windows" at start and calls the
   # function named in CHICAGO_LOGON_FUNC (an override in .wippy.yaml). The
@@ -300,7 +300,7 @@ entries:
   - name: logon
     kind: function.lua
     meta:
-      comment: "Terminal name and password → an application session token; called by the Windows 95 shell through funcs under its own actor, at most 10 failures per name."
+      comment: "Terminal name and password → an application session token; called by the Chicago shell through funcs under its own actor, at most 10 failures per name."
     source: file://logon.lua
     method: handler
     modules:
@@ -340,7 +340,7 @@ entries:
   - name: ssh
     kind: terminal.ssh
     meta:
-      comment: "SSH logon to the Windows 95 desktop: a connection gets its own terminal, a logon, windows under the person."
+      comment: "SSH logon to the Chicago desktop: a connection gets its own terminal, a logon, windows under the person."
     address: 0.0.0.0:2222
     # Generated once (ed25519) on the first boot and kept.
     host_key: .wippy/ssh_host_ed25519_key
@@ -371,7 +371,7 @@ entries:
   - name: user_name
     kind: function.lua
     meta:
-      comment: "{user_id} → the display name for the Windows 95 shell's Start menu (the full name, else the e-mail — logon's rule); the shell calls it through funcs on desktop.refresh (CHICAGO_USER_FUNC), under this function's own actor."
+      comment: "{user_id} → the display name for the Chicago shell's Start menu (the full name, else the e-mail — logon's rule); the shell calls it through funcs on desktop.refresh (CHICAGO_USER_FUNC), under this function's own actor."
     source: file://user_name.lua
     method: handler
     imports:

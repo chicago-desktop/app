@@ -1,4 +1,4 @@
--- The logged-on user's display name for the Windows 95 shell's Start menu.
+-- The logged-on user's display name for the Chicago shell's Start menu.
 --
 -- The shell calls this through funcs — it reads the name of this function
 -- from CHICAGO_USER_FUNC — with {user_id} when the desktop is reread

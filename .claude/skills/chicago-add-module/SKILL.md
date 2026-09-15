@@ -1,5 +1,5 @@
 ---
-name: windows-add-module
+name: chicago-add-module
 description: Add a module from its GitHub repository to the Chicago application (the ns.dependency entry in src/app/deps/_index.yaml naming the repository and a version range over its tags, with the parameters that bind the module's requirements, wippy update, restart), move a module to a newer tag, pin a branch or commit for development, or write a NEW module of the Chicago shell from chicago/module-template and release it by pushing a semver tag. Use when a program should appear in the Start menu that lives in a module, or when a module's version has to move.
 ---
 
