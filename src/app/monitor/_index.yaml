@@ -52,7 +52,7 @@ entries:
       width: 20
       height: 8
       order: 20
-      opens: windows.shell.taskman:window
+      opens: windows.taskman:window
       comment: "Widget — the runtime's heap now and over two minutes; a click opens Task Manager."
     source: file://memory.lua
     method: main
@@ -71,7 +71,7 @@ entries:
       width: 20
       height: 9
       order: 30
-      opens: windows.shell.taskman:window
+      opens: windows.taskman:window
       comment: "Widget — the runtime's goroutine count now and over two minutes; a click opens Task Manager."
     source: file://goroutines.lua
     method: main

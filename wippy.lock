@@ -129,8 +129,8 @@ modules:
       version: 0.1.0
       hash: 61601d8e53d6f71bca0991ac9d578164ed5aeaeff621f0c8ad4f76b9d3d70f59
     - name: windows/shell
-      version: 0.1.2
-      hash: 13e862cc9a7fdcfd6a5a600665b18c9de9abb171d1daf72590811d40e1a2c08b
+      version: 0.1.3
+      hash: 7895b6fb299059bbe2a9c7119304996912e2e11de29bf3cbbf9422e07f0a86c0
     - name: windows/tui-desktop
       version: 0.1.0
       hash: 450fce14e8dc510b6754d11022f8da9909cda41b174e3f21e3348e4d4c47ee47
