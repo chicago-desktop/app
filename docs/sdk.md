@@ -1,4 +1,4 @@
-> A copy of the shell's SDK guide as of `chicago/shell` 0.1.0
+> A copy of the shell's SDK guide as of `chicago/shell` 0.2.2
 > ([chicago-desktop/shell](https://github.com/chicago-desktop/shell), `docs/sdk.md`).
 > The shell's copy is canonical; this one exists so the application's skills can
 > link it. Relative links below (`test/`, `skills/`, `sdk-audit-…`) refer to the
@@ -102,7 +102,7 @@ current data; `update` changes the model on a component's action.
   space is divided by `weight` (1 by default). When space runs short, components are
   clipped; the container's size does not grow beyond the viewport.
 - Pixel measures: `size_px` on a child, `padding_px` and `gap_px` on a container
-  name pixels of the classic look. When the plan draws in pixels (`ui.plan(…, {cell = {w,
+  name the original's pixels. When the plan draws in pixels (`ui.plan(…, {cell = {w,
   h}})`, which `app.run` and the renderer both pass), they are rounded to the
   nearest whole cells per axis — the mouse speaks cells, so a layout is always
   whole cells, and the pixel number picks the closest one (7 px of padding is a
@@ -111,7 +111,7 @@ current data; `update` changes the model on a component's action.
   drawn width: in a row with `align = "right"` such buttons are packed from the
   row's right edge `pack_px` (6) apart, each drawing kept inside its own cells.
   A dialog row gives each button `size_px = 81, width_px = 75` and gets the
-  classic 75×23 buttons 6 px apart; "Display Properties" is the example.
+  original's 75×23 buttons 6 px apart; "Display Properties" is the example.
 - `label`: `text`, does not take focus; `alert = true` — refusal text (red).
   `\n` in the text makes a multi-line label: lines go at the font's step (15 px in
   pixels, one row per line in cells), the block centered in the rectangle; this way
@@ -145,7 +145,7 @@ current data; `update` changes the model on a component's action.
 - `button`: `id`, `text`, `disabled`, `default`; the `activate` action on releasing the left button inside,
   or on Enter or Space. Releasing outside the button cancels the press.
   A right press on an enabled button is `context` with the button's `id`, at
-  the PRESS, as the classic desktop does it (Minesweeper flags a cell on the right button
+  the PRESS, as the original does it (Minesweeper flags a cell on the right button
   going down). It arms nothing and takes no focus, so its release activates
   nothing; the window decides what the right button means. The middle button
   and passive views get nothing. The compositor sends right and middle presses
@@ -259,7 +259,7 @@ current data; `update` changes the model on a component's action.
   Without an `id` it is inert, like a `static` table, and stays at the top.
   `wrap = false` keeps each line whole and the renderer cuts it.
 - `editor`: `id`, `text`, `wrap` (off by default), `tab` (8), `font = "mono"`,
-  `read_only`, `wheel_step` (3) — the multi-line edit control of the classic desktop
+  `read_only`, `wheel_step` (3) — the multi-line edit control of the original's
   Notepad ([FR-007 §3](rfcs/007-notepad.md)). `text` is only the first value:
   the document lives in `interaction.editors[id]` (by its `lines`, apart from
   a field's `{cursor, selected}`), and the window reaches it with
@@ -739,7 +739,7 @@ keyboard, no title buttons and no frame of its own to drag.
     width: 20                                   # cells; default 20, limits 10..40
     height: 8                                   # cells; default 5, limits 2..16
     order: 20                                   # place in the column, lower first; default 100
-    opens: chicago.shell.taskman:window    # optional: a click opens or raises it
+    opens: chicago.taskman:window    # optional: a click opens or raises it
   source: file://memory.lua
   method: main
   modules: [system, time]

@@ -59,7 +59,7 @@ entries:
 
   # ─── Logging on to the Chicago shell ─────────────────────────────────
   #
-  # The shell (chicago/shell) shows "Log On to Windows" at start and calls the
+  # The shell (chicago/shell) shows "Welcome to Chicago" at start and calls the
   # function named in CHICAGO_LOGON_FUNC (an override in .wippy.yaml). The
   # function runs under ITS OWN actor with rights to the users database — the
   # same six policies the kickside.users web logon has — and answers with a
@@ -328,9 +328,9 @@ entries:
   # app.desktop:ssh
   #
   # The desktop over SSH: every connection gets a terminal and a shell
-  # desktop of its own, then "Log On to Windows" and windows under the person
+  # desktop of its own, then "Welcome to Chicago" and windows under the person
   # who logged on. `auth: logon` asks nothing at the door (owner's decision
-  # 2026-09-14): "Log On to Windows" checks the account's name and password,
+  # 2026-09-14): "Welcome to Chicago" checks the account's name and password,
   # the same as the web logon, and the shell refuses a desktop it cannot put
   # behind a logon. This is the door the application is served through, so it
   # listens on every interface; failed logons are limited per user name

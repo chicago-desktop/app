@@ -48,10 +48,10 @@ modules:
       commit: 71a1b97e2ae6c0e84f869ec550fe9ce1b9b86d81
       local_hash: sha256-tree-v1:ec96893c691ecae9b5fb687421b3543a944166819630e8b7a1f87e22676feb3a
     - name: chicago/shell
-      version: 0.2.0
+      version: 0.2.2
       source: github.com/chicago-desktop/shell
-      commit: 3903352d94c43c6b1eb7eb846c5288fe2a18a2c7
-      local_hash: sha256-tree-v1:f6c370a42752d4e2a85d7100d228ba9adb67f7d40da4a39dee55cb791aa3a6c6
+      commit: b9b8159f7a88e870a5ac669f5cc30de7ca002a15
+      local_hash: sha256-tree-v1:e0621222455d6380fa387fa953450781b0ed4b2976d2c0a2f18606264b2db71a
     - name: chicago/taskman
       version: 0.2.0
       source: github.com/chicago-desktop/taskman

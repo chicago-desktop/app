@@ -76,7 +76,7 @@ application through `src/app/deps/_index.yaml` (skill `chicago-add-module`).
   button is `context` at the press. Wheel belongs to the
   panel under the cursor. Client motion/release can leave its bounds during capture.
 - Render controls through shared `pixels.button/field/checkbox/edge`: two-pixel
-  bevelled borders, a dotted focus rectangle, a separate default-button outline
+  classic borders, a dotted focus rectangle, a separate default-button outline
   and single-pass gray disabled labels (no white text shadow at small sizes).
   Do not substitute a single `bevel`.
 - Handle close and release resources within the compositor's grace period.

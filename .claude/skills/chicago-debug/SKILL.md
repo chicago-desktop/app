@@ -75,7 +75,7 @@ ssh -t -p 2222 localhost                  # on the machine
 ssh -t -J <machine> -p 2222 localhost     # from outside
 ```
 
-- The door asks nothing (`auth: logon`): "Log On to Windows" checks the
+- The door asks nothing (`auth: logon`): "Welcome to Chicago" checks the
   account's name and password, the same as the web logon; a key pasted in
   Start → Settings → SSH Keys (`app.desktop:ssh_keys_window`, table
   `app_ssh_keys`, `key_owner: app.desktop:ssh_key_owner`) logs its owner on
