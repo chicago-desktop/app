@@ -55,7 +55,7 @@ entries:
       type: windows.taskbar_clock
       comment: "Clicking the taskbar clock opens the Windows 95 shell's Date/Time window."
     data:
-      entry: windows.shell.datetime:window
+      entry: windows.datetime:window
 
   # ─── Logging on to the Windows 95 shell ──────────────────────────────
   #

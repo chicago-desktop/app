@@ -125,9 +125,12 @@ modules:
     - name: windows/network
       version: 0.1.0
       hash: 6e8c0cd6de0a0e3d9f2cb7b966223412dbabdf0f12695aacbe28acd53ce546d7
+    - name: windows/regedit
+      version: 0.1.0
+      hash: 61601d8e53d6f71bca0991ac9d578164ed5aeaeff621f0c8ad4f76b9d3d70f59
     - name: windows/shell
-      version: 0.1.1
-      hash: 2063a73f5a2bfbcda756e3c1c0afeecd593a50edf400dc6c743cfa277ee0d6c5
+      version: 0.1.2
+      hash: 13e862cc9a7fdcfd6a5a600665b18c9de9abb171d1daf72590811d40e1a2c08b
     - name: windows/tui-desktop
       version: 0.1.0
       hash: 450fce14e8dc510b6754d11022f8da9909cda41b174e3f21e3348e4d4c47ee47
