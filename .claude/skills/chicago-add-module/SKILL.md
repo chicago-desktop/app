@@ -167,6 +167,21 @@ chicago.shell.sdk:render`, `pixel_state: <ns>:window`, `imports: {app:
 chicago.shell.sdk:app}`, `security.policies: [chicago.shell.security:view_state]`)
 and the code against the SDK — skill `wippy-window-app`, `docs/sdk.md`.
 
+The template also declares `<ns>:tip`, a "Did you know..." tip for the
+Welcome window (chicago/welcome): a `registry.entry` with `meta.type:
+chicago.tip` and `meta.order` (Welcome's own tips use 10–130, the sample
+500), and `data: {text, image?, open?, args?}`. `text` is the tip, one short
+paragraph (an entry without it is skipped). `image` is a square pack picture
+`<ns>:images/<file>`, drawn at 32 px, or an illustration
+`<ns>:images/pictures/<file>`, shown 100 px high. `open` is the window the
+Show Me button opens, and `args` what it is opened with (a string, or a
+table sent as JSON). Rewrite the text for the module's program, or delete the
+entry together with `test/src/tip_test.lua`. The tip needs no dependency on
+`chicago/welcome` (a desktop without the Welcome window ignores it), and
+`make check` refuses a tip that is not a `registry.entry` or has no text. The
+application's own tip is `app.desktop:ssh_keys_tip` in
+`src/app/desktop/_index.yaml`.
+
 Rules the module has to keep:
 
 - **It depends on `chicago/shell` and `chicago/tui-desktop`** — two
