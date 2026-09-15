@@ -1,4 +1,4 @@
-# windows-app — the Wippy Windows application
+# app — the Chicago desktop application
 
 A wippy *application*, not a module: it composes Hub modules (the kickside
 platform, `windows/tui-desktop`, `windows/shell`, the games and apps) and adds
@@ -33,5 +33,6 @@ windows. Its own namespace is `app` / `app.*`; the dependencies are in
   the desktop is doing, the probe, live update, the silent traps),
   `windows-add-module`, `tui-desktop`, `wippy-window-app`,
   `wippy-window-workshop`; the README's "For agents" lists them.
-- The Windows 95 icons (Microsoft's artwork) ship with the shell module; the
-  application carries no icon files of its own.
+- The icon set (an interim one, being replaced with original pixel art —
+  chicago-desktop/shell#1) ships with the shell module; the application
+  carries no icon files of its own.

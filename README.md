@@ -1,6 +1,6 @@
-# Wippy Windows
+# Chicago
 
-A Windows 95 desktop in the terminal, served from a server over SSH.
+A desktop in the terminal, in the look of the mid-nineties desktops, served from a server over SSH.
 
 `ssh -t -p 2222 <server>` gets you "Log On to Windows", then a teal desktop
 with a taskbar, a Start menu, overlapping windows, real programs under a PTY
@@ -9,7 +9,7 @@ agents, models and MCP behind them. Every connection is a desktop of its own,
 under the account that logged on. The same application serves the web
 platform (users, agents, models, sessions, MCP) on `127.0.0.1:8099`.
 
-This repository is the *application*: it composes Hub modules and adds what
+This repository is the *application*: it composes modules (the platform's from the Hub, the desktop's resolved from their GitHub repositories by tag — v0.2.0 is the first) and adds what
 only an application can declare — the logon, the SSH host, the users'
 SSH keys, the runtime monitor widgets, the MCP window workshop, and the
 platform's system windows (Users, Services, Scheduled Tasks, Event Viewer,
@@ -21,7 +21,7 @@ Connections, User Profile).
 |---|---|---|
 | `kickside/kickside`, `kickside/mcp` | Hub | the platform: users, agents, models, sessions, MCP |
 | `windows/tui-desktop` | [wippy-windows/tui-desktop](https://github.com/wippy-windows/tui-desktop) | the terminal window manager: compositor, PTY windows, the command channel |
-| `windows/shell` | [wippy-windows/windows](https://github.com/wippy-windows/windows) | the Windows 95 shell: theme, Start menu, the SDK windows are written against |
+| `windows/shell` | [wippy-windows/windows](https://github.com/wippy-windows/windows) | the Chicago shell: theme, Start menu, the SDK windows are written against |
 | `windows/minesweeper` | [wippy-windows/minesweeper](https://github.com/wippy-windows/minesweeper) | Minesweeper |
 | `windows/weather` | [wippy-windows/weather](https://github.com/wippy-windows/weather) | Weather: window, tray, desktop widget |
 | `windows/aicq` | [wippy-windows/aicq](https://github.com/wippy-windows/aicq) | aICQ: people and agents in one contact list |
@@ -121,7 +121,8 @@ Tools in `tools/`:
 
 ## The icons
 
-The icon set — the Windows 95/98 icons from `shell32.dll` as PNG — is
-Microsoft's original artwork, shipped with the shell module (`windows/shell`,
+The icon set ships with the shell module (`windows/shell`,
 `assets/icons`, see its `SOURCE.md`); the application carries none of its
-own. The code of this repository is MIT (`LICENSE`).
+own. The icon set is an interim one and is being replaced with original pixel art
+([chicago-desktop/shell#1](https://github.com/chicago-desktop/shell/issues/1));
+the code is MIT (`LICENSE`).

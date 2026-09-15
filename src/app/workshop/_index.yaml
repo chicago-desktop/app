@@ -3,7 +3,7 @@ namespace: app.workshop
 
 # The window workshop for agents over MCP.
 #
-# The tool builds a window of the Windows 95 shell in the running runtime —
+# The tool builds a window of the Chicago shell in the running runtime —
 # no files and no restart — opens it, reads its screen and removes it. It is
 # the same path as the base's HTTP workshop (POST /tui-desktop/apps), with one
 # difference: the registry entry is applied by the compositor on the
@@ -23,7 +23,7 @@ entries:
       title: Windows Workshop
       llm_alias: WindowsWorkshop
       llm_description: |
-        Build, open, inspect and remove windows of the Windows 95 shell in the running
+        Build, open, inspect and remove windows of the Chicago shell in the running
         runtime — no files, no restart. `build` stores Lua source plus a description
         (imports, pixel view, icon, menu folder) and asks the compositor to register it;
         `open` opens a window by entry id; `windows` lists open windows; `screen` returns
@@ -144,15 +144,15 @@ entries:
       type: agent.trait
       public: true
       title: Windows Workshop
-      comment: Build and drive windows of the Windows 95 shell in the running runtime through the WindowsWorkshop tool.
+      comment: Build and drive windows of the Chicago shell in the running runtime through the WindowsWorkshop tool.
       tags: [windows, workshop, tui]
       prompt: |
-        You can build windows for the Windows 95 shell with the WindowsWorkshop tool:
+        You can build windows for the Chicago shell with the WindowsWorkshop tool:
         build stores Lua source and registers the window live, open opens it, screen
         shows its text, remove deletes it, image uploads a PNG picture for windows.
         Follow the wippy-window-workshop skill.
     prompt: |
-      You can build windows for the Windows 95 shell with the WindowsWorkshop tool:
+      You can build windows for the Chicago shell with the WindowsWorkshop tool:
       build stores Lua source and registers the window live, open opens it, screen
       shows its text, remove deletes it, image uploads a PNG picture for windows.
       Follow the wippy-window-workshop skill.
@@ -172,6 +172,6 @@ entries:
     kind: fs.directory
     meta:
       type: windows.images
-      comment: "Pictures of workshop windows (Minesweeper) — an image pack for the Windows 95 shell."
+      comment: "Pictures of workshop windows (Minesweeper) — an image pack for the Chicago shell."
     auto_init: false
     directory: ./src/app/workshop/images
