@@ -1,0 +1,92 @@
+version: "1.0"
+namespace: app.events
+
+# Event Viewer in the Windows 95 shell: "Start → Settings → Event Viewer". The
+# logs are kickside/core's threads and the entries their events, so the window
+# lives in the stand, like Connections, and not in the shell module.
+#
+# The window reads through kickside.core.threads:contract — the library the
+# HTTP handlers of kickside/core import (list_threads.lua, list_events.lua) —
+# without HTTP: the log tree is its list, a log's entries its list_events, one
+# page at a time. It writes nothing.
+#
+# Rights are not granted to the window on purpose, the same way as for
+# Connections: the shell spawns it under the actor of the logged-in user, and
+# the group app.security:user already carries what the web UI uses to read
+# threads. The contract lists only threads whose component that actor may
+# read. Under the service actor (a shell without logon) the window names the
+# refusal in its status bar. The only policy here is for talking to the
+# COMPOSITOR.
+
+entries:
+  # app.events:window_scope
+  - name: window_scope
+    kind: security.policy
+    meta:
+      comment: Rights of the Event Viewer window to talk to the compositor — the process context, the compositor's name in the process registry and sending it frame state.
+    policy:
+      actions:
+        - process.context
+        - process.registry
+        - process.send
+      resources: "*"
+      effect: allow
+
+  # app.events:model
+  - name: model
+    kind: library.lua
+    meta:
+      comment: Pure translation between kickside/core's thread and event rows and the window (log tree, table rows, message line, properties, payload); no IO, so a test runs it on stubs.
+    source: file://model.lua
+    modules:
+      - json
+    imports:
+      format: app.common:format
+
+  # app.events:window
+  - name: window
+    kind: process.lua
+    meta:
+      type: tui_desktop.window
+      title: Event Viewer
+      image: text_document
+      icon: "≣"
+      group: Settings
+      order: 56
+      width: 100
+      height: 26
+      window_type: app
+      resizable: true
+      pixel_render: windows.shell.sdk:render
+      pixel_state: app.events:window
+      comment: The platform's threads as logs and their events newest first, a page at a time — filter by type and text, double-click for the event's properties and payload.
+    source: file://window.lua
+    method: main
+    modules:
+      - time
+    imports:
+      app: windows.shell.sdk:app
+      model: app.events:model
+      format: app.common:format
+      threads: kickside.core.threads:contract
+    security:
+      policies: [app.events:window_scope]
+
+  # app.events:model_test
+  #
+  # Run from the stand with `wippy test --host wippy.terminal:host`. That boots
+  # the whole application (background services included), so do it only when the
+  # stand may run; the same suite also runs in an isolated harness (see the
+  # report of task S2).
+  - name: model_test
+    kind: function.lua
+    meta:
+      type: test
+      comment: Event Viewer model — log labels and the class tree, type split and message line, paging newest first, text and type filters, pretty payload, properties.
+      group: Event Viewer
+      suite: app_events
+    source: file://model_test.lua
+    imports:
+      test: wippy.test:test
+      model: app.events:model
+    method: run

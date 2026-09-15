@@ -1,0 +1,110 @@
+version: "1.0"
+namespace: app.deps
+
+# The modules this application composes. Every entry is an `ns.dependency`:
+# `wippy update` resolves them into wippy.lock, and a declared dependency
+# missing from the lock stops the boot outright. The Windows 95 shell's
+# "Add/Remove Programs" edits this file (app.desktop:deps_source) — a change
+# takes effect after `wippy update` and a restart.
+
+entries:
+  # app.deps:kickside
+  #
+  # The platform is a module too, and it has to be declared. Without this
+  # declaration any resolve from the sources throws it out of the lock together
+  # with everything reachable only through it (users, agents, models, sessions,
+  # mcp-client, connection, component, core, security, ui, sso, sync, hub,
+  # inbox, dashboard, realtime, facade, usage), and the boot fails on
+  # kickside.agents:ui_static.
+  - version: '>=v0.0.0'
+    name: kickside
+    kind: ns.dependency
+    meta: {}
+    component: kickside/kickside
+
+  # app.deps:mcp
+  #
+  # The platform's MCP server: the WindowsWorkshop tool (app.workshop) is
+  # reached over it.
+  - version: '>=v0.0.0'
+    name: mcp
+    kind: ns.dependency
+    meta: {}
+    component: kickside/mcp
+    parameters:
+      - name: kickside.mcp:api_router
+        value: app:api
+      - name: kickside.mcp:public_router
+        value: app:api.public
+      - name: kickside.mcp:target_db
+        value: app:db
+      - name: kickside.mcp:ui_server
+        value: app:gateway
+      - name: kickside.mcp.security:user_security_scope
+        value: app.security:user
+
+  # app.deps:tui-desktop
+  #
+  # The window desktop in the terminal. It brings ITS OWN terminal.host — it
+  # needs hide_logs — and from then on the CLI's terminal host autodetection
+  # refuses to choose: it counts terminal.host entries, and there are two now.
+  # So every command needs an explicit --host, including other modules':
+  #   wippy run --host windows.tui_desktop:terminal desktop
+  #   wippy test --host wippy.terminal:host
+  - version: '>=v0.0.0'
+    name: tui-desktop
+    kind: ns.dependency
+    meta: {}
+    component: windows/tui-desktop
+    parameters:
+      - name: windows.tui_desktop:api_router
+        value: app:api
+      - name: windows.tui_desktop.security:user_security_scope
+        value: app.security:user
+
+  # app.deps:windows
+  #
+  # The second shell of the same desktop — the Windows 95 look. It carries no
+  # window mechanics of its own: it calls the compositor library from
+  # windows/tui-desktop with its own theme. It brings a THIRD terminal.host, so
+  # --host is required here too:
+  #   wippy run --host windows.shell:terminal windows
+  # The SSH host (app.desktop:ssh) opens this module's `shell` entry.
+  - version: '>=v0.0.0'
+    name: windows
+    kind: ns.dependency
+    meta: {}
+    component: windows/shell
+    parameters:
+      - name: windows.shell:api_router
+        value: app:api
+      - name: windows.shell:target_db
+        value: app:db
+      - name: windows.shell.security:user_security_scope
+        value: app.security:user
+
+  # app.deps:minesweeper
+  #
+  # Minesweeper for the shell: the rules as a pure library, the window a
+  # declarative SDK application. No requirements to bind.
+  - version: '>=v0.0.0'
+    name: minesweeper
+    kind: ns.dependency
+    meta: {}
+    component: windows/minesweeper
+
+  # app.deps:weather
+  #
+  # Weather for the shell: the window, the temperature in the tray and the
+  # desktop widget. The forecaster service keeps the chosen city in the
+  # application's database and runs on its process host.
+  - version: '>=v0.0.0'
+    name: weather
+    kind: ns.dependency
+    meta: {}
+    component: windows/weather
+    parameters:
+      - name: windows.weather:target_db
+        value: app:db
+      - name: windows.weather:process_host
+        value: app:processes

@@ -1,0 +1,94 @@
+version: "1.0"
+namespace: app.profile
+
+# User Profile in the Windows 95 shell — the Windows 95 "User Properties"
+# sheet over kickside/users: General (identity, groups, session) and Profile
+# (the declared profile fields). It opens from the Start menu's user row with
+# {user_id = <id>}; the shell names this entry through
+# WINDOWS_PROFILE_ENTRY (.wippy.yaml). Not in the menu itself.
+#
+# The window does what GET/PUT /user/me and GET/PUT /profile do, without HTTP,
+# through the same libraries: user_repo, user_groups_repo, the
+# kickside.users.profile:profile contract. Rights come from the logged-in
+# user's group; the window adds none for the data. Writes are checked against
+# the router's gates first — `access` on kickside.users.api:update_me.endpoint
+# and :put_profile.endpoint, what endpoint_firewall checks — and always target
+# the actor, as the handlers do: another account is read-only, and a plain user
+# sees only its public profile fields.
+
+entries:
+  # app.profile:window_scope
+  - name: window_scope
+    kind: security.policy
+    meta:
+      comment: Rights of the User Profile window to talk to the compositor — the process context, the compositor's name in the process registry and sending it frame state.
+    policy:
+      actions:
+        - process.context
+        - process.registry
+        - process.send
+      resources: "*"
+      effect: allow
+
+  # app.profile:model
+  - name: model
+    kind: library.lua
+    meta:
+      comment: Pure translation between the users module's shapes (the account, its groups, its session, the declared profile fields) and the property sheet, its form and what is sent back; no IO, so a test runs it on stubs.
+    source: file://model.lua
+    imports:
+      format: app.common:format
+      sessions: app.users:sessions
+      consts: kickside.users:consts
+
+  # app.profile:window
+  - name: window
+    kind: process.lua
+    meta:
+      type: tui_desktop.window
+      title: User Profile
+      image: user
+      icon: "☺"
+      group: Settings
+      in_menu: false
+      width: 80
+      height: 26
+      window_type: app
+      resizable: false
+      pixel_render: windows.shell.sdk:render
+      pixel_state: app.profile:window
+      comment: An account's properties — name, groups, session and declared profile fields; the signed-in account edits its own name, fields and password, another account is read-only.
+    source: file://window.lua
+    method: main
+    modules:
+      - contract
+      - security
+      - time
+    imports:
+      app: windows.shell.sdk:app
+      model: app.profile:model
+      sessions: app.users:sessions
+      consts: kickside.users:consts
+      user_repo: kickside.users.persist:user_repo
+      user_groups_repo: kickside.users.persist:user_groups_repo
+      desktop: windows.tui_desktop.desktop:window_api
+    security:
+      policies: [app.profile:window_scope]
+
+  # app.profile:model_test
+  #
+  # Run from the stand with `wippy test --host wippy.terminal:host`. That boots
+  # the whole application, so do it only when the stand may run; the same suite
+  # runs in an isolated harness (see the report of task S5).
+  - name: model_test
+    kind: function.lua
+    meta:
+      type: test
+      comment: User Profile model — whose profile and how much of it, own and public fields, what is saved and what is refused, the password rule, the sheet under each gate and target.
+      group: User Profile
+      suite: app_profile
+    source: file://model_test.lua
+    imports:
+      test: wippy.test:test
+      model: app.profile:model
+    method: run

@@ -1,0 +1,110 @@
+version: "1.0"
+namespace: app.services
+
+# Services in the Windows 95 shell: "Start → Settings → Services", the Windows
+# NT applet over the runtime's supervisor. The table is
+# system.supervisor.states() joined with each service's registry entry (host,
+# lifecycle); the status bar counts system.hosts.list(); the heading names the
+# node through the shell's facts library (windows.shell.config:system).
+#
+# Start, Stop and Restart are disabled and say why: system.supervisor only
+# reads (state, states), and the Go supervisor has no per-service control to
+# bind. Properties… shows what the supervisor and the declaration know.
+#
+# Rights: the shell spawns the window under the logged-in user's actor, and
+# app.security:user holds no system.read. So the window carries one read-only
+# policy of its own, runtime_read — the Task Manager precedent, narrowed to the
+# four resources it reads. Everything else (registry entries) comes from the
+# user's group; an entry the user may not read is named in the status bar.
+
+entries:
+  # app.services:window_scope
+  - name: window_scope
+    kind: security.policy
+    meta:
+      comment: Rights of the Services window to talk to the compositor — the process context, the compositor's name in the process registry and sending it frame state.
+    policy:
+      actions:
+        - process.context
+        - process.registry
+        - process.send
+      resources: "*"
+      effect: allow
+
+  # app.services:runtime_read
+  #
+  # Read-only introspection, exactly what the window shows: the supervisor's
+  # states, the process hosts, the host name and the node for the heading
+  # (runtime/lua/modules/system: supervisor.go, hosts.go, module.go). It grants
+  # no control, and none exists to grant: system.supervisor has no start, stop
+  # or restart. Attached to this window only.
+  - name: runtime_read
+    kind: security.policy
+    meta:
+      comment: The Services window may read the supervisor's states, the process hosts, the host name and the node — read-only introspection; the runtime has no service control to grant.
+    policy:
+      actions:
+        - system.read
+      resources:
+        - supervisor
+        - hosts
+        - hostname
+        - node
+      effect: allow
+
+  # app.services:model
+  - name: model
+    kind: library.lua
+    meta:
+      comment: Pure translation between supervisor states, registry entries and the window (table rows, detail line, properties sheet, status line); no IO, so a test runs it on stubs.
+    source: file://model.lua
+    imports:
+      facts: windows.shell.config:system
+
+  # app.services:window
+  - name: window
+    kind: process.lua
+    meta:
+      type: tui_desktop.window
+      title: Services
+      image: program_settings
+      icon: "▤"
+      group: Settings
+      order: 55
+      width: 80
+      height: 24
+      window_type: app
+      resizable: true
+      pixel_render: windows.shell.sdk:render
+      pixel_state: app.services:window
+      comment: The runtime's supervised services — status, startup, host and the declaration behind each; Start, Stop and Restart are disabled because the runtime has no service control for Lua.
+    source: file://window.lua
+    method: main
+    modules:
+      - registry
+      - system
+      - time
+    imports:
+      app: windows.shell.sdk:app
+      model: app.services:model
+      facts: windows.shell.config:system
+    security:
+      policies: [app.services:window_scope, app.services:runtime_read]
+
+  # app.services:model_test
+  #
+  # Run from the stand with `wippy test --host wippy.terminal:host`. That boots
+  # the whole application, so do it only when the stand may run; the same suite
+  # runs in an isolated harness (see the report of task S3).
+  - name: model_test
+    kind: function.lua
+    meta:
+      type: test
+      comment: Services model — states joined with entries, startup and host columns, unread entries, disabled Start/Stop/Restart with the reason, refusal wording, ages from UnixNano stamps, the properties sheet.
+      group: Services
+      suite: app_services
+    source: file://model_test.lua
+    imports:
+      test: wippy.test:test
+      model: app.services:model
+    method: run

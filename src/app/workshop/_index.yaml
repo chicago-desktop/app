@@ -1,0 +1,177 @@
+version: "1.0"
+namespace: app.workshop
+
+# The window workshop for agents over MCP.
+#
+# The tool builds a window of the Windows 95 shell in the running runtime —
+# no files and no restart — opens it, reads its screen and removes it. It is
+# the same path as the base's HTTP workshop (POST /tui-desktop/apps), with one
+# difference: the registry entry is applied by the compositor on the
+# `desktop.workshop` command, because the MCP session's scope forbids
+# `registry.apply`.
+#
+# How an agent uses it — the `wippy-window-workshop` skill in the
+# windows/shell module (skills/wippy-window-workshop/SKILL.md).
+
+entries:
+  # app.workshop:windows_workshop
+  - name: windows_workshop
+    kind: function.lua
+    meta:
+      type: tool
+      public: true
+      title: Windows Workshop
+      llm_alias: WindowsWorkshop
+      llm_description: |
+        Build, open, inspect and remove windows of the Windows 95 shell in the running
+        runtime — no files, no restart. `build` stores Lua source plus a description
+        (imports, pixel view, icon, menu folder) and asks the compositor to register it;
+        `open` opens a window by entry id; `windows` lists open windows; `screen` returns
+        a window's text screen; `type` sends keystrokes; `close` closes a window;
+        `list` shows stored workshop windows; `remove` deletes one. `image` uploads a
+        PNG into the workshop image pack (app.workshop:images/<name>), drawn by the
+        shell within seconds, no restart; `images` lists the pack. Read the
+        wippy-window-workshop skill before building.
+      # The schema is a YAML map, not a string: MCP takes it only as a table,
+      # and with a string Claude would call the tool without arguments.
+      input_schema:
+        type: object
+        additionalProperties: false
+        required: [action]
+        properties:
+          action:
+            type: string
+            enum: [build, remove, list, windows, open, screen, type, close, image, images]
+            description: What to do.
+          name:
+            type: string
+            description: "Workshop window name: lowercase latin letters, digits, underscore, starting with a letter. Key for build/remove/open."
+          title:
+            type: string
+            description: Window title (build, open).
+          source:
+            type: string
+            description: "Lua source of the window (build). Must return {main = main}; SDK windows call app.run(definition, ...)."
+          width:
+            type: integer
+            description: Outer window width in cells (build).
+          height:
+            type: integer
+            description: Outer window height in cells (build).
+          modules:
+            type: array
+            items: {type: string}
+            description: "Extra runtime modules for the window code (build): json, sql, time. tty, channel and process are always present."
+          imports:
+            type: object
+            additionalProperties: {type: string}
+            description: "Library imports {alias = entry id} (build). SDK windows: {app = \"windows.shell.sdk:app\"}. Alias desktop is reserved."
+          pixel_render:
+            type: string
+            description: "Pixel view renderer for SDK windows (build): windows.shell.sdk:render."
+          group:
+            type: string
+            description: "Start menu folder (build), e.g. Programs/My tools. Empty lets the shell decide."
+          image:
+            type: string
+            description: "Icon (build): a name from the shell icon catalog, or a pack picture like app.workshop:images/<name>."
+          image_name:
+            type: string
+            description: "Picture name in the workshop pack (image): letters, digits, _ and -. The window names it app.workshop:images/<image_name>."
+          png:
+            type: string
+            description: "Base64 of a square PNG (image), 1..256 px; its size is its folder in the pack (16 for a button face, 32 for an icon)."
+          icon:
+            type: string
+            description: Single-character icon for cell mode (build).
+          window_type:
+            type: string
+            enum: [app, dialog, tool]
+            description: Window kind (build).
+          resizable:
+            type: boolean
+            description: false fixes the window size (build).
+          in_menu:
+            type: boolean
+            description: false hides the window from the Start menu (build).
+          open:
+            type: boolean
+            description: Open the window right after build.
+          entry:
+            type: string
+            description: Registry entry id of a window to open (open).
+          args:
+            type: string
+            description: Argument string passed to the window (build with open, open).
+          id:
+            type: string
+            description: Open window id like w3 (screen, type, close). See windows.
+          text:
+            type: string
+            description: Text to type into the window (type).
+          enter:
+            type: boolean
+            description: Press Enter after the text (type).
+      output_schema:
+        type: object
+        required: [success]
+        properties:
+          success: {type: boolean}
+          error: {type: string}
+    source: file://tool.lua
+    method: handle
+    modules:
+      - channel
+      - process
+      - registry
+      - time
+      # image: the PNG arrives base64-encoded, is checked with the same gfx
+      # the shell will read it with, and is written into the
+      # app.workshop:images pack.
+      - fs
+      - base64
+      - gfx
+    imports:
+      repo: windows.tui_desktop.persist:repo
+      apps: windows.tui_desktop.persist:apps
+      # The rule of desktop names (name, name.2, …): terminal.ssh runs several.
+      desktop: windows.tui_desktop.desktop:window_api
+
+  # app.workshop:trait
+  - name: trait
+    kind: registry.entry
+    meta:
+      type: agent.trait
+      public: true
+      title: Windows Workshop
+      comment: Build and drive windows of the Windows 95 shell in the running runtime through the WindowsWorkshop tool.
+      tags: [windows, workshop, tui]
+      prompt: |
+        You can build windows for the Windows 95 shell with the WindowsWorkshop tool:
+        build stores Lua source and registers the window live, open opens it, screen
+        shows its text, remove deletes it, image uploads a PNG picture for windows.
+        Follow the wippy-window-workshop skill.
+    prompt: |
+      You can build windows for the Windows 95 shell with the WindowsWorkshop tool:
+      build stores Lua source and registers the window live, open opens it, screen
+      shows its text, remove deletes it, image uploads a PNG picture for windows.
+      Follow the wippy-window-workshop skill.
+    tools:
+      - app.workshop:windows_workshop
+
+  # app.workshop:images
+  #
+  # Pictures of workshop windows — a pack of their own, not the shell's: an FS
+  # entry with meta.type windows.images; a picture is named
+  # `app.workshop:images/<file>` and lies as `<size>/<file>.png`. The shell
+  # looks the pack up in the registry at the moment of the request, so a file
+  # added here appears without editing its code. mine — w98_minesweeper.ico
+  # (32) and the game's mine drawn pixel by pixel (16); face_smile /
+  # face_dead / face_cool — the Minesweeper faces 16×16, our own drawing.
+  - name: images
+    kind: fs.directory
+    meta:
+      type: windows.images
+      comment: "Pictures of workshop windows (Minesweeper) — an image pack for the Windows 95 shell."
+    auto_init: false
+    directory: ./src/app/workshop/images

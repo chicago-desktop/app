@@ -1,0 +1,32 @@
+version: "1.0"
+namespace: app.common
+
+# What the stand's own windows share (Scheduled Tasks, Event Viewer, and the
+# windows that adopt it): the time the platform stores, rendered locally, and a
+# refusal worded by its kind. One rule in one place — the stand once had the
+# same rule written twice and the halves drifted.
+
+entries:
+  # app.common:format
+  - name: format
+    kind: library.lua
+    meta:
+      comment: Time and refusal text for the stand's windows — RFC3339 and SQLite datetime parsing, local formatting from the clock's offset, and a refusal's wording by its error kind; pure.
+    source: file://format.lua
+
+  # app.common:format_test
+  #
+  # Run from the stand with `wippy test --host wippy.terminal:host` (boots the
+  # whole application), or in the isolated harness of task S1/S2.
+  - name: format_test
+    kind: function.lua
+    meta:
+      type: test
+      comment: Stand format — RFC3339 and SQLite datetime parsing, zone and fraction handling, local time across midnight and the new year, the clock's offset, whole numbers, refusal text by error kind.
+      group: Stand format
+      suite: app_common
+    source: file://format_test.lua
+    imports:
+      test: wippy.test:test
+      format: app.common:format
+    method: run

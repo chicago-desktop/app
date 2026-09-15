@@ -1,0 +1,7 @@
+.wippy/
+.env.local
+.env
+*.db
+.uploads/
+.codex-pool/
+*.log

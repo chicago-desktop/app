@@ -1,0 +1,36 @@
+version: "1.0"
+# The application's default configuration. Every wippy command (run, update,
+# install, registry) picks it up on its own — no --config flag needed.
+#
+# Everything comes from the Hub: there are no workspace.replacements here. To
+# iterate on a module from a working copy, add one temporarily and take it out
+# again before the lock is committed.
+
+override:
+  # The PTY gets an explicit environment; an interactive Bash reads the user's .bashrc.
+  "windows.tui_desktop:exec:default_env.HOME": "${env:HOME}"
+  "windows.tui_desktop:exec:default_env.PATH": "${env:PATH}"
+
+  # The gateway's HTTP address; kickside/kickside declares :8085, and the vendor tree is rewritten on install, so it is changed here.
+  # Loopback on purpose: a server may publish ports it did not mean to.
+  "app:gateway:data.addr": "127.0.0.1:8099"
+
+  # The address the frontend calls the API at; it must match the port above, or the browser calls the old port.
+  "app.env:defaults:data.values.PUBLIC_API_URL": "http://localhost:8099"
+
+  # The folder of dependency declarations for the shell's "Add/Remove Programs" — app.desktop:deps_source over src/app/deps.
+  "app.env:defaults:data.values.WINDOWS_DEPS_FS": "app.desktop:deps_source"
+
+  # Logging on to the shell at start: the application's logon function (name and password → a session token) ...
+  "app.env:defaults:data.values.WINDOWS_LOGON_FUNC": "app.desktop:logon"
+  # ... and the token store the shell restores the actor from. Remove both lines and the shell comes up without a logon.
+  "app.env:defaults:data.values.WINDOWS_TOKEN_STORE": "kickside.users.security:tokens"
+
+  # A click on the logged-on user in the Start menu opens their profile — app.profile:window with args {user_id}.
+  "app.env:defaults:data.values.WINDOWS_PROFILE_ENTRY": "app.profile:window"
+
+  # The Start menu rereads the logged-on user's name on desktop.refresh through this function ({user_id} → {name}).
+  "app.env:defaults:data.values.WINDOWS_USER_FUNC": "app.desktop:user_name"
+
+  # The pixel theme: chrome drawn as rasters (needs the runtime fork's gfx module and a terminal with kitty or sixel graphics).
+  "app.env:defaults:data.values.WINDOWS_PIXELS": "1"

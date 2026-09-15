@@ -1,0 +1,415 @@
+version: "1.0"
+namespace: app.desktop
+
+# The application's own desktop entries: the logon, the SSH host, the windows
+# that belong in the sources.
+#
+# The workshop — building a window in the running runtime — lives in the
+# windows/tui-desktop module together with its store: the `/tui-desktop/apps`
+# endpoints. What stays here are the windows that travel as files and belong
+# in the sources.
+#
+# The desktop (windows/tui-desktop) provides the mechanism — the compositor,
+# the viewport, the command channel — and the application brings the windows.
+# An entry marked `meta.type: tui_desktop.window` lands in the compositor's
+# menu (alt+o), and nothing in the module has to be edited for that.
+#
+# A window is an ordinary process with a tty port: it opens a surface and
+# publishes frames, knowing neither its place on the screen nor that other
+# windows lie on top of it.
+
+entries:
+  # The minimal rights of a window: it needs only the process context. Rights
+  # to spawn processes and run programs are deliberately absent — a window
+  # draws itself and nothing more.
+  - name: window_scope
+    kind: security.policy
+    meta:
+      comment: The rights of a window application in this application.
+    policy:
+      actions:
+        - process.context
+      resources: "*"
+      effect: allow
+
+  # app.desktop:deps_source
+  #
+  # The folder of the application's dependency declarations — for the
+  # Windows 95 shell's "Add/Remove Programs". The window edits ONLY
+  # `_index.yaml` here: it removes and appends `ns.dependency` entries; that
+  # takes effect after `wippy update` and a restart, the same as an edit by
+  # hand. The shell learns this entry's name from WINDOWS_DEPS_FS (an override
+  # in .wippy.yaml).
+  - name: deps_source
+    kind: fs.directory
+    meta:
+      comment: "The application's dependency declarations (src/app/deps) — the folder edited by Add/Remove Programs."
+    auto_init: false
+    directory: ./src/app/deps
+
+  # The taskbar clock opens the shell's "Date/Time" — the Windows 95
+  # properties dialog with a calendar and an analog clock, read only.
+  - name: taskbar_clock
+    kind: registry.entry
+    meta:
+      type: windows.taskbar_clock
+      comment: "Clicking the taskbar clock opens the Windows 95 shell's Date/Time window."
+    data:
+      entry: windows.shell.datetime:window
+
+  # ─── Logging on to the Windows 95 shell ──────────────────────────────
+  #
+  # The shell (windows/shell) shows "Log On to Windows" at start and calls the
+  # function named in WINDOWS_LOGON_FUNC (an override in .wippy.yaml). The
+  # function runs under ITS OWN actor with rights to the users database — the
+  # same six policies the kickside.users web logon has — and answers with a
+  # session token. The shell is given no access to the password table.
+  #
+  # The policies are repeated here rather than taken from
+  # kickside.users.security: there the resources of `login_db_access` and
+  # `login_role_resolve` are substituted by the module's requirements, and a
+  # foreign entry referring to them would get an empty resource list — that
+  # is, a refusal that looks like "the database is unavailable".
+  - name: logon_db_access
+    kind: security.policy
+    meta:
+      comment: The terminal logon reads only the application's users database.
+    policy:
+      actions:
+        - db.get
+      resources:
+        - app:db
+      effect: allow
+
+  - name: logon_env_read
+    kind: security.policy
+    meta:
+      comment: The terminal logon reads only the users module's authentication settings.
+    policy:
+      actions:
+        - env.get
+      resources:
+        - kickside.users.env:database_resource
+        - kickside.users.env:admin_group_id
+        - kickside.users.env:admin_init_enabled
+        - kickside.users.env:default_group_id
+        - kickside.users.env:token_expiration
+      effect: allow
+
+  - name: logon_actor_create
+    kind: security.policy
+    meta:
+      comment: "The terminal logon creates the user's actor after the password check; the actor id is the user id, so the resource is any."
+    policy:
+      actions:
+        - security.actor.create
+      resources: "*"
+      effect: allow
+
+  - name: logon_role_resolve
+    kind: security.policy
+    meta:
+      comment: The terminal logon resolves only the application's security groups.
+    policy:
+      actions:
+        - security.policy_group.get
+      resources:
+        - app.security:*
+      effect: allow
+
+  - name: logon_token_mint
+    kind: security.policy
+    meta:
+      comment: The terminal logon issues sessions only through the users module's token store.
+    policy:
+      actions:
+        - security.token_store.get
+        - security.token.create
+      resources:
+        - kickside.users.security:tokens
+      effect: allow
+
+  - name: logon_settings_read
+    kind: security.policy
+    meta:
+      comment: The terminal logon reads the session lifetime through the settings contract.
+    policy:
+      actions:
+        - contract.get
+        - contract.open
+        - contract.call
+      resources:
+        - kickside.settings:settings
+        - kickside.settings:*
+        - get
+      effect: allow
+
+  - name: logon_attempts_access
+    kind: security.policy
+    meta:
+      comment: "The terminal logon counts failed attempts in its own memory store and nowhere else."
+    policy:
+      actions:
+        - store.get
+        - store.key.get
+        - store.key.set
+        - store.key.delete
+      resources:
+        - app.desktop:logon_attempts
+      effect: allow
+
+  # app.desktop:logon_attempts
+  #
+  # Failed terminal logons per user name (app.desktop:logon_limit), each kept
+  # 15 minutes. In memory: a restart forgets them, the price of not writing
+  # every wrong password to disk.
+  - name: logon_attempts
+    kind: store.memory
+    meta:
+      comment: "Failed terminal logons per user name, kept 15 minutes."
+    cleanup_interval: 5m
+    max_size: 10000
+    lifecycle:
+      auto_start: true
+
+  # app.desktop:logon_limit — at most 10 failed logons per user name, owner's
+  # decision 2026-09-15.
+  - name: logon_limit
+    kind: library.lua
+    meta:
+      comment: "At most 10 failed terminal logons per user name, then 15 minutes without a password check."
+    source: file://logon_limit.lua
+
+  # app.desktop:logon_limit_test
+  #
+  # Run with `wippy test --host wippy.terminal:host`, which brings the whole
+  # application up; the same suite runs in a copy of the shell module's
+  # harness.
+  - name: logon_limit_test
+    kind: function.lua
+    meta:
+      type: test
+      comment: "The failed-logon limit: the lock at ten, the name in any case, a success clearing the count, a failure that cannot be counted."
+      group: Logon
+      suite: app_desktop
+    source: file://logon_limit_test.lua
+    method: run
+    imports:
+      test: wippy.test:test
+      limit: app.desktop:logon_limit
+
+  # app.desktop:ssh_keys — the accounts' SSH public keys: a registered key logs
+  # its owner on to the desktop over SSH without a password.
+  - name: ssh_keys
+    kind: library.lua
+    meta:
+      comment: "Accounts' SSH public keys: parsing a pasted .pub line, the table, the owner lookup."
+    source: file://ssh_keys.lua
+    modules:
+      - sql
+
+  # app.desktop:01_ssh_keys
+  - name: 01_ssh_keys
+    kind: function.lua
+    meta:
+      type: migration
+      comment: "The app_ssh_keys table: one row per key with its owner, type, comment and when it was added."
+      target_db: app:db
+      timestamp: "2026-09-15T12:00:00Z"
+    source: file://01_ssh_keys.lua
+    imports:
+      migration: wippy.migration:migration
+      keys: app.desktop:ssh_keys
+    method: migrate
+
+  # app.desktop:ssh_key_owner — asked by the SSH host (terminal.ssh
+  # key_owner) while a client offers its keys one by one.
+  - name: ssh_key_owner
+    kind: function.lua
+    meta:
+      comment: "{key} → {known, user_id}: whether an SSH key offered at the door is registered to an account; the SSH host asks it, and it runs under its own actor."
+    source: file://ssh_key_owner.lua
+    method: handler
+    imports:
+      keys: app.desktop:ssh_keys
+    security:
+      actor:
+        id: app.desktop:ssh_key_owner
+      policies:
+        - app.desktop:logon_db_access
+
+  - name: ssh_keys_window_scope
+    kind: security.policy
+    meta:
+      comment: "The SSH Keys window talks to the compositor (process context, its name, frame state); its data rights are the signed-in account's."
+    policy:
+      actions:
+        - process.context
+        - process.registry
+        - process.send
+      resources: "*"
+      effect: allow
+
+  # app.desktop:ssh_keys_window — Start → Settings → SSH Keys.
+  - name: ssh_keys_window
+    kind: process.lua
+    meta:
+      type: tui_desktop.window
+      title: SSH Keys
+      image: key
+      icon: "⚿"
+      group: Settings
+      width: 76
+      height: 20
+      window_type: app
+      resizable: true
+      pixel_render: windows.shell.sdk:render
+      pixel_state: app.desktop:ssh_keys_window
+      comment: "The signed-in account's SSH public keys: add one by pasting its .pub line, remove one; a listed key opens the desktop over SSH without a password."
+    source: file://ssh_keys_window.lua
+    method: main
+    modules:
+      - security
+      - time
+    imports:
+      app: windows.shell.sdk:app
+      keys: app.desktop:ssh_keys
+      user_repo: kickside.users.persist:user_repo
+    security:
+      policies: [app.desktop:ssh_keys_window_scope]
+
+  # app.desktop:ssh_keys_test — also run in a copy of the shell module's
+  # harness; the table rules run on a scratch table, never on app_ssh_keys.
+  - name: ssh_keys_test
+    kind: function.lua
+    meta:
+      type: test
+      comment: "Account SSH keys: reading a pasted key, and the table's rules on a scratch table."
+      group: SSH keys
+      suite: app_desktop
+    source: file://ssh_keys_test.lua
+    method: run
+    modules:
+      - sql
+      - uuid
+    imports:
+      test: wippy.test:test
+      keys: app.desktop:ssh_keys
+
+  # app.desktop:logon
+  - name: logon
+    kind: function.lua
+    meta:
+      comment: "Terminal name and password → an application session token; called by the Windows 95 shell through funcs under its own actor, at most 10 failures per name."
+    source: file://logon.lua
+    method: handler
+    modules:
+      - store
+    imports:
+      consts: kickside.users:consts
+      user_repo: kickside.users.persist:user_repo
+      user_groups_repo: kickside.users.persist:user_groups_repo
+      session: kickside.users:session
+      format: app.common:format
+      limit: app.desktop:logon_limit
+      keys: app.desktop:ssh_keys
+    security:
+      actor:
+        id: app.desktop:logon
+      policies:
+        - app.desktop:logon_db_access
+        - app.desktop:logon_env_read
+        - app.desktop:logon_actor_create
+        - app.desktop:logon_role_resolve
+        - app.desktop:logon_token_mint
+        - app.desktop:logon_settings_read
+        - app.desktop:logon_attempts_access
+
+  # app.desktop:ssh
+  #
+  # The desktop over SSH: every connection gets a terminal and a shell
+  # desktop of its own, then "Log On to Windows" and windows under the person
+  # who logged on. `auth: logon` asks nothing at the door (owner's decision
+  # 2026-09-14): "Log On to Windows" checks the account's name and password,
+  # the same as the web logon, and the shell refuses a desktop it cannot put
+  # behind a logon. This is the door the application is served through, so it
+  # listens on every interface; failed logons are limited per user name
+  # (app.desktop:logon_limit), counted across connections. The host exists
+  # only in the runtime fork's build (like gfx): the release wippy does not
+  # know this kind.
+  - name: ssh
+    kind: terminal.ssh
+    meta:
+      comment: "SSH logon to the Windows 95 desktop: a connection gets its own terminal, a logon, windows under the person."
+    address: 0.0.0.0:2222
+    # Generated once (ed25519) on the first boot and kept.
+    host_key: .wippy/ssh_host_ed25519_key
+    auth: logon
+    # A key registered in Start → Settings → SSH Keys opens its owner's
+    # desktop without a password; any other client meets the logon.
+    key_owner: app.desktop:ssh_key_owner
+    # The shell entry's ID, not the CLI command name `windows`.
+    entry: windows.shell:shell
+    close_grace: 10s
+    max_sessions: 16
+    lifecycle:
+      auto_start: true
+
+  # app.desktop:user_name_env_read
+  - name: user_name_env_read
+    kind: security.policy
+    meta:
+      comment: "The Start menu's user name reads only the variable that names the users database — what user_repo.get needs, nothing of logon's token and group settings."
+    policy:
+      actions:
+        - env.get
+      resources:
+        - kickside.users.env:database_resource
+      effect: allow
+
+  # app.desktop:user_name
+  - name: user_name
+    kind: function.lua
+    meta:
+      comment: "{user_id} → the display name for the Windows 95 shell's Start menu (the full name, else the e-mail — logon's rule); the shell calls it through funcs on desktop.refresh (WINDOWS_USER_FUNC), under this function's own actor."
+    source: file://user_name.lua
+    method: handler
+    imports:
+      consts: kickside.users:consts
+      user_repo: kickside.users.persist:user_repo
+      format: app.common:format
+    security:
+      actor:
+        id: app.desktop:user_name
+      policies:
+        - app.desktop:logon_db_access
+        - app.desktop:user_name_env_read
+
+  # app.desktop:user_name_rules
+  - name: user_name_rules
+    kind: library.lua
+    meta:
+      comment: "The code of app.desktop:user_name as a library, so its test can import it; the shell calls the function entry, never this one."
+    source: file://user_name.lua
+    imports:
+      consts: kickside.users:consts
+      user_repo: kickside.users.persist:user_repo
+      format: app.common:format
+
+  # app.desktop:user_name_test
+  #
+  # Run with `wippy test --host wippy.terminal:host` (boots the whole
+  # application), or in an isolated harness.
+  - name: user_name_test
+    kind: function.lua
+    meta:
+      type: test
+      comment: "The Start menu's user name — logon's naming rule, an empty id refused before any read, a missing user and a failed read told apart."
+      group: Desktop
+      suite: app_desktop
+    source: file://user_name_test.lua
+    imports:
+      test: wippy.test:test
+      user_name: app.desktop:user_name_rules
+      consts: kickside.users:consts
+    method: run
