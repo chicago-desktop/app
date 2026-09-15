@@ -110,6 +110,12 @@ modules:
     - name: windows/aicq
       version: 0.1.0
       hash: affafc8b84b0439bc1aca3e391bb4be42c0feec321c55df483b7d838ed6c8e31
+    - name: windows/antibug
+      version: 0.1.0
+      hash: fee21b211f667497e7aa340ebdfdc495df035f36d700dfdcc7a6f38ad6d55815
+    - name: windows/appwiz
+      version: 0.1.0
+      hash: 506f8fb9416d229f2add33e98cabd3ffdb3bf26fca058d4a82ee9366da90e5f3
     - name: windows/calculator
       version: 0.1.0
       hash: 671b810e3c0738dd3d57c433e57dac6b013eb2f1d6e6580438e6370d850919d7

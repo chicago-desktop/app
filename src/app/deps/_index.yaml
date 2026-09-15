@@ -142,3 +142,26 @@ entries:
     kind: ns.dependency
     meta: {}
     component: windows/network
+
+  # app.deps:antibug
+  #
+  # AntiBug, the test scanner (administrators only). This application declares
+  # no scan targets of its own: "This computer" runs the application's tests.
+  - version: '>=v0.0.0'
+    name: antibug
+    kind: ns.dependency
+    meta: {}
+    component: windows/antibug
+    parameters:
+      - name: windows.antibug:process_host
+        value: app:processes
+
+  # app.deps:appwiz
+  #
+  # Add/Remove Programs (administrators only): edits this file through the
+  # folder WINDOWS_DEPS_FS names (app.desktop:deps_source, .wippy.yaml).
+  - version: '>=v0.0.0'
+    name: appwiz
+    kind: ns.dependency
+    meta: {}
+    component: windows/appwiz
