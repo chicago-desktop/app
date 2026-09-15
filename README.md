@@ -32,13 +32,15 @@ The declarations live in `src/app/deps/_index.yaml`; the shell's
 
 ## Requirements
 
-- **A build of the runtime fork** — [wippy-windows/runtime](https://github.com/wippy-windows/runtime),
+- **The runtime fork** — [wippy-windows/runtime](https://github.com/wippy-windows/runtime),
   branch `wippy-projects`. The shell needs its `gfx` module (pixels in the
   terminal) and its `terminal.ssh` host; a release `wippy` does not have
   either, and an entry that declares a module the runtime does not know fails
-  the whole boot, not just that entry. Build it there
-  (`make build-wippy-local`, see the fork's docs) and point `WIPPY` at the
-  binary.
+  the whole boot, not just that entry. `make runtime` downloads the fork's
+  latest [release](https://github.com/wippy-windows/runtime/releases) binary
+  for this machine into `bin/wippy` (Linux and macOS, amd64 and arm64;
+  `RUNTIME_TAG=v0.3.40a-windows.1` pins a version); or build it there with
+  `make build-wippy-local` and point `WIPPY` at the binary.
 - **fonts-liberation** (`/usr/share/fonts/truetype/liberation/`) — the pixel
   theme renders text from these files; `app:system_fonts` in
   `src/app/storage/_index.yaml` names the directory.
@@ -48,6 +50,7 @@ The declarations live in `src/app/deps/_index.yaml`; the shell's
 ## First boot
 
 ```bash
+make runtime                                    # the runtime fork's release binary into bin/wippy
 wippy install                                   # modules from the committed wippy.lock
 export KICKSIDE_USERS_DEFAULT_ADMIN_EMAIL=admin@example.com
 export KICKSIDE_USERS_DEFAULT_ADMIN_PASSWORD='choose one'
