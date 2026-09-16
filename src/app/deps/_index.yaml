@@ -288,7 +288,7 @@ entries:
   - name: floppy
     kind: ns.dependency
     component: github.com/chicago-desktop/floppy
-    version: ">=0.3.0"
+    version: ">=0.4.0"
 
   - name: workshop
     kind: ns.dependency

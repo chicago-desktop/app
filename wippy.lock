@@ -43,10 +43,10 @@ modules:
       commit: e98aff2e328dbf6dda265c4b44b0e2680bbcae09
       local_hash: sha256-tree-v1:dafa843819ad856b65415f9abcde02983187adf312cd92adf0379553509a2d8e
     - name: chicago/floppy
-      version: 0.3.0
+      version: 0.4.0
       source: github.com/chicago-desktop/floppy
-      commit: 7b6383197bc905db98f3ffb3925fc5b61b190a1a
-      local_hash: sha256-tree-v1:5d5b1cad3c460cb1c944afcb2d0c99003c1a6b7265153a90f3b999e7e119fd02
+      commit: 260cc934e8fae0e4a69e5bc0793e26523adee4c7
+      local_hash: sha256-tree-v1:9fd2091841e38d9396ee6953434987bf9a1a0a80f94ea55f01799ca3f273d7b0
     - name: chicago/hardware
       version: 0.1.2
       source: github.com/chicago-desktop/hardware
@@ -93,10 +93,10 @@ modules:
       commit: 73b4c147551158d0c78aade1e1f55d6e61d89e74
       local_hash: sha256-tree-v1:af4c69b5dce2d5a27d9127a0aa7a723560dff3a15f44f2ea6cd1424bda59b84e
     - name: chicago/tui-desktop
-      version: 0.2.3
+      version: 0.2.4
       source: github.com/chicago-desktop/tui-desktop
-      commit: 7a6ecadd77863c3f2ebfa8f3e700cd8f18355f93
-      local_hash: sha256-tree-v1:d1c0e7d131597ed5589d7ad7d829e2ab2f088cfd0087f296d1d13d6a8bee7950
+      commit: 690843e4f5b0446e822bf4edf448cae710dc3afc
+      local_hash: sha256-tree-v1:60b1bee8a44a8ca387d3ec0885e188bd1ba9e4cee9f9fbab31c22993ff4a3f5f
     - name: chicago/users
       version: 0.2.1
       source: github.com/chicago-desktop/users

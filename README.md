@@ -181,7 +181,7 @@ inline PNGs through the shell SDK without adding per-app imports to shell.
 
 ## Floppy Setup Wizard
 
-Open **My Computer → 3½ Floppy (A:)**, insert `ski.wapp` (the default disk), and click **Setup…**.
+Open **My Computer → 3½ Floppy (A:)**, select **Ski** under **Included disks**, then click **Insert Disk → Setup…**.
 The wizard has a destination page, simulated file copying, a ten-second pause
 at 99%, and the classic completion screen. **Finish** returns to the drive;
 no computer or desktop restart occurs. Select the program and click **Run**.
@@ -191,9 +191,14 @@ and temporary: ejecting the disk closes its windows and removes its programs.
 Cancel during copying leaves the disk inserted without registering its programs.
 
 The disk includes **Ski**, an original SkiFree-inspired downhill game. Press
-**Space** to start or pause, **← / →** to steer, and **R** for a new run. Avoid
+**Space** to start or pause, **← / →** to steer, and **R** for a new run.
+The game opens full-screen; **Esc** returns to the drive. Avoid
 trees and rocks; you have three lives. Pixel graphics are required. The older
 `hello.wapp` sample remains available.
 
-Floppy 0.3.0 requires Shell 0.3.4 or newer for the wizard separator control.
+Add your own `.wapp` files to the application's `.wippy/floppy/` folder, then
+choose **My disks → Refresh**. If Wippy runs on a server, copy the files there.
+The **Add Disks…** button explains this inside the application.
+
+Floppy 0.4.0 requires Shell 0.3.4 and tui-desktop 0.2.4 or newer.
 Restart the desktop after updating modules to load the new SDK and disk.
