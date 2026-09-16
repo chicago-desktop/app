@@ -48,10 +48,10 @@ modules:
       commit: 7b6383197bc905db98f3ffb3925fc5b61b190a1a
       local_hash: sha256-tree-v1:5d5b1cad3c460cb1c944afcb2d0c99003c1a6b7265153a90f3b999e7e119fd02
     - name: chicago/hardware
-      version: 0.1.1
+      version: 0.1.2
       source: github.com/chicago-desktop/hardware
-      commit: 35ee9936620a9bde03fcaf5aeed584165334e91d
-      local_hash: sha256-tree-v1:cc6140df1f7bec6e281ff23baef90709ea50974f3b81fbbc4c2335d868442115
+      commit: 8ac6a740076086a97875170907acc1baf11bebc9
+      local_hash: sha256-tree-v1:1dbbf22255f92804b89b88bbc70a68349af83f600f815a7e8570c872cd355a61
     - name: chicago/minesweeper
       version: 0.2.0
       source: github.com/chicago-desktop/minesweeper
