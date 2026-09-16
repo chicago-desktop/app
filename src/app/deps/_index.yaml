@@ -254,7 +254,7 @@ entries:
   # Add New Hardware (Control Panel) — the Plug and Play wizard as 1995 had
   # it: detection, a driver list, and an endless "insert the disk". A joke,
   # not a tool: it installs nothing and keeps nothing. No requirements.
-  - version: '>=0.1.0'
+  - version: '>=0.1.1'
     name: hardware
     kind: ns.dependency
     meta: {}
