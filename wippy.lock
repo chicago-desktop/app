@@ -43,10 +43,15 @@ modules:
       commit: e98aff2e328dbf6dda265c4b44b0e2680bbcae09
       local_hash: sha256-tree-v1:dafa843819ad856b65415f9abcde02983187adf312cd92adf0379553509a2d8e
     - name: chicago/floppy
-      version: 0.2.0
+      version: 0.2.1
       source: github.com/chicago-desktop/floppy
-      commit: bd505674e41d8f520b8cf4835a67e7a9d1cc6fc5
-      local_hash: sha256-tree-v1:318baaf2a8aaf83891bd9c0028b277ffccc1f8bf2877731840660a7c9c00bb7c
+      commit: 5bd000ed137bfdb03a14bd67fa0d6923d667f0ca
+      local_hash: sha256-tree-v1:f775c9e5cd53f4854785a538cb195b69fa4aaac6293641815a689281f8d5de0c
+    - name: chicago/hardware
+      version: 0.1.0
+      source: github.com/chicago-desktop/hardware
+      commit: 742cf0894614415b89c55770e835245086f5ea9f
+      local_hash: sha256-tree-v1:dcc435f67f29cd8c1a7cbf22fb2ffeecb80079ed0d82164e048ff20ad8e4ba63
     - name: chicago/minesweeper
       version: 0.2.0
       source: github.com/chicago-desktop/minesweeper
@@ -78,10 +83,10 @@ modules:
       commit: ffd3bd8ea3768da36163f84b7ea752c53ffd0851
       local_hash: sha256-tree-v1:e27bef37e46c488331bb7e8c8cadf466c67f1ac058937477d4176be888655b7c
     - name: chicago/shell
-      version: 0.3.3
+      version: 0.3.4
       source: github.com/chicago-desktop/shell
-      commit: 9bbaaac77ce4d0e5ef99ffb8da5731d16ed23516
-      local_hash: sha256-tree-v1:bfe1c958b24610f13e1b0a18fcbce297df3284661c42df3dede4a8e5ee6dbc6d
+      commit: 5d65674f7331864616e52fc30b6d51cd6289f63b
+      local_hash: sha256-tree-v1:d6334cc4899023758fb607cefea3979d80344de136b9cdf7ab5deb320ece8eab
     - name: chicago/taskman
       version: 0.2.1
       source: github.com/chicago-desktop/taskman
