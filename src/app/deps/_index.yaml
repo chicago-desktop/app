@@ -76,8 +76,9 @@ entries:
   # The SSH host (app.desktop:ssh) opens this module's `shell` entry. The
   # logon takes the display-name rule from chicago.shell.sdk:format, which
   # came in 0.2.4; the startup windows and the SDK picture the Welcome module
-  # stands on came in 0.2.5.
-  - version: '>=0.2.5'
+  # stands on came in 0.2.5. Shell 0.3.0 provides the menu and inline-picture
+  # APIs used by the independent Display module below.
+  - version: '>=0.3.0'
     name: windows
     kind: ns.dependency
     meta: {}
@@ -263,7 +264,7 @@ entries:
   # the shell), with tips any module registers as `meta.type: chicago.tip`
   # (app.desktop:ssh_keys_tip is the application's own). It keeps whether to
   # show itself and the last tip per person in the application's database.
-  - version: '>=0.2.0'
+  - version: '>=0.2.2'
     name: welcome
     kind: ns.dependency
     meta: {}
@@ -281,4 +282,10 @@ entries:
   - name: workshop
     kind: ns.dependency
     component: github.com/chicago-desktop/workshop
+    version: ">=0.1.0"
+
+  # Display owns appearance settings, the desktop Properties menu and Pipes preview.
+  - name: display
+    kind: ns.dependency
+    component: github.com/chicago-desktop/display
     version: ">=0.1.0"

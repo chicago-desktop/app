@@ -160,3 +160,16 @@ The icon set ships with the shell module (`chicago/shell`,
 own. The icon set is an interim one and is being replaced with original pixel art
 ([chicago-desktop/shell#1](https://github.com/chicago-desktop/shell/issues/1));
 the code is MIT (`LICENSE`).
+
+## Display and 3D Pipes preview
+
+[Display](https://github.com/chicago-desktop/display) is installed as an independent
+module from its GitHub tag. After restarting the desktop, right-click empty
+space and choose **Properties → Screen Saver → 3D Pipes → Preview**. The same
+settings window is under **Start → Settings → Display Properties**.
+
+The preview supports Pause/Resume, New pipes, Close and Esc. This release is a
+manual preview; it does not activate on idle. Pixel graphics are required.
+Appearance settings keep using the existing shell settings repository. Modules
+can add desktop menu items through `meta.type: chicago.desktop_menu` and render
+inline PNGs through the shell SDK without adding per-app imports to shell.
