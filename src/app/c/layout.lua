@@ -7,28 +7,35 @@
 --
 -- The shape:
 --
---   PROGRAMS/CHICAGO/SHELL/EXPLORER/WINDOW.LUA    the entry's Lua text
---   PROGRAMS/CHICAGO/SHELL/EXPLORER/WINDOW.YAML   the entry that declares it
+--   Programs/chicago/shell/explorer/window.lua    the entry's Lua text
+--   Programs/chicago/shell/explorer/window.yaml   the entry that declares it
 --
--- The namespace becomes folders (a dot is one level down), the entry name
--- becomes the file, and both are upper case, the way a disk of that age
--- had them. Nothing is invented on the way: a module that is installed has
--- a folder, a module that is not has none, and the entry id — the real
--- address — is inside the YAML, not guessed from the path.
+-- The namespace becomes folders (a dot is one level down) and the entry name
+-- becomes the file, spelled exactly as the registry spells them. Not upper
+-- case: that was DOS, the shell this desktop is dressed as already showed
+-- long names as written, and an upper-cased name would no longer be the name
+-- a person searches the source for. It would also fold two entries that
+-- differ only in case into one file, and the second would overwrite the
+-- first without a word. Upper case is for the emulated system files that
+-- really were upper case — AUTOEXEC.BAT, WIN.INI — not for this.
+--
+-- Nothing is invented on the way: a module that is installed has a folder, a
+-- module that is not has none, and the entry id — the real address — is
+-- inside the YAML, not guessed from the path.
 --
 -- WHY THE SOURCE IS NOT REPEATED IN THE YAML. The registry holds the Lua
 -- text inside the entry (`source: file://window.lua` is resolved at load
 -- time), so writing it in both files would put the same thing on the disk
 -- twice and let the two copies disagree. The YAML carries the reference the
--- author wrote instead — `source: file://WINDOW.LUA` — which is also what
--- the file beside it is called.
+-- author wrote instead — `source: file://window.lua` — which is also what the
+-- file beside it is called.
 
 local layout = {}
 
 -- The folder of the disk this module owns. One name, because three things
 -- use it: the writer, the sweeper of files whose entries are gone, and the
--- tests.
-layout.ROOT = "PROGRAMS"
+-- tests. Named like its neighbour of the era, Program Files.
+layout.ROOT = "Programs"
 
 -- The kinds whose `data.source` is Lua text. Taken from what the runtime
 -- itself treats as source-carrying when it packs a module back into files;
@@ -40,18 +47,17 @@ layout.SOURCE_KINDS = {
     ["workflow.lua"] = true,
 }
 
--- A path segment as it appears on this disk: upper case, and nothing in it
--- that a path separator could be mistaken for. A name the registry allows
--- but a filesystem does not is not dropped — it is spelled with an
+-- A path segment as it appears on this disk: the name as written, with
+-- nothing in it a path separator could be mistaken for. A name the registry
+-- allows but a filesystem does not is not dropped — it is spelled with an
 -- underscore, because a missing file reads as "this module has no such
 -- entry", which would be a lie.
 local function segment(text: any): string
-    local value = string.upper(tostring(text or ""))
-    value = value:gsub("[/\\:%z]", "_")
+    local value = tostring(text or ""):gsub("[/\\:%z]", "_")
     return value
 end
 
--- split(id) -> namespace, name | nil, reason
+-- split(id) -> namespace, name | nil, nil, reason
 --
 -- An entry id is `namespace:name` and there is no slash in either half.
 -- An id that is not of that shape is refused with a reason rather than
@@ -65,7 +71,7 @@ function layout.split(id: any): (any, any, any)
     return namespace, name, nil
 end
 
--- folder(id) -> "PROGRAMS/CHICAGO/SHELL/EXPLORER" | nil, reason
+-- folder(id) -> "Programs/chicago/shell/explorer" | nil, reason
 function layout.folder(id: any): (any, any)
     local namespace, _, why = layout.split(id)
     if not namespace then return nil, why end
@@ -89,7 +95,8 @@ function layout.files(record: any): (any, any)
     if not folder then return nil, why end
 
     local _, name = layout.split(entry.id)
-    local base = folder .. "/" .. segment(name)
+    local file = segment(name)
+    local base = folder .. "/" .. file
 
     local data: any = type(entry.data) == "table" and entry.data or {}
     local out: any = {}
@@ -99,7 +106,7 @@ function layout.files(record: any): (any, any)
     local has_source = layout.SOURCE_KINDS[tostring(entry.kind)] == true
         and type(source) == "string" and source ~= ""
     if has_source then
-        out[#out + 1] = {path = base .. ".LUA", kind = "source", text = source}
+        out[#out + 1] = {path = base .. ".lua", kind = "source", text = source}
     end
 
     -- The declaration, with the source replaced by the reference to the file
@@ -109,17 +116,17 @@ function layout.files(record: any): (any, any)
     local shown: any = {id = entry.id, kind = entry.kind}
     if type(entry.meta) == "table" then shown.meta = entry.meta end
     -- `source` is dropped ONLY when it is the Lua text that went into the
-    -- .LUA file beside this one. An entry of another kind may carry a field
+    -- .lua file beside this one. An entry of another kind may carry a field
     -- of that name meaning something else entirely, and losing it would make
     -- the YAML a quieter lie than no YAML at all.
     local fields: any = {}
     for key, value in pairs(data) do
         if not (has_source and key == "source") then fields[key] = value end
     end
-    if has_source then fields.source = "file://" .. segment(name) .. ".LUA" end
+    if has_source then fields.source = "file://" .. file .. ".lua" end
     if next(fields) ~= nil then shown.data = fields end
 
-    out[#out + 1] = {path = base .. ".YAML", kind = "entry", entry = shown}
+    out[#out + 1] = {path = base .. ".yaml", kind = "entry", entry = shown}
     return out, nil
 end
 

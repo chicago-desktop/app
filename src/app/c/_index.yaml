@@ -47,7 +47,7 @@ entries:
   # (the shell builds `disk/C/<entry>/<path>` from it, so the address bar can
   # say C:\PROGRAMS without asking the registry where it is).
   #
-  # Needs chicago/shell >= 0.2.8: an older shell knows only disks that open a
+  # Needs chicago/shell >= 0.3.1: an older shell knows only disks that open a
   # window of their own, and would simply not show this one.
   - name: c
     kind: registry.entry
