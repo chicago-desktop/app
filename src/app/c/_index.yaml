@@ -141,6 +141,12 @@ entries:
     meta:
       comment: "Keeps the drive C: writer running — the disk follows an installed or removed module without anybody pressing refresh."
     process: app.c:writer
+    # The host is required — a service without one fails the whole boot with
+    # "decode config: invalid configuration: host is required", and `wippy
+    # lint` does not see it: it reads the code of entries, not the shape of a
+    # service. Modules take this from their `process_host` requirement; the
+    # application names it directly, as it names the host for everything else.
+    host: app:processes
     lifecycle:
       auto_start: true
       restart:
