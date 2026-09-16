@@ -53,7 +53,9 @@ entries:
     kind: registry.entry
     meta:
       type: chicago.drive
-      title: "C:"
+      # The original's form: the label, then the letter. The hard disk had no
+      # label, so its caption was the letter alone.
+      title: "(C:)"
       image: drive
       comment: "The running system as a disk — programs, their source and their declarations."
       order: 20
