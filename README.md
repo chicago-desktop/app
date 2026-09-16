@@ -168,8 +168,9 @@ module from its GitHub tag. After restarting the desktop, right-click empty
 space and choose **Properties → Screen Saver → 3D Pipes → Preview**. The same
 settings window is under **Start → Settings → Display Properties**.
 
-The preview supports Pause/Resume, New pipes, Close and Esc. This release is a
-manual preview; it does not activate on idle. Pixel graphics are required.
+The preview fills the whole terminal with perspective pipes and rounded elbows,
+without a frame or taskbar. Move the mouse or press any key to return to Display.
+It follows terminal resizing and does not activate on idle. Pixel graphics are required.
 Appearance settings keep using the existing shell settings repository. Modules
 can add desktop menu items through `meta.type: chicago.desktop_menu` and render
 inline PNGs through the shell SDK without adding per-app imports to shell.

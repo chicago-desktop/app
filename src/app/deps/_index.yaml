@@ -78,7 +78,7 @@ entries:
   # came in 0.2.4; the startup windows and the SDK picture the Welcome module
   # stands on came in 0.2.5. Shell 0.3.0 provides the menu and inline-picture
   # APIs used by the independent Display module below.
-  - version: '>=0.3.0'
+  - version: '>=0.3.1'
     name: windows
     kind: ns.dependency
     meta: {}
@@ -288,4 +288,4 @@ entries:
   - name: display
     kind: ns.dependency
     component: github.com/chicago-desktop/display
-    version: ">=0.1.0"
+    version: ">=0.1.1"

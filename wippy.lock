@@ -33,10 +33,10 @@ modules:
       commit: fe92a4aba23aca8d71341052754f49663cc22c7f
       local_hash: sha256-tree-v1:dd33bb503fc4781db92cf2a490f331a769dfb9c3d55a2900c813a25c76f7b772
     - name: chicago/display
-      version: 0.1.0
+      version: 0.1.1
       source: github.com/chicago-desktop/display
-      commit: c59f109562a043693189d932c141f0f25304ba38
-      local_hash: sha256-tree-v1:0dc7811226ee9c5f67b4cbd79c3eaefbfd36eddd53958d92c02dc679a80a14eb
+      commit: e8a1d72920bd702597d786e6a92c0acdd98cf182
+      local_hash: sha256-tree-v1:5b849262ff48b5323066fb9741afe2f98c4499eb46d0dd65690707d349d2f091
     - name: chicago/events
       version: 0.2.0
       source: github.com/chicago-desktop/events
@@ -78,20 +78,20 @@ modules:
       commit: ffd3bd8ea3768da36163f84b7ea752c53ffd0851
       local_hash: sha256-tree-v1:e27bef37e46c488331bb7e8c8cadf466c67f1ac058937477d4176be888655b7c
     - name: chicago/shell
-      version: 0.3.0
+      version: 0.3.1
       source: github.com/chicago-desktop/shell
-      commit: 4e3b291a71099727666c06ad90b748ee0183af55
-      local_hash: sha256-tree-v1:794a9fe6132fdc1be14d1935b42a8b5406dc6810daf525d112a07799cdfe3f78
+      commit: d014efdfd1a175715d47312a965d035fceec6d08
+      local_hash: sha256-tree-v1:7988b5422deaa1481820751ccd9998cf048a4567acd15841c539bd8cfbc45fff
     - name: chicago/taskman
       version: 0.2.1
       source: github.com/chicago-desktop/taskman
       commit: 73b4c147551158d0c78aade1e1f55d6e61d89e74
       local_hash: sha256-tree-v1:af4c69b5dce2d5a27d9127a0aa7a723560dff3a15f44f2ea6cd1424bda59b84e
     - name: chicago/tui-desktop
-      version: 0.2.2
+      version: 0.2.3
       source: github.com/chicago-desktop/tui-desktop
-      commit: 81d62fadb50b71e86559b320a5beaff645859c2d
-      local_hash: sha256-tree-v1:9a13a38876a09e37f51f569f814a6ba961ed755143baf0c3283015f5d30b61fe
+      commit: 7a6ecadd77863c3f2ebfa8f3e700cd8f18355f93
+      local_hash: sha256-tree-v1:d1c0e7d131597ed5589d7ad7d829e2ab2f088cfd0087f296d1d13d6a8bee7950
     - name: chicago/users
       version: 0.2.1
       source: github.com/chicago-desktop/users
