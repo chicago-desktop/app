@@ -43,10 +43,10 @@ modules:
       commit: e98aff2e328dbf6dda265c4b44b0e2680bbcae09
       local_hash: sha256-tree-v1:dafa843819ad856b65415f9abcde02983187adf312cd92adf0379553509a2d8e
     - name: chicago/floppy
-      version: 0.1.1
+      version: 0.2.0
       source: github.com/chicago-desktop/floppy
-      commit: 868395c337bf015515043720a0538d3e6815e441
-      local_hash: sha256-tree-v1:736c466e050933f4efe5ca9b572ed39b99cea1482c4ef533c99475ca19294346
+      commit: bd505674e41d8f520b8cf4835a67e7a9d1cc6fc5
+      local_hash: sha256-tree-v1:318baaf2a8aaf83891bd9c0028b277ffccc1f8bf2877731840660a7c9c00bb7c
     - name: chicago/minesweeper
       version: 0.2.0
       source: github.com/chicago-desktop/minesweeper

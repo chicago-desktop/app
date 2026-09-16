@@ -178,3 +178,14 @@ It follows terminal resizing and does not activate on idle. Pixel graphics are r
 Appearance settings keep using the existing shell settings repository. Modules
 can add desktop menu items through `meta.type: chicago.desktop_menu` and render
 inline PNGs through the shell SDK without adding per-app imports to shell.
+
+## Floppy Setup Wizard
+
+Open **My Computer → 3½ Floppy (A:)**, insert `hello.wapp`, and click **Setup…**.
+The wizard has a destination page, simulated file copying, a ten-second pause
+at 99%, and the classic completion screen. **Finish** returns to the drive;
+no computer or desktop restart occurs. Select the program and click **Run**.
+
+The destination and copying are presentation only. WAPP registration is real
+and temporary: ejecting the disk removes its programs. Cancel during copying
+leaves the disk inserted without registering its programs.
