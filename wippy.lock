@@ -38,10 +38,10 @@ modules:
       commit: 47835b636e8031ffad23d8da210d57bb47f0a3cc
       local_hash: sha256-tree-v1:c03c43c395f75deca6a71b917c790b00eddc102a07e998889f4aed1b095d27df
     - name: chicago/events
-      version: 0.2.0
+      version: 0.2.1
       source: github.com/chicago-desktop/events
-      commit: 762bf450ea2af05d71f9b116974ec06a05fd2fe1
-      local_hash: sha256-tree-v1:c8eff0994fd38dfd8960108ccc4fc39c9f1de27942011ce4977ae81003393b60
+      commit: e98aff2e328dbf6dda265c4b44b0e2680bbcae09
+      local_hash: sha256-tree-v1:dafa843819ad856b65415f9abcde02983187adf312cd92adf0379553509a2d8e
     - name: chicago/floppy
       version: 0.1.1
       source: github.com/chicago-desktop/floppy

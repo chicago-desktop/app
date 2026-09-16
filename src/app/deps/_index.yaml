@@ -243,7 +243,7 @@ entries:
   # app.deps:events
   #
   # Event Viewer (Start → Settings), the platform's component events.
-  - version: '>=0.2.0'
+  - version: '>=0.2.1'
     name: events
     kind: ns.dependency
     meta: {}
