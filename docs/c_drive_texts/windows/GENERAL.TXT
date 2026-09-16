@@ -1,0 +1,58 @@
+                    GENERAL NOTES ABOUT THIS SYSTEM
+                    ===============================
+
+In the original this file explained what had changed since the manual went
+to the printer. Here it explains what the system is, because there is no
+manual and there never was one.
+
+
+THE SHAPE OF IT
+---------------
+
+One runtime process holds everything. Inside it:
+
+  The compositor    owns the screen. It draws the desktop, the taskbar and
+                    the frame of every window, and it is the only thing that
+                    writes to the terminal. A log line from anywhere else
+                    would tear the picture apart, which is why the terminal
+                    host is told to keep quiet.
+
+  The windows       are processes. A window publishes a tree of components -
+                    a label, a button, a list - and the shell's renderer
+                    draws it. A window that dies on its first frame simply
+                    is not there, so a window is never trusted to be alive
+                    because it was started.
+
+  The registry      holds what can be launched. The Start menu is built from
+                    it every time it opens, which is why installing a module
+                    adds programs without anybody editing a menu.
+
+  The database      holds what belongs to a person: the desktop layout, the
+                    settings, the messages in aICQ, the high scores.
+
+
+THE PARTS YOU CAN SEE
+---------------------
+
+Every program on this desktop is a module of its own, resolved from its
+repository by a version tag: the shell, the base under it, Notepad and the
+picture viewer, the calculator, Minesweeper, the clock, aICQ, Task Manager,
+Add/Remove Programs, the Registry Editor, Users, Services, Scheduled Tasks,
+Events, Connections, the Welcome window, the floppy drive.
+
+Add/Remove Programs edits a folder of declarations - the one at
+app.desktop:deps_source, which is a real filesystem you can open on C:.
+Removing a module there removes its programs from the menu, because the menu
+was never a list anyone kept by hand.
+
+
+WHAT THIS DRIVE IS
+------------------
+
+Two filesystems the application declares - Windows and Program Files - kept
+for the pleasure of opening them. They are read-only in practice: nothing on
+this system writes to them, and nothing on this system reads them either.
+
+The other folders on C: are not decoration. They are the fonts, the
+wallpapers, the icon packs and the declarations the running system uses, and
+if you delete one, something stops drawing.

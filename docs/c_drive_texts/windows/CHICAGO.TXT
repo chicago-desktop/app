@@ -1,0 +1,43 @@
+                        WHY IT IS CALLED CHICAGO
+                        ========================
+
+Chicago was the code name of the system this desktop is dressed as, the one
+that shipped in 1995 with a grey taskbar, a Start button and a folder window
+that opened a new window for every folder.
+
+The name is used here for the same reason the look is: this is not that
+system and does not pretend to be. It is a desktop for a terminal, written
+from nothing, that borrows a shape people already know how to use. A window
+with a title bar, a raised border and a close box needs no explaining. That
+is the whole argument for the look.
+
+
+WHAT IS BORROWED AND WHAT IS NOT
+--------------------------------
+
+Borrowed:   the shape of a window, the taskbar, the Start menu, the folder
+            window in four views, the dialog with OK and Cancel, the balloon
+            tip that points at the tray, a Welcome window with "Did you
+            know...", and the habit of explaining yourself in a README.TXT.
+
+Not borrowed:  a single line of anyone's code. The compositor, the windows,
+            the shell, the theme and the programs are written here. The
+            icons are an interim set being replaced with original pixel art.
+            The fonts are Liberation, under the SIL Open Font License.
+
+Not there at all:  a registry that breaks, a defragmenter, a driver disk,
+            and the sound of a hard drive waking up.
+
+
+WHAT RUNS UNDERNEATH
+--------------------
+
+A runtime called wippy: a registry of entries, processes written in Lua,
+modules resolved from git tags, and a fork of the runtime that adds two
+things this desktop needs - a gfx module that draws rasters into a terminal,
+and an SSH host that gives every connection a desktop of its own.
+
+That last one is the part worth remembering when you read the rest of this
+drive: you can ssh into a machine and get a mid-nineties desktop, with a
+mouse, on a terminal, over a connection that did not exist in 1995 in any
+form you would recognise.

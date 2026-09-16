@@ -1,0 +1,68 @@
+                       HARDWARE NOTES
+                       ==============
+
+What this system thinks it is running on. Some of it is even true.
+
+
+DISPLAY
+-------
+
+Your terminal. The system asks it, at every connection, two questions: can
+you draw pictures, and how large is one character cell. The answers decide
+everything else.
+
+  Graphics      kitty protocol or sixel. Without either, the desktop draws
+                itself out of characters and still works - it just looks
+                like 1989 instead of 1995.
+  Cell size     measured, not guessed. The window frames are drawn in
+                pixels and have to land exactly on the character grid, and
+                a cell that is one pixel off shows up as a seam.
+  Colours       256 or true colour.
+
+The screen is redrawn by rows that changed. A full screen of pixels costs
+about 47 milliseconds; the edges of one window, under a millisecond. That
+measurement is why the chrome is pixels and the text is not.
+
+
+MOUSE
+-----
+
+SGR 1006, with one-based coordinates. Clicks, double clicks, drags, the
+wheel. If your terminal is left typing sequences like [<35;80;24M at you
+after a desktop ends badly, the desktop forgot to switch the mouse off;
+"reset" in the shell puts it right. The system now switches it off itself.
+
+
+KEYBOARD
+--------
+
+Whatever your terminal sends. There is no keyboard driver, no code page and
+no dead key table.
+
+
+SOUND
+-----
+
+None. See Media\README.TXT, which is a whole file about the absence of a
+sound card.
+
+
+DISKS
+-----
+
+C: is not a disk. It is the collection of filesystems the running modules
+declare, each one shown as a folder. A: is a floppy drive that really does
+something: it opens a package, registers what is inside it into an owned
+corner of the registry, runs it, and takes it away again when you eject.
+
+There is no D:, no CD-ROM and no defragmenter. The last one is the real
+loss: nothing on this system will ever show you coloured blocks rearranging
+themselves for forty minutes.
+
+
+MEMORY
+------
+
+As much as the machine running the runtime has, which is more than any
+machine this desktop is dressed as ever had, by a factor nobody in 1995
+would have believed.

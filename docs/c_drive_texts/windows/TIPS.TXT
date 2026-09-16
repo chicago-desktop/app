@@ -1,0 +1,60 @@
+                          TIPS AND TRICKS
+                          ===============
+
+The Welcome window shows one of these at a time, and every module adds its
+own through the registry. Here they are in a file, the way the original kept
+them, so you can read them all at once and then never open this again.
+
+
+THE DESKTOP
+-----------
+
+* Double-click My Computer to open C: (Wippy). Every folder in there is a
+  filesystem some module declared - the fonts, the wallpapers, the icon
+  packs, this drive. They are real, and the system reads them itself.
+
+* A folder opens in a window of its own. If you would rather have one window
+  that changes, it is View - Options - Folder, exactly where it was.
+
+* Drag an icon on the desktop and it stays where you put it. The position is
+  a row in a table, one per person, so your desktop is yours and not the
+  machine's.
+
+* Right-click the desktop for the context menu. Right-click an icon for its
+  own.
+
+
+THE START MENU
+--------------
+
+* The menu is built from the registry every time it opens. Install a module
+  and its programs are there without a restart of anything you can see.
+
+* Programs that ask for administrator rights say so when they refuse. A
+  refusal nobody awaited shows in the status line at the bottom.
+
+
+WINDOWS
+-------
+
+* The title bar drags, the corner resizes, the box closes. Minimised windows
+  live in the taskbar and come back with a click.
+
+* The clock in the tray opens Date/Time. Icons appear in the tray when a
+  program has something to say - aICQ puts an envelope there.
+
+* A balloon tip points at the icon that raised it and goes away by itself.
+  Click it and it opens what it is about.
+
+
+THINGS THAT ARE NOT OBVIOUS
+---------------------------
+
+* This desktop can be reached over SSH. Every connection gets a desktop of
+  its own, sized by your terminal, with your own mouse and your own windows.
+
+* The screen is drawn twice: the chrome as pixels, the text as cells. That
+  is why the borders look right and the text is still text you can select in
+  a terminal that supports it.
+
+* Minesweeper is a real Minesweeper. The first click is never a mine.

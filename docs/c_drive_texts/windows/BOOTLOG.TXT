@@ -1,0 +1,49 @@
+[0001] Loading wippy runtime (fork wippy-projects)
+[0001] Reading registry from state store
+[0002] Dependency chicago/tui-desktop resolved by tag
+[0002] Dependency chicago/shell resolved by tag
+[0002] Dependency chicago/taskman resolved by tag
+[0002] Dependency chicago/aicq resolved by tag
+[0002] Dependency chicago/minesweeper resolved by tag
+[0002] Dependency chicago/calculator resolved by tag
+[0002] Dependency chicago/datetime resolved by tag
+[0002] Dependency chicago/regedit resolved by tag
+[0002] Dependency chicago/appwiz resolved by tag
+[0002] Dependency chicago/network resolved by tag
+[0002] Dependency chicago/run resolved by tag
+[0002] Dependency chicago/antibug resolved by tag
+[0002] Dependency chicago/weather resolved by tag
+[0002] Dependency chicago/welcome resolved by tag
+[0002] Dependency chicago/floppy resolved by tag
+[0003] Migrations up to date
+[0003] Init terminal.host chicago.shell:terminal
+[0003] Init terminal.ssh app.desktop:ssh on 0.0.0.0:2222
+[0003] Init http gateway on 127.0.0.1:8099
+[0004] Asking terminal: graphics
+[0004] Terminal answered: kitty
+[0004] Asking terminal: cell size
+[0004] Terminal answered: 9x18
+[0004] LoadSuccess = chicago.shell.theme:fonts (Liberation Sans, Liberation Mono)
+[0004] LoadSuccess = chicago.shell.theme:icon_files
+[0004] LoadSuccess = chicago.shell.display:wallpaper_files
+[0005] LoadSuccess = app.c:windows
+[0005] LoadSuccess = app.c:program_files
+[0005] LoadFailed   = sound.drv
+[0005] LoadFailed   = smartdrv.exe
+[0005] LoadFailed   = himem.sys
+[0005] LoadFailed   = the nineties
+[0006] Compositor started, 1 desktop
+[0006] Logon screen drawn
+[0041] Logon accepted
+[0041] Desktop drawn, 0 windows restored
+[0041] Startup entries: welcome
+[0042] Welcome window opened
+
+; A boot log in the shape a boot log had, and mostly true: those modules are
+; really resolved by tag, the terminal really is asked those two questions,
+; and the desktop really does take about forty seconds to come up cold.
+;
+; The three LoadFailed lines before the last one are the ones everybody
+; remembers reading in C:\BOOTLOG.TXT at two in the morning while trying to
+; work out why the machine would not start. They failed here too, in the
+; sense that nothing on this system has ever loaded them.

@@ -1,0 +1,34 @@
+                        HELP ABOUT HELP
+                        ===============
+
+In the original, help was a .HLP file: a compiled book with green underlined
+words in it that you clicked to jump somewhere else. There is one next to
+this file. Nothing on this system opens it, because nothing on this system
+compiles one.
+
+Where the help actually is:
+
+  THE WELCOME WINDOW      "Did you know..." at logon, one tip at a time.
+                          Every module registers its own tips through the
+                          registry, so the module that knows the thing is
+                          the module that says it.
+
+  THE STATUS LINE         The bottom of the desktop. A refusal nobody
+                          awaited is shown there and nowhere else.
+
+  THE README FILES        C:\Windows\README.TXT and the files beside it.
+
+  THE REPOSITORIES        Every module carries a README and a docs folder,
+                          and they are written for people who want to know
+                          why something is the way it is, not only how to
+                          use it.
+
+WHAT HELP LOOKED LIKE
+---------------------
+
+A window with three buttons across the top - Contents, Index, Back - and a
+book icon for every chapter. You opened Contents, you did not find your
+question, you opened Index, you typed the first three letters of a word, and
+you were taken to a topic that told you what you already knew.
+
+Then you closed it and telephoned somebody who had done it before.

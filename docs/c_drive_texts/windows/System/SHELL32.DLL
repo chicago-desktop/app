@@ -1,0 +1,16 @@
+This is not a library. It is its name, and the name is the point.
+
+SHELL32.DLL held the desktop: the folder windows, the file dialogs, the
+Start menu, the drag and drop, and the icons - all of them, in one file, at
+fixed positions, which is why "the icon at index 4 in SHELL32.DLL" was
+something people knew by heart and typed into shortcut dialogs.
+
+Replacing this file replaced the desktop. Replacing it with the wrong
+version replaced the desktop with a machine that started and then stopped.
+
+On this system the desktop is a module resolved by a version tag, the icons
+are PNG files in a folder you can open on C:, and nothing is addressed by
+its position inside a binary. If the shell is replaced by a version that
+does not work, the lock file still names the commit of the one that did.
+
+Nothing opens a .DLL, which is precisely what a .DLL was for.

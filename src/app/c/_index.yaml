@@ -1,0 +1,155 @@
+version: "1.0"
+namespace: app.c
+
+# Drive C: — the running system, written out as a disk.
+#
+# "My Computer" already showed every filesystem the installed modules declare
+# (the fonts, the wallpapers, the icon packs, the folder of dependency
+# declarations). That collection is D: now, and it keeps its meaning: each
+# folder there is something the system really reads.
+#
+# C: is a different thing. It is the registry itself, laid out as folders and
+# files a person can walk through: C:\PROGRAMS\CHICAGO\SHELL\EXPLORER holds
+# WINDOW.LUA — the actual Lua text of the window you are reading it in — and
+# WINDOW.YAML, the entry that declares it. Nothing is invented on the way: a
+# module that is installed has a folder, one that is removed has none.
+#
+# WHY A REAL DIRECTORY AND NOT A FILESYSTEM MADE UP ON THE SPOT. The runtime
+# has exactly two kinds of filesystem — a real directory and bytes frozen
+# into a package — and no kind whose contents are produced by code. A drive
+# invented inside the folder window would be visible ONLY in the folder
+# window: Notepad, the picture viewer and the file dialogs open a file as
+# "filesystem entry + path", and they would all have to learn a second way of
+# reading. So the disk is written out: a service renders the registry into
+# this directory and keeps it in step, and every program that can open a file
+# opens these files with no change at all.
+#
+# It lives under .wippy, beside the database and the lock: it is state of this
+# machine, not source, and it is not in the repository.
+
+entries:
+  # app.c:drive_c
+  #
+  # The directory itself. `auto_init` creates it on the first boot — unlike
+  # the module folders, this one is ours to create, and there is nothing in
+  # it a person wrote.
+  - name: drive_c
+    kind: fs.directory
+    meta:
+      comment: "Drive C: — the registry rendered as folders and files; written by app.c:writer, read by anything that opens a file."
+    directory: ./.wippy/drive_c
+    auto_init: true
+
+  # app.c:c
+  #
+  # What makes it a disk in "My Computer" rather than a folder inside D:.
+  # `data.fs` names the filesystem, `data.letter` the letter its paths carry
+  # (the shell builds `disk/C/<entry>/<path>` from it, so the address bar can
+  # say C:\PROGRAMS without asking the registry where it is).
+  #
+  # Needs chicago/shell >= 0.2.8: an older shell knows only disks that open a
+  # window of their own, and would simply not show this one.
+  - name: c
+    kind: registry.entry
+    meta:
+      type: chicago.drive
+      title: "C:"
+      image: drive
+      comment: "The running system as a disk — programs, their source and their declarations."
+      order: 20
+    data:
+      fs: app.c:drive_c
+      letter: C
+
+  # app.c:layout
+  #
+  # Where each entry goes on the disk. Pure — entries in, files out, no
+  # registry and no filesystem — so the layout is checked without a running
+  # system.
+  - name: layout
+    kind: library.lua
+    meta:
+      comment: "The layout of drive C: — a namespace becomes folders, an entry becomes its Lua file and its declaration."
+    source: file://layout.lua
+
+  # app.c:layout_test
+  - name: layout_test
+    kind: function.lua
+    meta:
+      type: test
+      comment: "The layout of drive C:: folders from the namespace, the Lua text written once and referred to, an unplaceable entry named rather than dropped."
+      group: Drive C
+      suite: app_c
+    source: file://layout_test.lua
+    method: run
+    imports:
+      test: wippy.test:test
+      layout: app.c:layout
+
+  # app.c:writer
+  #
+  # The service that renders the registry into the directory. It reads the
+  # registry and writes files; it changes nothing and answers nobody.
+  - name: writer
+    kind: process.lua
+    meta:
+      comment: "Renders the registry into drive C: at start and on a tick, and removes the files of entries that are gone."
+    source: file://writer.lua
+    method: main
+    modules:
+      - channel
+      - fs
+      - logger
+      - process
+      - registry
+      - time
+      - yaml
+    imports:
+      layout: app.c:layout
+
+  # app.c:writer_scope
+  #
+  # Three rights and no more: find entries, read them, open OUR filesystem.
+  # `fs.get` is named on the one entry rather than on "*" — a service that
+  # writes files has no business being able to open anybody else's disk.
+  - name: writer_scope
+    kind: security.policy
+    meta:
+      comment: "The drive C: writer — read the registry and open its own filesystem; it cannot spawn processes, reach a database or open another disk."
+    policy:
+      actions:
+        - process.context
+        - registry.get
+        - registry.find
+      resources: "*"
+      effect: allow
+
+  - name: writer_fs
+    kind: security.policy
+    meta:
+      comment: "The drive C: writer opens exactly one filesystem — its own."
+    policy:
+      actions:
+        - fs.get
+      resources:
+        - app.c:drive_c
+      effect: allow
+
+  # app.c:writer_service
+  - name: writer_service
+    kind: process.service
+    meta:
+      comment: "Keeps the drive C: writer running — the disk follows an installed or removed module without anybody pressing refresh."
+    process: app.c:writer
+    lifecycle:
+      auto_start: true
+      restart:
+        initial_delay: 5s
+        max_attempts: 10
+        backoff_factor: 2.0
+      security:
+        actor:
+          id: app.c.writer
+        policies:
+          - app.c:writer_scope
+          - app.c:writer_fs

@@ -1,0 +1,16 @@
+This is not a library. It is its name.
+
+KERNEL32.DLL was where the machine kept the things it could not do without:
+memory, processes, files, threads. You never opened it, never moved it, and
+never thought about it at all - except on the day a dialog appeared saying
+that something had performed an illegal operation in KERNEL32.DLL, at which
+point you learned its name for life.
+
+The dialog had two buttons. Close, which closed the program, and Details,
+which showed an address in hexadecimal that helped nobody who was ever shown
+it.
+
+On this system the equivalent is a runtime process, and when something in it
+fails the failure is told in words, in a status line a person can actually
+read - because a failure told only to a log, or only in hexadecimal, is a
+failure told to nobody.

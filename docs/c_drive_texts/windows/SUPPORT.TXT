@@ -1,0 +1,59 @@
+                      WHEN SOMETHING IS WRONG
+                      =======================
+
+No telephone number, no fax, no premium line charged by the minute. The
+support for this system is its source, and the source is public.
+
+
+FIRST, THE THINGS THAT LOOK LIKE FAULTS AND ARE NOT
+---------------------------------------------------
+
+A program that refuses          Some programs need administrator rights:
+                                Task Manager, the Registry Editor, Add/
+                                Remove Programs, a command window. The
+                                refusal is shown in the status line at the
+                                bottom of the desktop, not in a dialog.
+
+A window that will not open     It may have died on its first frame. Nothing
+                                announces that; the window is simply not
+                                there.
+
+A menu that shows nothing new   The Start menu is built from the registry
+                                when it opens. If a module was installed
+                                while the desktop was running, its programs
+                                need the desktop to start again.
+
+Files with nothing to open them A file is opened by the program that
+                                declared its extension. A .DLL on this drive
+                                has no program, and says so when you try.
+
+
+WHEN IT IS REALLY WRONG
+-----------------------
+
+The desktop keeps a status endpoint and a command channel, and both answer
+in words rather than in silence: whether the shell is running, which windows
+are open, what became of the windows it tried to restore at start, and how
+many rows the last frame changed.
+
+A shell that is shut down answers "running: false" and means it. That is not
+a broken application; that is an answer.
+
+
+THE REPOSITORIES
+----------------
+
+  github.com/chicago-desktop/app            this application
+  github.com/chicago-desktop/shell          the desktop, the theme, the menu
+  github.com/chicago-desktop/tui-desktop    the compositor and the windows
+  github.com/chicago-desktop/runtime        the runtime fork this needs
+
+Every program on the desktop has a repository of its own next to those.
+
+
+IF YOU ARE READING THIS BECAUSE SOMETHING BROKE
+-----------------------------------------------
+
+Look at the screen before you look at the code. The screen is the only
+evidence of what a program did; a command that succeeded only means the keys
+arrived.

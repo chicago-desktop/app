@@ -1,0 +1,46 @@
+                      GETTING ONLINE
+                      ==============
+
+There was a sound. It went like this:
+
+  A click as the line opened.
+  A dial tone, steady, for about a second.
+  Eleven digits, one per tone, quick.
+  Two rings, or three.
+  A carrier tone from the other end, flat and high.
+  Then the handshake: hiss, warble, hiss, a noise like a fax arguing with
+  a kettle, rising, and then -
+  Silence.
+
+The silence was the good part. The silence meant it had worked, and the
+little green light started blinking, and the machine was on the network at
+28,800 bits per second, which was 3.5 kilobytes in one second, which meant a
+photograph took a minute and you watched it arrive in strips.
+
+And the telephone did not work while it was on, and if somebody in the house
+picked it up, the connection died, and you had to start again from the
+click.
+
+
+WHAT THIS DESKTOP DOES INSTEAD
+------------------------------
+
+It is already online, and it has been the whole time, which is why there is
+nothing to hear.
+
+  The gateway    An HTTP server on 127.0.0.1:8099, on the loopback address
+                 on purpose: a server may publish ports it did not mean to.
+
+  The SSH host   Port 2222. Every connection gets a desktop of its own,
+                 sized by your terminal, with its own windows and its own
+                 mouse. You can log on from another machine and get this
+                 desktop there, which is the one thing here that a modem
+                 could not have done at any speed.
+
+  aICQ           Messages between the people on this system, and with
+                 agents. The tray icon is an envelope; when a message
+                 arrives, a balloon tip points at it.
+
+The connection you are reading this over is, at a conservative estimate,
+about thirty thousand times faster than the one this file is about. It makes
+no sound at all.
