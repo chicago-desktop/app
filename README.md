@@ -168,6 +168,10 @@ module from its GitHub tag. After restarting the desktop, right-click empty
 space and choose **Properties → Screen Saver → 3D Pipes → Preview**. The same
 settings window is under **Start → Settings → Display Properties**.
 
+The Screen Saver page uses the classic monitor, Screen saver and Monitor power
+groups. **Settings…** opens per-user Pipes preferences: speed, thickness and palette.
+Wait, resume locking and Power controls are disabled until those features exist.
+
 The preview fills the whole terminal with perspective pipes and rounded elbows,
 without a frame or taskbar. Move the mouse or press any key to return to Display.
 It follows terminal resizing and does not activate on idle. Pixel graphics are required.
