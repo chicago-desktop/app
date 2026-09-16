@@ -43,10 +43,10 @@ modules:
       commit: e98aff2e328dbf6dda265c4b44b0e2680bbcae09
       local_hash: sha256-tree-v1:dafa843819ad856b65415f9abcde02983187adf312cd92adf0379553509a2d8e
     - name: chicago/floppy
-      version: 0.2.1
+      version: 0.3.0
       source: github.com/chicago-desktop/floppy
-      commit: 5bd000ed137bfdb03a14bd67fa0d6923d667f0ca
-      local_hash: sha256-tree-v1:f775c9e5cd53f4854785a538cb195b69fa4aaac6293641815a689281f8d5de0c
+      commit: 7b6383197bc905db98f3ffb3925fc5b61b190a1a
+      local_hash: sha256-tree-v1:5d5b1cad3c460cb1c944afcb2d0c99003c1a6b7265153a90f3b999e7e119fd02
     - name: chicago/hardware
       version: 0.1.1
       source: github.com/chicago-desktop/hardware

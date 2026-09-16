@@ -181,11 +181,19 @@ inline PNGs through the shell SDK without adding per-app imports to shell.
 
 ## Floppy Setup Wizard
 
-Open **My Computer → 3½ Floppy (A:)**, insert `hello.wapp`, and click **Setup…**.
+Open **My Computer → 3½ Floppy (A:)**, insert `ski.wapp` (the default disk), and click **Setup…**.
 The wizard has a destination page, simulated file copying, a ten-second pause
 at 99%, and the classic completion screen. **Finish** returns to the drive;
 no computer or desktop restart occurs. Select the program and click **Run**.
 
 The destination and copying are presentation only. WAPP registration is real
-and temporary: ejecting the disk removes its programs. Cancel during copying
-leaves the disk inserted without registering its programs.
+and temporary: ejecting the disk closes its windows and removes its programs.
+Cancel during copying leaves the disk inserted without registering its programs.
+
+The disk includes **Ski**, an original SkiFree-inspired downhill game. Press
+**Space** to start or pause, **← / →** to steer, and **R** for a new run. Avoid
+trees and rocks; you have three lives. Pixel graphics are required. The older
+`hello.wapp` sample remains available.
+
+Floppy 0.3.0 requires Shell 0.3.4 or newer for the wizard separator control.
+Restart the desktop after updating modules to load the new SDK and disk.
