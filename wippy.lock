@@ -78,10 +78,10 @@ modules:
       commit: ffd3bd8ea3768da36163f84b7ea752c53ffd0851
       local_hash: sha256-tree-v1:e27bef37e46c488331bb7e8c8cadf466c67f1ac058937477d4176be888655b7c
     - name: chicago/shell
-      version: 0.3.2
+      version: 0.3.3
       source: github.com/chicago-desktop/shell
-      commit: 6150600bfa43e698a6809e2b00c221e5a2afb5d5
-      local_hash: sha256-tree-v1:81e2666962f74c35b3fcfd79491e2e1d1f911a5c604ca859a58268f7b9a1a214
+      commit: 9bbaaac77ce4d0e5ef99ffb8da5731d16ed23516
+      local_hash: sha256-tree-v1:bfe1c958b24610f13e1b0a18fcbce297df3284661c42df3dede4a8e5ee6dbc6d
     - name: chicago/taskman
       version: 0.2.1
       source: github.com/chicago-desktop/taskman
@@ -103,10 +103,10 @@ modules:
       commit: 4fda75926ec141bbfd4a92cc9f96490feee1e969
       local_hash: sha256-tree-v1:d0aa2be980c7261f2689dc527f75fcebd237bfe0732ffc7f6f39a78d9f41be51
     - name: chicago/welcome
-      version: 0.2.2
+      version: 0.2.3
       source: github.com/chicago-desktop/welcome
-      commit: d04c4398ea6779984b1e5ee2a7868f74dac844f3
-      local_hash: sha256-tree-v1:1973bb434a71d38098c8a5b04b73c31efc4e12b1ba57aabe92314a30a13b1d34
+      commit: 01088c1496f91aea189d2a15871fa3f1a5053fed
+      local_hash: sha256-tree-v1:b8e93d8d8c6cd31649b3a93fdb34e2e1c49396a283f4c04557504ab83faba499
     - name: chicago/workshop
       version: 0.1.0
       source: github.com/chicago-desktop/workshop
