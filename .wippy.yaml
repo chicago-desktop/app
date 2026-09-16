@@ -3,15 +3,9 @@ version: "1.0"
 # install, registry) picks it up on its own — no --config flag needed.
 #
 # Every desktop module comes from its GitHub repository by tag (see src/app/deps);
-# Floppy, Workshop and its aICQ draft integration use local checkouts. To
+# There are no local replacements. To
 # iterate on a module from a working copy, add one temporarily and take it out
 # again before the lock is committed.
-
-workspace:
-  replacements:
-    chicago/floppy: ../floppy
-    chicago/workshop: ../workshop
-    chicago/aicq: ../aicq
 
 override:
   # The PTY gets an explicit environment; an interactive Bash reads the user's .bashrc.

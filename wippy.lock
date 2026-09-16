@@ -3,10 +3,10 @@ directories:
     src: ./src
 modules:
     - name: chicago/aicq
-      version: 0.2.0
+      version: 0.2.1
       source: github.com/chicago-desktop/aicq
-      commit: 24daf913c658925a3955a3e923c7c7e20bccbdc5
-      local_hash: sha256-tree-v1:bbeb0c97d76a88df6712ccc3d0b41167bee5d63e7b8cf1569717aba7d70305ed
+      commit: 579e089bf41af2a1c4cd4fc3523ea1a21444791d
+      local_hash: sha256-tree-v1:601cc48f12a1641583801c51dab2794282b00b6a73937b58eb0ff0df01680e76
     - name: chicago/antibug
       version: 0.2.0
       source: github.com/chicago-desktop/antibug
@@ -38,7 +38,10 @@ modules:
       commit: 762bf450ea2af05d71f9b116974ec06a05fd2fe1
       local_hash: sha256-tree-v1:c8eff0994fd38dfd8960108ccc4fc39c9f1de27942011ce4977ae81003393b60
     - name: chicago/floppy
-      version: 0.0.0
+      version: 0.1.0
+      source: github.com/chicago-desktop/floppy
+      commit: 5da5a8d0a6c05bb1c30625d4a9d9fa66b84cdfcf
+      local_hash: sha256-tree-v1:7077a5c9d14d4a6b6a188b8f63452ed3e9fb6a7dd14d5e083946b9743ae067f0
     - name: chicago/minesweeper
       version: 0.2.0
       source: github.com/chicago-desktop/minesweeper
@@ -100,7 +103,10 @@ modules:
       commit: d88f390169975787b0fa947edefc529931fa9d6b
       local_hash: sha256-tree-v1:c5dd42ba263099865b340d52c5623553b27fd659c1db3f4cd37e6ace779019e0
     - name: chicago/workshop
-      version: 0.0.0
+      version: 0.1.0
+      source: github.com/chicago-desktop/workshop
+      commit: 28bf60cfa1ecf047223f343dc190e8a1dab88e0c
+      local_hash: sha256-tree-v1:b02ebe09feda4c32c4860886a0c09707bb342badc40bfa695cc5c060e2dcabb3
     - name: keeper/keeper
       version: 0.5.83
       hash: fe598669f8b0ef6e99acaf0eba7568492b785f2f32bd6df4683b26d452de0fef

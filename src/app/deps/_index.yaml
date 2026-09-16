@@ -120,7 +120,7 @@ entries:
   # aICQ — people and agents in one ICQ-style contact list. The parameters
   # follow the module's requirements: the database for contacts and messages,
   # the process host for the presence and messenger services.
-  - version: '>=0.2.0'
+  - version: '>=0.2.1'
     name: aicq
     kind: ns.dependency
     meta: {}
@@ -272,13 +272,13 @@ entries:
       - name: chicago.welcome:target_db
         value: app:db
 
-  # Local floppy prototype; resolved through workspace.replacements.
+  # Versioned desktop modules, installed from their GitHub tags.
   - name: floppy
     kind: ns.dependency
-    component: chicago/floppy
-    version: "*"
+    component: github.com/chicago-desktop/floppy
+    version: ">=0.1.0"
 
   - name: workshop
     kind: ns.dependency
-    component: chicago/workshop
-    version: "*"
+    component: github.com/chicago-desktop/workshop
+    version: ">=0.1.0"
