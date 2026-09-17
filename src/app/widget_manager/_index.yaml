@@ -60,6 +60,7 @@ entries:
       pixel_state: app.desktop.widget_manager:window
     source: file://window.lua
     method: main
+    modules: [json]
     imports:
       app: chicago.shell.sdk:app
       model: app.desktop.widget_manager:model
@@ -99,7 +100,7 @@ entries:
     source: file://manager_test.lua
     method: run
     meta: {type: test, suite: app, group: Desktop}
-    modules: [fs, gfx, yaml, registry, process, tty, time, channel, funcs]
+    modules: [fs, gfx, yaml, registry, process, tty, time, channel, funcs, json]
     imports:
       test: wippy.test:test
       model: app.desktop.widget_manager:model
@@ -110,3 +111,20 @@ entries:
       render: chicago.shell.sdk:render
       rasters: chicago.shell.theme:rasters
       cells: chicago.shell.sdk:cells
+  - name: dialog_composer
+    kind: process.lua
+    source: file://dialog_composer.lua
+    method: main
+    modules: [process, fs, gfx]
+    imports:
+      library: chicago.tui_desktop.desktop:library
+      chrome: chicago.shell.theme:chrome_pixels
+  - name: dialog_test
+    kind: function.lua
+    source: file://dialog_test.lua
+    method: run
+    meta: {type: test, suite: app, group: Desktop}
+    modules: [process, channel, time, tty]
+    imports:
+      test: wippy.test:test
+      ui: chicago.shell.sdk:ui

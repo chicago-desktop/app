@@ -2,6 +2,7 @@ local app = require("app")
 local model = require("model")
 local store = require("store")
 local desktop = require("desktop")
+local json = require("json")
 local definition: any = {backend = store, desktop = desktop, interval = "2s"}
 local function load(state: any, quiet: boolean?): boolean
     local fresh, err = definition.backend.load()
@@ -65,9 +66,12 @@ function definition.update(state: any, action: any, context: any): any
             local item = state.items[state.selected]
             if state.dirty or state.pending or state.failure then return false end
             if action.id ~= "add" and not item then return false end
+            -- Window arguments cross the compositor as a string; tables are dropped.
+            local args, encode_err = json.encode({mode = action.id == "add" and "add" or "edit", name = item and item.name})
+            if not args then state.status = "Could not encode widget settings: " .. tostring(encode_err); return end
             local opened, err = definition.desktop.dialog({entry = "app.desktop.widget_manager:editor",
                 title = action.id == "add" and "Add Widget" or "Widget Properties",
-                w = 52, h = 26, args = {mode = action.id == "add" and "add" or "edit", name = item and item.name}})
+                w = 52, h = 26, args = args})
             if not opened then state.status = "Could not open: " .. tostring(err) end
         elseif action.id == "remove" then state.confirm = "remove"; state.status = "Remove the selected widget from all desktops?"
         elseif action.id == "apply" then save(state)
