@@ -382,6 +382,29 @@ Down does.
   and the Registry Editor are administrators' too. Create the other
   accounts in the web UI (Users) or Start → Settings → Users.
 
+- **A slow link: compress the outer connection.** The pixel theme sends
+  a lot of picture data: under a tiled wallpaper, a window drag over Sixel
+  writes about 130 KB per frame (runtime v0.3.40a-chicago.5; 400 KB on
+  older ones). That data compresses about 20 times. The
+  desktop's SSH door itself offers no compression, so `ssh -C -p 2222`
+  changes nothing (`ssh -v` shows `compression: none`). Compress the hop to
+  the server's own sshd instead, and reach the desktop from there:
+
+  ```bash
+  ssh -C -t user@server ssh -t -p 2222 localhost
+  ```
+
+  `-J` does not help here: the inner connection is already encrypted when
+  it passes the jump host, and encrypted data does not compress. Kitty
+  terminals send each picture once and then only move it, so they need
+  this much less than Sixel ones.
+- **Windows PowerShell's `ssh.exe`**: Windows Terminal draws Sixel
+  (1.22 and later), but through PowerShell's `ssh.exe` the desktop may be
+  shown in cells, while the same terminal through WSL's ssh gets pictures.
+  Name the protocol yourself — `ssh -o SetEnv=WIPPY_TTY_GRAPHICS=sixel -t -p 2222 server`,
+  or `SetEnv WIPPY_TTY_GRAPHICS=sixel` in `%USERPROFILE%\.ssh\config`. From
+  WSL no setting is needed.
+
 The same desktop can be opened in the server's own terminal, the whole
 runtime coming up with it — `./bin/wippy run --host chicago.shell:terminal chicago`
 (`make windows`) — but not next to a running service: it is a second
