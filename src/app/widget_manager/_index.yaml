@@ -1,0 +1,87 @@
+version: "1.0"
+namespace: app.desktop.widget_manager
+entries:
+  - name: source
+    kind: fs.directory
+    directory: ./src/app/widgets
+    auto_init: false
+    meta: {comment: Host widget declarations edited by Desktop Widgets.}
+  - name: model
+    kind: library.lua
+    source: file://model.lua
+    imports:
+      catalog: chicago.shell.programs:catalog
+  - name: store
+    kind: library.lua
+    source: file://store.lua
+    modules: [fs, yaml, registry, funcs]
+    imports:
+      model: app.desktop.widget_manager:model
+      writer: chicago.appwiz:model
+      control: chicago.shell.api:control
+  - name: scope
+    kind: security.policy
+    policy:
+      actions: [process.context, process.registry, process.send, registry.get, registry.find]
+      resources: "*"
+      effect: allow
+  - name: files
+    kind: security.policy
+    policy:
+      actions: [fs.get]
+      resources: [app.desktop.widget_manager:source]
+      effect: allow
+  - name: sync
+    kind: security.policy
+    policy:
+      actions: [funcs.call]
+      resources: [keeper.gov.tools:sync_from_fs]
+      effect: allow
+  - name: upload
+    kind: security.policy
+    policy:
+      actions: [registry.request.sync]
+      resources: [upload]
+      effect: allow
+  - name: window
+    kind: process.lua
+    meta:
+      type: tui_desktop.window
+      title: Desktop Widgets
+      image: display_properties
+      requires: chicago.admin
+      group: Settings
+      order: 145
+      width: 68
+      height: 26
+      window_type: app
+      resizable: true
+      pixel_render: chicago.shell.sdk:render
+      pixel_state: app.desktop.widget_manager:window
+    source: file://window.lua
+    method: main
+    imports:
+      app: chicago.shell.sdk:app
+      model: app.desktop.widget_manager:model
+      store: app.desktop.widget_manager:store
+    security:
+      policies: [app.desktop.widget_manager:scope, app.desktop.widget_manager:files, app.desktop.widget_manager:sync, app.desktop.widget_manager:upload]
+  - name: shots
+    kind: fs.directory
+    directory: ./.wippy/widget-manager-shots
+    auto_init: true
+  - name: manager_test
+    kind: function.lua
+    source: file://manager_test.lua
+    method: run
+    meta: {type: test, suite: app, group: Desktop}
+    modules: [fs, gfx, yaml, registry, process, tty, time, channel, funcs]
+    imports:
+      test: wippy.test:test
+      model: app.desktop.widget_manager:model
+      store: app.desktop.widget_manager:store
+      window: app.desktop.widget_manager:window
+      ui: chicago.shell.sdk:ui
+      render: chicago.shell.sdk:render
+      rasters: chicago.shell.theme:rasters
+      cells: chicago.shell.sdk:cells

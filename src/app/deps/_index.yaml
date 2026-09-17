@@ -55,7 +55,7 @@ entries:
   # So every command needs an explicit --host, including other modules':
   #   wippy run --host chicago.tui_desktop:terminal desktop
   #   wippy test --host wippy.terminal:host
-  - version: '>=0.2.0'
+  - version: '>=0.3.0'
     name: tui-desktop
     kind: ns.dependency
     meta: {}
@@ -78,7 +78,7 @@ entries:
   # came in 0.2.4; the startup windows and the SDK picture the Welcome module
   # stands on came in 0.2.5. Shell 0.3.0 provides the menu and inline-picture
   # APIs used by the independent Display module below.
-  - version: '>=0.3.4'
+  - version: '>=0.4.0'
     name: windows
     kind: ns.dependency
     meta: {}

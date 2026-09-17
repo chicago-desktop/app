@@ -83,20 +83,20 @@ modules:
       commit: ffd3bd8ea3768da36163f84b7ea752c53ffd0851
       local_hash: sha256-tree-v1:e27bef37e46c488331bb7e8c8cadf466c67f1ac058937477d4176be888655b7c
     - name: chicago/shell
-      version: 0.3.4
+      version: 0.4.0
       source: github.com/chicago-desktop/shell
-      commit: 5d65674f7331864616e52fc30b6d51cd6289f63b
-      local_hash: sha256-tree-v1:d6334cc4899023758fb607cefea3979d80344de136b9cdf7ab5deb320ece8eab
+      commit: 8fbd092a570d7b078c1af749b299f976b2daa8e3
+      local_hash: sha256-tree-v1:34bc4464937a47beea128a7ae5fadd85ddbef552883e3d8a06b3137829b497d2
     - name: chicago/taskman
       version: 0.2.1
       source: github.com/chicago-desktop/taskman
       commit: 73b4c147551158d0c78aade1e1f55d6e61d89e74
       local_hash: sha256-tree-v1:af4c69b5dce2d5a27d9127a0aa7a723560dff3a15f44f2ea6cd1424bda59b84e
     - name: chicago/tui-desktop
-      version: 0.2.4
+      version: 0.3.0
       source: github.com/chicago-desktop/tui-desktop
-      commit: 690843e4f5b0446e822bf4edf448cae710dc3afc
-      local_hash: sha256-tree-v1:60b1bee8a44a8ca387d3ec0885e188bd1ba9e4cee9f9fbab31c22993ff4a3f5f
+      commit: 20289fa805aaee260850287fb9798808febb46de
+      local_hash: sha256-tree-v1:0c753778c69d3e4a7d70e9b7318fd4d924affeb8dc346678cb0d516dbe06022b
     - name: chicago/users
       version: 0.2.1
       source: github.com/chicago-desktop/users

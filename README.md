@@ -211,8 +211,15 @@ instance; change `width`, `height` and `order` to adjust its panel. Duplicate a
 declaration with a new name to add another independent instance of a definition.
 Upload the namespace and refresh the desktop to apply declaration changes.
 
-This composition requires the local shell/tui-desktop replacements until compatible
-module versions are released. Existing desktop sessions must be reopened after an
-SDK code update. See the canonical [Widgets SDK](https://github.com/chicago-desktop/shell/blob/master/docs/sdk.md#desktop-widgets)
+Open **Start → Settings → Desktop Widgets** as an administrator to add or remove
+instances, toggle Enabled, and edit Title, Width, Height and Order. **Apply** saves
+the YAML, uploads only `app.desktop.widgets` through Keeper, and refreshes all
+desktops. **Reload** rereads the file; unsaved edits require confirmation before
+discarding. The previous file is kept as `_index.yaml.bak`. Concurrent external
+edits are rejected; reload before applying again. YAML comments are not preserved.
+If upload fails, the window reports that the file is saved and offers an Apply retry.
+
+The app now resolves shell 0.4.0 and tui-desktop 0.3.0 from release tags.
+Existing desktop sessions must be reopened after an SDK code update. See the canonical [Widgets SDK](https://github.com/chicago-desktop/shell/blob/master/docs/sdk.md#desktop-widgets)
 for lifecycle, configuration, geometry and migration rules. Built-ins currently
 use empty `config`; Weather's city is still owned by its shared forecast service.
