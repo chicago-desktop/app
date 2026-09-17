@@ -1,0 +1,50 @@
+version: "1.0"
+namespace: app.desktop.widgets
+
+# Only instances are displayed. Each enabled entry starts its own process per
+# desktop session. Upload registry changes, then request desktop.refresh.
+entries:
+  - name: weather
+    kind: registry.entry
+    meta: {type: chicago.widget.instance}
+    data:
+      widget: chicago.weather:widget
+      enabled: true
+      width: 20
+      height: 7
+      order: 10
+      config: {}
+
+  - name: memory
+    kind: registry.entry
+    meta: {type: chicago.widget.instance}
+    data:
+      widget: chicago.taskman:memory
+      enabled: true
+      width: 20
+      height: 8
+      order: 20
+      config: {}
+
+  - name: goroutines
+    kind: registry.entry
+    meta: {type: chicago.widget.instance}
+    data:
+      widget: chicago.taskman:goroutines
+      enabled: true
+      width: 20
+      height: 9
+      order: 30
+      config: {}
+
+  - name: catalog_test
+    kind: function.lua
+    meta:
+      type: test
+      suite: app
+      group: Desktop
+    source: file://catalog_test.lua
+    method: run
+    imports:
+      test: wippy.test:test
+      catalog: chicago.shell.programs:catalog

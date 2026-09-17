@@ -202,3 +202,17 @@ The **Add Disks…** button explains this inside the application.
 
 Floppy 0.4.0 requires Shell 0.3.4 and tui-desktop 0.2.4 or newer.
 Restart the desktop after updating modules to load the new SDK and disk.
+
+## Desktop widget instances
+
+The desktop composition lives in [src/app/widgets/_index.yaml](src/app/widgets/_index.yaml).
+Each enabled declaration runs its own process. Set `enabled: false` to disable an
+instance; change `width`, `height` and `order` to adjust its panel. Duplicate a
+declaration with a new name to add another independent instance of a definition.
+Upload the namespace and refresh the desktop to apply declaration changes.
+
+This composition requires the local shell/tui-desktop replacements until compatible
+module versions are released. Existing desktop sessions must be reopened after an
+SDK code update. See the canonical [Widgets SDK](https://github.com/chicago-desktop/shell/blob/master/docs/sdk.md#desktop-widgets)
+for lifecycle, configuration, geometry and migration rules. Built-ins currently
+use empty `config`; Weather's city is still owned by its shared forecast service.
