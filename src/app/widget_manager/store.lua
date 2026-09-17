@@ -1,7 +1,7 @@
 local fs = require("fs")
 local yaml = require("yaml")
 local registry = require("registry")
-local funcs = require("funcs")
+local gov = require("gov")
 local model = require("model")
 local writer = require("writer")
 local control = require("control")
@@ -35,7 +35,7 @@ function store.commit(state: any, handle: any, upload: any, refresh: any): (bool
     -- Reuse governance; the window has no registry.apply permission. The
     -- one-shot allow-list never changes Keeper's global configuration.
     local called, result, aerr = pcall(upload, {
-        managed_namespaces = {model.NAMESPACE}, timeout = "15s",
+        managed_namespaces = {model.NAMESPACE}, sync = false, timeout = "15s",
     })
     if not called then aerr, result = result, nil end
     if not result then return false, "Saved to disk; apply not confirmed: " .. tostring(aerr) .. ". Apply again to retry." end
@@ -46,14 +46,17 @@ function store.commit(state: any, handle: any, upload: any, refresh: any): (bool
     return true, "Saved and applied to all desktops."
 end
 
+-- Upload already-written host YAML without exporting it to a second namespace path.
+-- sync_from_fs currently drops the sync option; use the same governance client directly.
+function store.upload(input: any): (any, any)
+    local result, err = gov.request_upload({managed_namespaces = {model.NAMESPACE}, sync = false}, input.timeout or "15s")
+    return result, err
+end
+
 function store.save(state: any): (boolean, any)
     local handle, err = fs.get(DRIVE)
     if not handle then return false, tostring(err) end
-    local function upload(input: any): (any, any)
-        local result, failure = funcs.call("keeper.gov.tools:sync_from_fs", input)
-        return result, failure
-    end
-    local ok, message = store.commit(state, handle, upload, control.refresh)
+    local ok, message = store.commit(state, handle, store.upload, control.refresh)
     return ok, message
 end
 

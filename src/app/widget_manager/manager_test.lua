@@ -16,7 +16,6 @@ local process = require("process")
 local tty = require("tty")
 local time = require("time")
 local channel = require("channel")
-local funcs = require("funcs")
 
 local function fixture(): any
     local defs = {{id = "test:memory", kind = "process.lua", meta = {type = "chicago.widget", title = "Memory", width = 20, height = 8}}}
@@ -58,7 +57,7 @@ local function define_tests()
             changes:create({id = id, kind = "registry.entry", meta = {type = "chicago.widget.instance"},
                 data = {widget = "chicago.taskman:memory", enabled = false}})
             assert(changes:apply())
-            local result, err = funcs.call("keeper.gov.tools:sync_from_fs", {managed_namespaces = {model.NAMESPACE}, timeout = "10s"})
+            local result, err = store.upload({timeout = "10s"})
             local remaining = registry.get(id)
             if remaining then
                 local cleanup = assert(registry.snapshot()):changes()
@@ -68,6 +67,26 @@ local function define_tests()
             test.is_nil(err, tostring(err))
             test.not_nil(result)
             test.is_nil(remaining, "Keeper applies the deletion instead of rejecting its namespace")
+        end)
+        test.it("applies repeated updates without creating a second YAML source", function()
+            local source = assert(fs.get("app.desktop.widget_manager:source"))
+            local root = assert(fs.get("keeper.gov:source_fs"))
+            local before = assert(source:readfile("_index.yaml"))
+            local id = model.NAMESPACE .. ":weather"
+            local original = assert(registry.get(id))
+            for index = 1, 3 do
+                local changed = model.copy(original)
+                changed.data.title = "Registry-only regression " .. index
+                local delta = assert(registry.snapshot()):changes()
+                delta:update(changed)
+                assert(delta:apply())
+                local result, err = store.upload({timeout = "10s"})
+                test.is_nil(err, tostring(err))
+                test.not_nil(result)
+                test.eq(assert(registry.get(id)).data.title, original.data.title)
+                test.eq(assert(source:readfile("_index.yaml")), before, "user YAML remains the source of truth")
+                test.eq(root:exists("app/desktop/widgets/_index.yaml"), false, "no namespace-derived duplicate")
+            end
         end)
         test.it("starts the manager and add dialog as real independent window processes", function()
             for _, spec in ipairs({{entry = "window", caption = "Manage widgets"}, {entry = "editor", caption = "General", args = {mode = "add"}}}) do
@@ -138,6 +157,7 @@ local function define_tests()
             local ok, message = store.commit(state, disk, function(input: any)
                 test.eq(#input.managed_namespaces, 1)
                 test.eq(input.managed_namespaces[1], "app.desktop.widgets")
+                test.eq(input.sync, false, "upload must not export a second copy")
                 return nil, "timeout"
             end, function() called.refresh = called.refresh + 1; return {refreshed = true} end)
             test.eq(ok, false)

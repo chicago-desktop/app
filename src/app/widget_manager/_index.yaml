@@ -14,9 +14,10 @@ entries:
   - name: store
     kind: library.lua
     source: file://store.lua
-    modules: [fs, yaml, registry, funcs]
+    modules: [fs, yaml, registry]
     imports:
       model: app.desktop.widget_manager:model
+      gov: keeper.gov:client
       writer: chicago.appwiz:model
       control: chicago.shell.api:control
   - name: scope
@@ -30,12 +31,6 @@ entries:
     policy:
       actions: [fs.get]
       resources: [app.desktop.widget_manager:source]
-      effect: allow
-  - name: sync
-    kind: security.policy
-    policy:
-      actions: [funcs.call]
-      resources: [keeper.gov.tools:sync_from_fs]
       effect: allow
   - name: upload
     kind: security.policy
@@ -67,7 +62,7 @@ entries:
       store: app.desktop.widget_manager:store
       desktop: chicago.tui_desktop.desktop:window_api
     security:
-      policies: [app.desktop.widget_manager:scope, app.desktop.widget_manager:files, app.desktop.widget_manager:sync, app.desktop.widget_manager:upload]
+      policies: [app.desktop.widget_manager:scope, app.desktop.widget_manager:files, app.desktop.widget_manager:upload]
   - name: editor
     kind: process.lua
     meta:
@@ -90,7 +85,7 @@ entries:
       model: app.desktop.widget_manager:model
       store: app.desktop.widget_manager:store
     security:
-      policies: [app.desktop.widget_manager:scope, app.desktop.widget_manager:files, app.desktop.widget_manager:sync, app.desktop.widget_manager:upload]
+      policies: [app.desktop.widget_manager:scope, app.desktop.widget_manager:files, app.desktop.widget_manager:upload]
   - name: shots
     kind: fs.directory
     directory: ./.wippy/widget-manager-shots
@@ -100,7 +95,7 @@ entries:
     source: file://manager_test.lua
     method: run
     meta: {type: test, suite: app, group: Desktop}
-    modules: [fs, gfx, yaml, registry, process, tty, time, channel, funcs, json]
+    modules: [fs, gfx, yaml, registry, process, tty, time, channel, json]
     imports:
       test: wippy.test:test
       model: app.desktop.widget_manager:model
