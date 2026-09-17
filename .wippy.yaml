@@ -8,6 +8,10 @@ version: "1.0"
 # again before the lock is committed.
 
 override:
+  # Both editors own host declarations. Keeper validates nonempty uploads
+  # against this global allow-list as well as the request namespace filter.
+  "app.env:defaults:data.values.GOV_MANAGED_NAMESPACES": "app.deps,app.desktop.widgets"
+
   # The PTY gets an explicit environment; an interactive Bash reads the user's .bashrc.
   "chicago.tui_desktop:exec:default_env.HOME": "${env:HOME}"
   "chicago.tui_desktop:exec:default_env.PATH": "${env:PATH}"

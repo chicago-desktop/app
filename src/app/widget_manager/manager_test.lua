@@ -44,10 +44,24 @@ local function define_tests()
             test.is_true(#state.definitions > 0)
             test.not_nil(model.build(state))
         end)
-        test.it("uploads only the unchanged widget namespace through installed Keeper", function()
-            local result, err = funcs.call("keeper.gov.tools:sync_from_fs", {managed_namespaces = {model.NAMESPACE}, timeout = "2s"})
-            test.is_nil(err)
+        test.it("applies a nonempty widget changeset through installed Keeper", function()
+            -- A registry-only stale instance: syncing the host YAML must remove it.
+            -- Unlike a no-op upload this exercises the final governance validator.
+            local id = model.NAMESPACE .. ":manager_sync_probe"
+            local changes = assert(registry.snapshot()):changes()
+            changes:create({id = id, kind = "registry.entry", meta = {type = "chicago.widget.instance"},
+                data = {widget = "chicago.taskman:memory", enabled = false}})
+            assert(changes:apply())
+            local result, err = funcs.call("keeper.gov.tools:sync_from_fs", {managed_namespaces = {model.NAMESPACE}, timeout = "10s"})
+            local remaining = registry.get(id)
+            if remaining then
+                local cleanup = assert(registry.snapshot()):changes()
+                cleanup:delete(id)
+                assert(cleanup:apply())
+            end
+            test.is_nil(err, tostring(err))
             test.not_nil(result)
+            test.is_nil(remaining, "Keeper applies the deletion instead of rejecting its namespace")
         end)
         test.it("starts the real window process and draws the installed composition", function()
             local events = assert(process.events())

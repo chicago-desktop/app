@@ -218,6 +218,9 @@ desktops. **Reload** rereads the file; unsaved edits require confirmation before
 discarding. The previous file is kept as `_index.yaml.bak`. Concurrent external
 edits are rejected; reload before applying again. YAML comments are not preserved.
 If upload fails, the window reports that the file is saved and offers an Apply retry.
+Keeper must allow `app.desktop.widgets` in `GOV_MANAGED_NAMESPACES`; the app
+configuration includes it alongside `app.deps`. A persisted or OS override takes
+precedence: append the widget namespace there while preserving existing entries.
 
 The app now resolves shell 0.4.0 and tui-desktop 0.3.0 from release tags.
 Existing desktop sessions must be reopened after an SDK code update. See the canonical [Widgets SDK](https://github.com/chicago-desktop/shell/blob/master/docs/sdk.md#desktop-widgets)
