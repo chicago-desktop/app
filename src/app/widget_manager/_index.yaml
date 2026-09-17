@@ -1,6 +1,18 @@
 version: "1.0"
 namespace: app.desktop.widget_manager
 entries:
+  - name: images
+    kind: fs.directory
+    meta: {type: chicago.images, comment: Original Desktop Widgets icons; tools/widget_manager_icons.py.}
+    directory: ./src/app/widget_manager/images
+    auto_init: false
+  - name: desktop_menu
+    kind: registry.entry
+    meta: {type: chicago.desktop_menu, order: 890}
+    data:
+      text: Desktop Widgets...
+      image: app.desktop.widget_manager:images/widgets
+      entry: app.desktop.widget_manager:window
   - name: source
     kind: fs.directory
     directory: ./src/app/widgets
@@ -43,7 +55,7 @@ entries:
     meta:
       type: tui_desktop.window
       title: Desktop Widgets
-      image: display_properties
+      image: app.desktop.widget_manager:images/widgets
       requires: chicago.admin
       group: Settings
       order: 145
@@ -68,7 +80,7 @@ entries:
     meta:
       type: tui_desktop.window
       title: Widget Properties
-      image: display_properties
+      image: app.desktop.widget_manager:images/widgets
       requires: chicago.admin
       in_menu: false
       width: 52
@@ -106,6 +118,8 @@ entries:
       render: chicago.shell.sdk:render
       rasters: chicago.shell.theme:rasters
       cells: chicago.shell.sdk:cells
+      images: chicago.shell.theme:images
+      desktop_menu: chicago.shell.programs:desktop_menu
   - name: dialog_composer
     kind: process.lua
     source: file://dialog_composer.lua

@@ -1,4 +1,6 @@
 local test = require("test")
+local images = require("images")
+local desktop_menu = require("desktop_menu")
 local model = require("model")
 local store = require("store")
 local window = require("window")
@@ -40,6 +42,23 @@ local function define_tests()
             test.eq(entry.meta.type, "tui_desktop.window")
             test.eq(entry.meta.group, "Settings")
             test.eq(entry.meta.requires, "chicago.admin")
+            local menu, menu_err = desktop_menu.read()
+            test.is_nil(menu_err)
+            local widgets_index, properties_index
+            for index, item in ipairs(menu) do
+                if item.entry == entry.id then widgets_index = index end
+                if item.entry == "chicago.display:window" then properties_index = index end
+            end
+            test.not_nil(widgets_index, "The shell discovers the desktop Widgets action")
+            test.not_nil(properties_index)
+            test.is_true(widgets_index < properties_index)
+            for _, size in ipairs({16, 32}) do
+                local icon, why = images.get(entry.meta.image, size)
+                test.not_nil(icon, tostring(why))
+                local width, height = icon:size()
+                test.eq(width, size)
+                test.eq(height, size)
+            end
             local state, err = store.load()
             test.is_nil(err)
             test.is_true(#state.definitions > 0)

@@ -1,5 +1,8 @@
 # Widget-owned settings
 
+Open the manager from **Start → Settings → Desktop Widgets**, or right-click
+an empty area of the desktop and choose **Desktop Widgets...** above Properties.
+
 The host owns Add Widget, Widget Properties and the instance YAML. The widget
 owns its configurable fields and validates its own `config` when it starts.
 There are no Weather/Task Manager branches in the host editor.
