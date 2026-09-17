@@ -106,7 +106,7 @@ entries:
   # Weather for the shell: the window, the temperature in the tray and the
   # desktop widget. The forecaster service keeps the chosen city in the
   # application's database and runs on its process host.
-  - version: '>=0.2.0'
+  - version: '>=0.3.1'
     name: weather
     kind: ns.dependency
     meta: {}
@@ -197,7 +197,7 @@ entries:
   #
   # Task Manager (administrators only) and the runtime monitor widgets on the
   # desktop (Memory, Goroutines), which open it; the widgets came in 0.2.1.
-  - version: '>=0.2.1'
+  - version: '>=0.3.0'
     name: taskman
     kind: ns.dependency
     meta: {}

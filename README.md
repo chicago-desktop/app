@@ -211,18 +211,27 @@ instance; change `width`, `height` and `order` to adjust its panel. Duplicate a
 declaration with a new name to add another independent instance of a definition.
 Upload the namespace and refresh the desktop to apply declaration changes.
 
-Open **Start → Settings → Desktop Widgets** as an administrator to add or remove
-instances, toggle Enabled, and edit Title, Width, Height and Order. **Apply** saves
-the YAML, uploads only `app.desktop.widgets` through Keeper, and refreshes all
-desktops. **Reload** rereads the file; unsaved edits require confirmation before
-discarding. The previous file is kept as `_index.yaml.bak`. Concurrent external
-edits are rejected; reload before applying again. YAML comments are not preserved.
-If upload fails, the window reports that the file is saved and offers an Apply retry.
+Open **Start → Settings → Desktop Widgets** as an administrator. **Add...**
+opens a separate Add Widget window; **Properties...** opens the selected
+instance's settings. General provides the title, order, enabled state and nine
+size presets from **1 x 1** to **3 x 3**. Widget settings are declared by the
+widget itself: Weather offers city search; Memory and Goroutines offer Show
+history graph. In Weather, Search → select a result → Use selected → Save
+sets the city only for that instance. The tray and main Weather window keep
+their shared city. Existing widgets without a city override keep that behavior.
+
+Save writes YAML, uploads `app.desktop.widgets` through Keeper and refreshes
+desktops. Add, removal and enable changes are applied immediately; the list
+picks up changes saved by a properties window automatically. The previous file
+is kept as `_index.yaml.bak`. Concurrent edits are rejected. YAML comments
+are not preserved. A failed upload leaves the saved file and a retry action.
+See [the widget-owned settings contract](docs/widget-settings.md) for authors.
+
 Keeper must allow `app.desktop.widgets` in `GOV_MANAGED_NAMESPACES`; the app
 configuration includes it alongside `app.deps`. A persisted or OS override takes
 precedence: append the widget namespace there while preserving existing entries.
 
-The app now resolves shell 0.4.0 and tui-desktop 0.3.0 from release tags.
+The app resolves the Widgets SDK dependencies from release tags.
 Existing desktop sessions must be reopened after an SDK code update. See the canonical [Widgets SDK](https://github.com/chicago-desktop/shell/blob/master/docs/sdk.md#desktop-widgets)
-for lifecycle, configuration, geometry and migration rules. Built-ins currently
-use empty `config`; Weather's city is still owned by its shared forecast service.
+for lifecycle, configuration, geometry and migration rules. Weather 0.3.0 and Task Manager 0.3.0 provide per-instance settings.
+Restart the runtime after updating the Weather service code.

@@ -88,10 +88,10 @@ modules:
       commit: 90810e3b87b087732e4b1496922d62f7d71d2a45
       local_hash: sha256-tree-v1:7cb87b8782efa3deb3697059d23430d6eadf6bce731f5c1d634c5995e8461b6c
     - name: chicago/taskman
-      version: 0.2.1
+      version: 0.3.0
       source: github.com/chicago-desktop/taskman
-      commit: 73b4c147551158d0c78aade1e1f55d6e61d89e74
-      local_hash: sha256-tree-v1:af4c69b5dce2d5a27d9127a0aa7a723560dff3a15f44f2ea6cd1424bda59b84e
+      commit: 51db4ff7049df654599a5cd06a6918476e0b004c
+      local_hash: sha256-tree-v1:dca25de15c326131557dd995dfa5f525c4590e735edd2d651a4e11e8977ad317
     - name: chicago/tui-desktop
       version: 0.3.1
       source: github.com/chicago-desktop/tui-desktop
@@ -103,10 +103,10 @@ modules:
       commit: 11ea3a75488007483b376c4418aa090d0133eb14
       local_hash: sha256-tree-v1:631d50cf842a842d509bfb5f275aab8a2017c8ffb8b1aa628727800fcddc4988
     - name: chicago/weather
-      version: 0.2.0
+      version: 0.3.1
       source: github.com/chicago-desktop/weather
-      commit: 4fda75926ec141bbfd4a92cc9f96490feee1e969
-      local_hash: sha256-tree-v1:d0aa2be980c7261f2689dc527f75fcebd237bfe0732ffc7f6f39a78d9f41be51
+      commit: 19c278cf8de100a38e48459dc2e15ff1a0296149
+      local_hash: sha256-tree-v1:522c21fa281e1a726126d6587a0ad71cc5869d17782d6797bd62bc348f813049
     - name: chicago/welcome
       version: 0.2.3
       source: github.com/chicago-desktop/welcome

@@ -1,104 +1,82 @@
 local app = require("app")
 local model = require("model")
 local store = require("store")
-local definition: any = {backend = store}
-local function load(state: any)
+local desktop = require("desktop")
+local definition: any = {backend = store, desktop = desktop, interval = "2s"}
+local function load(state: any, quiet: boolean?): boolean
     local fresh, err = definition.backend.load()
-    if not fresh then state.failure = tostring(err); return end
+    if not fresh then state.failure = tostring(err); return true end
+    if quiet and fresh.before == state.before and not state.failure then return false end
+    local selected = state.items[state.selected]
     for key, value in pairs(fresh) do state[key] = value end
+    if selected then
+        for i, item in ipairs(state.items) do if item.name == selected.name then state.selected = i end end
+    end
     state.failure, state.confirm = nil, nil
+    return true
 end
 function definition.init(args: any, context: any): any
-    local state: any = {items = {}, definitions = {}, selected = 0, available = "", dirty = false}
+    local state: any = {items = {}, definitions = {}, selected = 0, dirty = false}
     load(state)
     return state
 end
-local function field(id: string, text: string, value: any, disabled: boolean): any
-    return {kind = "row", size = 1, gap = 1, children = {
-        {kind = "label", size = 10, text = text},
-        {kind = "input", id = id, text = tostring(value or ""), disabled = disabled}}}
-end
 function definition.view(state: any, context: any): any
-    local rows, options = {}, {}
+    local rows = {}
     for _, item in ipairs(state.items) do
-        rows[#rows + 1] = {id = item.name, cells = {item.title, item.enabled and "On" or "Off", item.width .. " x " .. item.height}}
+        rows[#rows + 1] = {id = item.name, cells = {item.title, item.enabled and "On" or "Off", model.grid_label(item)}}
     end
-    for _, entry in ipairs(state.definitions) do
-        options[#options + 1] = {value = entry.id, label = tostring(entry.meta.title or entry.id)}
-    end
-    local item: any = state.items[state.selected]
-    local disabled = item == nil or state.failure ~= nil
-    local controls: any
+    local item = state.items[state.selected]
+    local blocked = state.failure ~= nil or state.dirty or state.pending
+    local buttons: any = {kind = "row", size = 2, gap = 1, children = {
+        {kind = "button", id = "add", text = "Add...", disabled = blocked},
+        {kind = "button", id = "properties", text = "Properties...", disabled = blocked or not item},
+        {kind = "button", id = "remove", text = "Remove", disabled = blocked or not item}}}
     if state.confirm then
-        controls = {kind = "row", size = 2, gap = 1, children = {
-            {kind = "label", text = state.confirm == "close" and "Discard changes and close?" or "Discard changes and reload?"},
-            {kind = "button", id = "discard", size = 10, text = "Discard"},
-            {kind = "button", id = "keep", size = 8, text = "Back"}}}
-    else
-        controls = {kind = "row", size = 2, gap = 1, children = {
-            {kind = "button", id = "apply", size = 10, text = "Apply", default = true,
-                disabled = (not state.dirty and not state.pending) or state.failure ~= nil},
-            {kind = "button", id = "reload", size = 10, text = "Reload"},
-            {kind = "button", id = "refresh", size = 12, text = "Refresh"},
-            {kind = "label", text = ""}, {kind = "button", id = "close", size = 9, text = "Close"}}}
+        buttons.children = {{kind = "button", id = "discard", text = state.confirm == "remove" and "Remove widget" or "Discard changes"},
+            {kind = "button", id = "keep", text = "Back"}}
     end
-    local listing: any = {kind = "table", id = "instances", rows = rows, selected = state.selected,
-        columns = {{title = "Widget", weight = 1}, {title = "State", width = 6}, {title = "Size", width = 10}}}
-    local chooser: any = {kind = "row", size = 2, gap = 1, children = {
-        {kind = "select", id = "available", value = state.available, options = options},
-        {kind = "button", id = "add", text = "Add", size = 7, disabled = #options == 0 or state.failure ~= nil},
-        {kind = "button", id = "remove", text = "Remove", size = 9, disabled = disabled}}}
-    local fields: any = {
-        {kind = "label", size = 1, text = item and (item.name .. " / " .. tostring(item.widget)) or "Select or add a widget."},
-        {kind = "checkbox", id = "enabled", size = 1, text = "Enabled", checked = item and item.enabled or false, disabled = disabled},
-        field("title", "Title", item and item.title, disabled), field("width", "Width", item and item.width, disabled),
-        field("height", "Height", item and item.height, disabled), field("order", "Order", item and item.order, disabled)}
-    local children: any = {{kind = "label", size = 1, text = "Manage widgets on all desktops"}}
-    if (tonumber(context.height) or 24) < 22 or (tonumber(context.width) or 66) < 52 then
-        local page = state.page or 1
-        children[#children + 1] = {kind = "tabs", id = "pages", labels = {"Widgets", "Properties"}, active = page,
-            padding = 0, children = page == 1 and {listing, chooser} or fields}
-        if not state.confirm then
-            controls.children = {controls.children[1], controls.children[2], controls.children[5]}
-        end
-    else
-        children[#children + 1], children[#children + 2] = listing, chooser
-        for _, node in ipairs(fields) do children[#children + 1] = node end
-        children[#children + 1] = {kind = "label", size = 1, text = "Size includes frame. Lower order appears first."}
-    end
-    children[#children + 1] = controls
-    children[#children + 1] = {kind = "label", size = 2, wrap = true, alert = state.failure ~= nil, text = state.failure or state.status or ""}
-    return {kind = "column", padding = 1, gap = 0, children = children}
-
+    return {kind = "column", padding = 1, children = {
+        {kind = "label", size = 1, text = "Manage widgets on all desktops"},
+        {kind = "table", id = "instances", rows = rows, selected = state.selected,
+            columns = {{title = "Widget", weight = 1}, {title = "State", width = 6}, {title = "Size", width = 14}}},
+        buttons,
+        {kind = "checkbox", id = "enabled", size = 1, text = "Enabled", checked = item and item.enabled or false, disabled = blocked or not item},
+        {kind = "row", size = 2, gap = 1, children = {
+            {kind = "button", id = "apply", text = state.pending and "Retry Apply" or "Apply", disabled = state.failure ~= nil},
+            {kind = "button", id = "reload", text = "Reload"}, {kind = "button", id = "close", text = "Close"}}},
+        {kind = "label", size = 3, wrap = true, alert = state.failure ~= nil, text = state.failure or state.status or ""}}}
+end
+local function save(state: any)
+    local ok, message = definition.backend.save(state)
+    state.status, state.confirm = tostring(message), nil
 end
 function definition.update(state: any, action: any, context: any): any
-    if action.type == "close" or (action.type == "key" and action.key_type == "esc") or action.id == "close" then
+    if action.type == "tick" then
+        if state.dirty or state.pending or state.confirm then return false end
+        return load(state, true)
+    elseif action.type == "close" or (action.type == "key" and action.key_type == "esc") or action.id == "close" then
         if state.dirty then state.confirm = "close"; context.stay() else context.close() end
-    elseif action.type == "select" and action.id == "pages" then state.page = action.index
     elseif action.type == "select" and action.id == "instances" then state.selected = action.index
-    elseif action.type == "change" then
-        if action.id == "available" then state.available = action.value
-        else
-            local item: any = state.items[state.selected]
-            if not item then return false end
-            if action.id == "enabled" or action.id == "title" or action.id == "width" or action.id == "height" or action.id == "order" then
-                item[action.id], state.dirty = action.value, true
-            end
-        end
+    elseif action.type == "change" and action.id == "enabled" then
+        local item = state.items[state.selected]
+        if item then item.enabled, state.dirty = action.value, true; save(state) end
     elseif action.type == "activate" then
-        if action.id == "add" then
-            local ok, err = model.add(state)
-            state.status = ok and "Widget added. Apply to start it." or tostring(err)
-        elseif action.id == "remove" then model.remove(state); state.status = "Removed from draft. Apply to stop it."
-        elseif action.id == "apply" then
-            local ok, message = definition.backend.save(state)
-            state.status = tostring(message)
-            if ok then state.confirm = nil end
+        if action.id == "add" or action.id == "properties" or action.id == "instances" then
+            local item = state.items[state.selected]
+            if state.dirty or state.pending or state.failure then return false end
+            if action.id ~= "add" and not item then return false end
+            local opened, err = definition.desktop.dialog({entry = "app.desktop.widget_manager:editor",
+                title = action.id == "add" and "Add Widget" or "Widget Properties",
+                w = 52, h = 26, args = {mode = action.id == "add" and "add" or "edit", name = item and item.name}})
+            if not opened then state.status = "Could not open: " .. tostring(err) end
+        elseif action.id == "remove" then state.confirm = "remove"; state.status = "Remove the selected widget from all desktops?"
+        elseif action.id == "apply" then save(state)
         elseif action.id == "reload" then if state.dirty then state.confirm = "reload" else load(state) end
         elseif action.id == "discard" then
-            if state.confirm == "close" then state.dirty = false; context.close() else load(state) end
+            if state.confirm == "remove" then model.remove(state); save(state)
+            elseif state.confirm == "close" then state.dirty = false; context.close()
+            else load(state) end
         elseif action.id == "keep" then state.confirm = nil
-        elseif action.id == "refresh" then state.status = definition.backend.refresh()
         else return false end
     elseif action.type ~= "resize" then return false end
 end

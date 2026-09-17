@@ -2,6 +2,7 @@ local test = require("test")
 local model = require("model")
 local store = require("store")
 local window = require("window")
+local editor = require("editor")
 local ui = require("ui")
 local render = require("render")
 local rasters = require("rasters")
@@ -43,6 +44,10 @@ local function define_tests()
             test.is_nil(err)
             test.is_true(#state.definitions > 0)
             test.not_nil(model.build(state))
+            local weather = model.definition(state.definitions, "chicago.weather:widget")
+            test.eq(weather.meta.settings.fields[1].key, "place")
+            local memory = model.definition(state.definitions, "chicago.taskman:memory")
+            test.eq(memory.meta.settings.fields[1].key, "show_history")
         end)
         test.it("applies a nonempty widget changeset through installed Keeper", function()
             -- A registry-only stale instance: syncing the host YAML must remove it.
@@ -63,11 +68,12 @@ local function define_tests()
             test.not_nil(result)
             test.is_nil(remaining, "Keeper applies the deletion instead of rejecting its namespace")
         end)
-        test.it("starts the real window process and draws the installed composition", function()
+        test.it("starts the manager and add dialog as real independent window processes", function()
+            for _, spec in ipairs({{entry = "window", caption = "Manage widgets"}, {entry = "editor", caption = "General", args = {mode = "add"}}}) do
             local events = assert(process.events())
             local view = assert(tty.viewport({width = 66, height = 24}))
             local pid = assert(process.with_options({terminal = assert(view:grant())})
-                :spawn_monitored("app.desktop.widget_manager:window", "app:processes"))
+                :spawn_monitored("app.desktop.widget_manager:" .. spec.entry, "app:processes", spec.args))
             local deadline = time.after("3s")
             local drawn = false
             while not drawn do
@@ -76,12 +82,13 @@ local function define_tests()
                 if picked.channel == events and picked.value.kind == process.event.EXIT and tostring(picked.value.from) == tostring(pid) then break end
                 local snapshot = view:snapshot(-1)
                 for _, row in ipairs(snapshot and snapshot.rows or {}) do
-                    if tostring(row):find("Manage widgets", 1, true) then drawn = true end
+                    if tostring(row):find(spec.caption, 1, true) then drawn = true end
                 end
             end
             process.terminate(tostring(pid))
             view:close()
-            test.is_true(drawn, "real window presents its first frame")
+            test.is_true(drawn, "real window presents its first frame: " .. spec.entry)
+            end
         end)
         test.it("adds independent instances, validates sizes and preserves unrelated YAML and config", function()
             local state = fixture()
@@ -141,37 +148,103 @@ local function define_tests()
             test.eq(saved, true)
             test.eq(state.pending, false)
         end)
-        test.it("protects unsaved drafts on close and reload, and routes editor actions", function()
+        test.it("edits one instance with a bounded grid and widget-owned settings", function()
             local state = fixture()
+            state.mode, state.page, state.channels = "edit", 1, {}
+            state.definitions[1].meta.settings = {fields = {{key = "show_history", type = "boolean", label = "History", default = true}}}
             local flags: any = {closed = false, staying = false}
             local context: any = {close = function() flags.closed = true end, stay = function() flags.staying = true end}
-            window.definition.update(state, {type = "change", id = "width", value = "24"}, context)
-            test.eq(state.items[1].width, "24")
-            window.definition.update(state, {type = "close"}, context)
+            editor.definition.update(state, {type = "activate", id = "size_3_3"}, context)
+            test.eq(state.items[1].width, "30")
+            test.eq(state.items[1].height, "12")
+            test.eq(model.set_grid(state.items[1], 4, 1), false)
+            editor.definition.update(state, {type = "change", id = "config_show_history", value = false}, context)
+            test.eq(assert(model.build(state)).entries[2].data.config.show_history, false)
+            test.eq(assert(model.build(state)).entries[2].data.config.unit, "MB")
+            editor.definition.update(state, {type = "close"}, context)
             test.eq(flags.staying, true)
             test.eq(flags.closed, false)
-            window.definition.update(state, {type = "activate", id = "keep"}, context)
-            test.is_nil(state.confirm)
-            window.definition.update(state, {type = "activate", id = "reload"}, context)
-            test.eq(state.confirm, "reload")
-            window.definition.update(state, {type = "close"}, context)
-            window.definition.update(state, {type = "activate", id = "discard"}, context)
+            editor.definition.update(state, {type = "activate", id = "keep"}, context)
+            test.eq(state.confirm, false)
+            editor.definition.update(state, {type = "activate", id = "discard"}, context)
             test.eq(flags.closed, true)
+        end)
+        test.it("stores a provider choice only in the edited instance and ignores stale search replies", function()
+            local state = fixture()
+            state.definitions[1].meta.settings = {fields = {{key = "destination", type = "lookup", label = "Destination"}}}
+            state.query = "Tbilisi"
+            editor.definition.update(state, {type = "channel", ok = true, value = {payload = function()
+                return {ok = true, query = "Berlin", results = {{name = "Berlin"}}}
+            end}}, {})
+            test.is_nil(state.results)
+            editor.definition.update(state, {type = "channel", ok = true, value = {payload = function()
+                return {ok = true, query = "Tbilisi", results = {{name = "Tbilisi", latitude = 41.7, longitude = 44.8}}}
+            end}}, {})
+            editor.definition.update(state, {type = "select", id = "results_destination", index = 1}, {})
+            editor.definition.update(state, {type = "activate", id = "use_destination"}, {})
+            state.results[1].name = "changed result"
+            test.eq(state.items[1].config.destination.name, "Tbilisi")
+            model.add(state)
+            test.is_nil(state.items[2].config.destination)
+            test.eq(assert(model.build(state)).entries[2].data.config.destination.latitude, 41.7)
+        end)
+        test.it("opens distinct add and properties dialogs without embedding property controls", function()
+            local state = fixture()
+            local previous = window.definition.desktop
+            local calls: any = {}
+            window.definition.desktop = {dialog = function(spec: any) calls[#calls + 1] = spec; return {id = "dialog"} end}
+            window.definition.update(state, {type = "activate", id = "add"}, {})
+            window.definition.update(state, {type = "activate", id = "properties"}, {})
+            window.definition.desktop = previous
+            test.eq(calls[1].args.mode, "add")
+            test.eq(calls[2].args.mode, "edit")
+            test.eq(calls[2].args.name, "memory")
+            local plan = ui.plan(window.definition.view(state, {}), 50, 20, ui.interaction())
+            test.is_nil(plan.by_id.width)
+            test.not_nil(plan.by_id.properties)
+        end)
+        test.it("renders separate add and settings dialogs in cells and pixels", function()
+            local files = assert(fs.get("chicago.shell.theme:fonts"))
+            local fonts = {face = assert(gfx.font(assert(files:readfile("LiberationSans-Regular.ttf")), {size = 13})),
+                bold = assert(gfx.font(assert(files:readfile("LiberationSans-Bold.ttf")), {size = 13}))}
+            local shots = assert(fs.get("app.desktop.widget_manager:shots"))
+            for _, mode in ipairs({"add", "edit"}) do
+                for page = 1, 2 do
+                    local state = fixture()
+                    state.mode, state.page = mode, page
+                    state.definitions[1].meta.settings = {fields = {{key = "place", type = "lookup", label = "City", label_fields = {"name", "country"}}}}
+                    state.results, state.result_index = {{name = "Tbilisi", country = "Georgia"}}, 1
+                    for _, size in ipairs({{w = 50, h = 24}, {w = 38, h = 20}}) do
+                        local tree = editor.definition.view(state, {width = size.w, height = size.h})
+                        test.is_nil(ui.problem(tree))
+                        local interaction = ui.interaction()
+                        local plan = ui.plan(tree, size.w, size.h, interaction)
+                        for _, id in ipairs(page == 1 and {"size_1_1", "size_3_3", "order", "save", "close"} or {"config_place", "search_place", "use_place", "save"}) do
+                            test.not_nil(plan.by_id[id], id)
+                            test.is_true(plan.by_id[id].rect.h > 0, id .. " has room")
+                        end
+                        test.not_nil(cells.rows(plan, interaction, size.w, size.h))
+                        local placed = assert(render.placement({id = mode, content_state = {sdk = 1, revision = page, ui = tree, interaction = interaction}},
+                            {x = 1, y = 1, cols = size.w, rows = size.h}, {w = 10, h = 20}, fonts, rasters.store()))
+                        assert(shots:writefile(mode .. "-" .. page .. "-" .. size.w .. ".png", assert(placed.raster:encode("png"))))
+                    end
+                end
+            end
         end)
         test.it("lays out cells and pixels at full and compact sizes and renders real previews", function()
             local files = assert(fs.get("chicago.shell.theme:fonts"))
             local fonts = {face = assert(gfx.font(assert(files:readfile("LiberationSans-Regular.ttf")), {size = 13, smooth = true})),
                 bold = assert(gfx.font(assert(files:readfile("LiberationSans-Bold.ttf")), {size = 13, smooth = true}))}
             local shots = assert(fs.get("app.desktop.widget_manager:shots"))
-            for _, size in ipairs({{w = 66, h = 24, page = 1}, {w = 40, h = 16, page = 1}, {w = 40, h = 16, page = 2}}) do
+            for _, size in ipairs({{w = 66, h = 24, page = 1}, {w = 40, h = 16, page = 1}}) do
                 local state = fixture()
                 for index = 1, 30 do model.add(state) end
-                state.selected, state.page = 1, size.page
+                state.selected, state.page, state.dirty = 1, size.page, false
                 local tree = window.definition.view(state, {width = size.w, height = size.h})
                 test.is_nil(ui.problem(tree))
                 local interaction = ui.interaction()
                 local plan = ui.plan(tree, size.w, size.h, interaction)
-                for _, id in ipairs(size.page == 2 and {"enabled", "width", "height", "apply", "close"} or {"instances", "add", "apply", "close"}) do
+                for _, id in ipairs({"instances", "add", "properties", "apply", "close"}) do
                     test.not_nil(plan.by_id[id], id)
                     test.is_true(plan.by_id[id].rect.h > 0 and plan.by_id[id].rect.w > 0, id .. " has room")
                 end
