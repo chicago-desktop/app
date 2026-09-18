@@ -3,10 +3,10 @@ directories:
     src: ./src
 modules:
     - name: chicago/aicq
-      version: 0.2.2
+      version: 0.3.0
       source: github.com/chicago-desktop/aicq
-      commit: b38edd64136cb66d03a6ee4a510342e54bbf0b71
-      local_hash: sha256-tree-v1:99e35e96e4163dfa8c901600c3c2479642d3ada8cdbca5aefe4a1f67518259ee
+      commit: 9f17c2f8afa58aacb357a212db0f972c253f9f96
+      local_hash: sha256-tree-v1:e5c91534f5d6b81325f11de3bcc133ae31fb14ed333602b84336df95a7f274fb
     - name: chicago/antibug
       version: 0.2.0
       source: github.com/chicago-desktop/antibug
