@@ -63,10 +63,10 @@ modules:
       commit: a8d6d723e2667d6d7daafa86beafcb7025f01967
       local_hash: sha256-tree-v1:389efef0b8e70ffd567688afc713e9cc142f0966c4a2f1279d4cf4e29fa157be
     - name: chicago/rdesktop
-      version: 0.1.5
+      version: 0.3.2
       source: github.com/chicago-desktop/rdesktop
-      commit: 85d5d946fb5c359da723e8a3a8610a298e5abdd5
-      local_hash: sha256-tree-v1:8883297d0605f05eee6cb2eb65275ec0928d9a895355bdb9b934cb51a0fb595b
+      commit: c57d84c5d68020115a4d28a5f6b6c72cd4f009ac
+      local_hash: sha256-tree-v1:6b4b77339b1f37ef12a22fe931f150ad6afa08b745d74d647041300682510fb2
     - name: chicago/regedit
       version: 0.2.0
       source: github.com/chicago-desktop/regedit
@@ -88,20 +88,20 @@ modules:
       commit: ffd3bd8ea3768da36163f84b7ea752c53ffd0851
       local_hash: sha256-tree-v1:e27bef37e46c488331bb7e8c8cadf466c67f1ac058937477d4176be888655b7c
     - name: chicago/shell
-      version: 0.4.1
+      version: 0.5.2
       source: github.com/chicago-desktop/shell
-      commit: 90810e3b87b087732e4b1496922d62f7d71d2a45
-      local_hash: sha256-tree-v1:7cb87b8782efa3deb3697059d23430d6eadf6bce731f5c1d634c5995e8461b6c
+      commit: ceaebf527c42466505c2ed2b4b3e50f3ab3e0d87
+      local_hash: sha256-tree-v1:55e8b3e25a43700058b136a33a98d4fdeaf6094ebdc81b2a7e49b3f7f6adbccc
     - name: chicago/taskman
       version: 0.3.0
       source: github.com/chicago-desktop/taskman
       commit: 51db4ff7049df654599a5cd06a6918476e0b004c
       local_hash: sha256-tree-v1:dca25de15c326131557dd995dfa5f525c4590e735edd2d651a4e11e8977ad317
     - name: chicago/tui-desktop
-      version: 0.3.1
+      version: 0.4.0
       source: github.com/chicago-desktop/tui-desktop
-      commit: 5454ce4288146fcaad507b8faeab920e238a4eed
-      local_hash: sha256-tree-v1:8e7441691435dfdca3ceee5bba5f64ee0c513898e8fa480db6f88c6374827eea
+      commit: d62ae9a944077dfd0f1e455267c9c0b632cc3703
+      local_hash: sha256-tree-v1:4d4079366bdf600415b149bf98392daeeccc9757738151544b6eb91e217ff94b
     - name: chicago/users
       version: 0.2.1
       source: github.com/chicago-desktop/users
