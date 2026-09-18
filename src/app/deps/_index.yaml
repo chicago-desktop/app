@@ -300,3 +300,17 @@ entries:
     kind: ns.dependency
     component: github.com/chicago-desktop/display
     version: ">=0.1.2"
+
+  # app.deps:rdesktop
+  #
+  # Remote Desktop — a window that shows another node's desktop in a window
+  # and drives it, over the cluster's own transport: no SSH and no address,
+  # the computer is picked from the list the network reports and the far
+  # side asks for its own password.
+  - name: rdesktop
+    kind: ns.dependency
+    component: github.com/chicago-desktop/rdesktop
+    version: ">=0.1.5"
+    parameters:
+      - name: chicago.rdesktop:process_host
+        value: app:processes

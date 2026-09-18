@@ -62,6 +62,11 @@ modules:
       source: github.com/chicago-desktop/network
       commit: a8d6d723e2667d6d7daafa86beafcb7025f01967
       local_hash: sha256-tree-v1:389efef0b8e70ffd567688afc713e9cc142f0966c4a2f1279d4cf4e29fa157be
+    - name: chicago/rdesktop
+      version: 0.1.5
+      source: github.com/chicago-desktop/rdesktop
+      commit: 85d5d946fb5c359da723e8a3a8610a298e5abdd5
+      local_hash: sha256-tree-v1:8883297d0605f05eee6cb2eb65275ec0928d9a895355bdb9b934cb51a0fb595b
     - name: chicago/regedit
       version: 0.2.0
       source: github.com/chicago-desktop/regedit
