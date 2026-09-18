@@ -82,6 +82,7 @@ class Screen:
         self.cols, self.rows = cols, rows
         self.grid = [[" "] * cols for _ in range(rows)]
         self.x = self.y = 0
+        self.pending = b""
 
     def _put(self, text):
         for ch in text:
@@ -97,6 +98,24 @@ class Screen:
                 self.x += 1
 
     def feed(self, data):
+        # A read ends wherever the pipe had bytes, often inside an escape
+        # sequence or a multi-byte character. Decoded apart, the halves print
+        # as text the program never wrote ("8;2;255;255;255m" at a window's
+        # edge, "�" in a border), so the cut tail waits for the next read.
+        data = self.pending + data
+        self.pending = b""
+        esc = data.rfind(b"\x1b")
+        if esc >= 0 and len(data) - esc < 64 and not CSI.match(data, esc):
+            data, self.pending = data[:esc], data[esc:]
+        for back in (1, 2, 3):
+            if back > len(data):
+                break
+            lead = data[-back]
+            if lead & 0xC0 == 0x80:
+                continue
+            if lead >= 0xC0 and back < (2 if lead < 0xE0 else 3 if lead < 0xF0 else 4):
+                data, self.pending = data[:-back], data[-back:] + self.pending
+            break
         pos = 0
         while pos < len(data):
             match = CSI.search(data, pos)
